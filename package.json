@@ -8,7 +8,9 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test node --test",
-    "lint": "pnpx eslint ."
+    "lint": "pnpx eslint .",
+    "db:win": "scripts/refresh",
+    "db:linux": "bash ./scripts/refresh.sh"
   },
   "keywords": [],
   "author": "",
@@ -21,13 +23,17 @@
     "graphql": "^16.9.0",
     "graphql-http": "^1.22.3",
     "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "sequelize": "^6.37.5",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@stylistic/eslint-plugin-js": "^2.11.0",
     "eslint": "^9.16.0",
+    "faker": "^6.6.6",
     "globals": "^15.13.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "sequelize-cli": "^6.6.2"
   }
 }
