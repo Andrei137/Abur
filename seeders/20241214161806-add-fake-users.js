@@ -42,20 +42,35 @@ module.exports = {
       }
     ];
 
-    let userId = mockDevelopers.length;
-    const mockCustomers = new Array(10).fill().map(() =>  {
-      return {
-        id: userId++,
-        username: faker.internet.username(),
-        password: faker.internet.password(),
-        email: faker.internet.email(),
+    const mockCustomers = [
+      {
+        id: 3,
+        username: 'FixBambucea',
+        password: await bcrypt.hash('FixBambucea1234', 5),
+        email: 'FixBambucea@gmail.com',
         createdAt: Date(),
         updatedAt: Date(),
 
-        firstName: faker.person.firstName(),
-        lastName: faker.person.lastName()
+        firstName: 'Bambucea',
+        lastName: 'Fix'
       }
-    });
+    ];
+
+    // TODO: fake data
+    // let userId = mockDevelopers.length;
+    // const mockCustomers = new Array(10).fill().map(() =>  {
+    //   return {
+    //     id: userId++,
+    //     username: faker.internet.username(),
+    //     password: faker.internet.password(),
+    //     email: faker.internet.email(),
+    //     createdAt: Date(),
+    //     updatedAt: Date(),
+
+    //     firstName: faker.person.firstName(),
+    //     lastName: faker.person.lastName()
+    //   }
+    // });
 
     await queryInterface.bulkInsert('Users', mockDevelopers.map((developer) => {
       return {

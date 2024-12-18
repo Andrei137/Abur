@@ -1,5 +1,5 @@
 meta {
-  name: GET-customer
+  name: Get-Customer
   type: graphql
   seq: 1
 }
@@ -12,7 +12,12 @@ post {
 
 body:graphql {
   query customer {
-    customer(id: 5) {
+    customer(id: 3) {
+      id
+      username
+      password
+      email
+      
       firstName
       lastName
     }

@@ -3,18 +3,26 @@ import developerType from "../types/developerType.js";
 import db from "../../models/index.js"
 
 const developerQueryResolver = async (_, { id }) => {
+    const user = await db.User.findOne({
+        where: {
+            id
+        }
+    });
+
     const developer = await db.Developer.findOne({
         where: {
             id
         }
     });
 
-    // TODO: debug
-    console.log('developerQueryResolver');
-    console.log(id);
-    console.log(developer);
+    if (!user || !developer) {
+        return null;
+    }
 
-    return developer;
+    return {
+        ...user.dataValues,
+        ...developer.dataValues
+    };
 };
 
 const developerQuery = {
