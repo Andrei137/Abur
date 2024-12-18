@@ -1,5 +1,5 @@
 @echo off
 
-del /Q db.sqlite
-npx sequelize db:migrate
-npx sequelize db:seed:all
+del /Q /F db.sqlite
+call npx sequelize db:migrate
+call npx sequelize db:seed:all
