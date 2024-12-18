@@ -1,0 +1,22 @@
+meta {
+  name: LoginUser
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: http://localhost:3001/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  mutation LoginUser {
+    login(credentials: {
+      username: "SquareEnix"
+      password: "SquareEnix1234"
+    }) {
+      token
+    }
+  }
+}

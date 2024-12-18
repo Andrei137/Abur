@@ -1,6 +1,7 @@
 'use strict';
 
 const { faker } = require('@faker-js/faker');
+const bcrypt = require('bcrypt');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
       {
         id: 0,
         username: 'PlayStationStudios',
-        password: 'PlayStationStudios1234',
+        password: await bcrypt.hash('PlayStationStudios1234', 5),
         email: 'contact@sony.com',
         createdAt: Date(),
         updatedAt: Date(),
@@ -20,7 +21,7 @@ module.exports = {
       {
         id: 1,
         username: 'CD_PROJEKT_RED',
-        password: 'CD_PROJEKT_RED1234',
+        password: await bcrypt.hash('CD_PROJEKT_RED1234', 5),
         email: 'contact@cdpr.com',
         createdAt: Date(),
         updatedAt: Date(),
@@ -31,7 +32,7 @@ module.exports = {
       {
         id: 2,
         username: 'SquareEnix',
-        password: 'SquareEnix1234',
+        password: await bcrypt.hash('SquareEnix1234', 5),
         email: 'contact@square.com',
         createdAt: Date(),
         updatedAt: Date(),

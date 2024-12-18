@@ -38,8 +38,8 @@ const userExtractor = async (req, res, next) => {
   }
 
   const decodedToken = jwt.verify(token, config.SECRET);
-  req.user_id = decodedToken.id;
-
+  req.user_id = decodedToken.user_id;
+  
   next();
 };
 
