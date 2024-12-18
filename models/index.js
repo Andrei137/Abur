@@ -4,8 +4,10 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 import process from 'process';
+import { pathToFileURL } from 'url';
 import config from '../config/config.js';
 
+const __dirname = import.meta.dirname;
 const env = process.env.NODE_ENV || 'development';
 
 let sequelize;
@@ -16,18 +18,18 @@ if (config.use_env_variable) {
 }
 
 const models = await Promise.all(fs
-  .readdirSync(import.meta.dirname)
+  .readdirSync(__dirname)
   .filter(file => {
     return (
       file.indexOf('.') !== 0 &&
-      file !== import.meta.dirname,
+      file !== __dirname,
       file !== 'index.js' &&
       file.slice(-3) === '.js' &&
       file.indexOf('.test.js') === -1
     );
   })
   .map(async file => {
-    const module = await import(path.join(import.meta.dirname, file));
+    const module = await import(pathToFileURL(path.join(__dirname, file)).href);
     return module.default(sequelize, Sequelize.DataTypes);
   })
 );
