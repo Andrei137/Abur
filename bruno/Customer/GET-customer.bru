@@ -1,0 +1,20 @@
+meta {
+  name: GET-customer
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: http://localhost:3001/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query customer {
+    customer(id: 5) {
+      firstName
+      lastName
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from "graphql";
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLNonNull } from "graphql";
 
 const customerType = new GraphQLObjectType({
     name: 'Customer',
@@ -8,7 +8,6 @@ const customerType = new GraphQLObjectType({
         password: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
 
-        nickname: { type: GraphQLString },
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
         // TODO
