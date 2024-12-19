@@ -16,7 +16,6 @@ ENV NODE_ENV="production"
 ARG PNPM_VERSION=9.15.0
 RUN npm install -g pnpm@$PNPM_VERSION
 
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -26,13 +25,15 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 # Copy application code
 COPY . .
 
 # Final stage for app image
 FROM base
+
+RUN pnpm add sequelize-cli @faker-js/faker
 
 # Copy built application
 COPY --from=build /app /app
@@ -41,7 +42,7 @@ COPY --from=build /app /app
 RUN mkdir -p /data
 VOLUME /data
 
-# Start the server by default, this can be overwritten at runtime
+# Start the server
+RUN pnpm db:migrate && pnpm db:seed
 EXPOSE 3000
-ENV DATABASE_URL="file:///data/sqlite.db"
-CMD [ "pnpm", "run", "start" ]
+CMD ["pnpm", "run", "start"]
