@@ -1,4 +1,7 @@
-import { GraphQLInputObjectType, GraphQLString } from 'graphql'
+import {
+    GraphQLInputObjectType,
+    GraphQLString,
+} from 'graphql';
 
 const customerInputType = new GraphQLInputObjectType({
     name: 'CustomerInput',
@@ -10,7 +13,7 @@ const customerInputType = new GraphQLInputObjectType({
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
     // TODO
-    }
+    },
 });
 
 export default customerInputType;

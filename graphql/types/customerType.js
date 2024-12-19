@@ -1,4 +1,9 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql';
+import {
+    GraphQLObjectType,
+    GraphQLInt,
+    GraphQLString,
+    GraphQLNonNull,
+} from 'graphql';
 
 const customerType = new GraphQLObjectType({
     name: 'Customer',
@@ -11,7 +16,7 @@ const customerType = new GraphQLObjectType({
         firstName: { type: GraphQLString },
         lastName: { type: GraphQLString },
     // TODO
-    }
+    },
 });
 
 export default customerType;

@@ -1,4 +1,7 @@
-import { GraphQLInputObjectType, GraphQLString } from 'graphql'
+import {
+    GraphQLInputObjectType,
+    GraphQLString
+} from 'graphql';
 
 const developerInputType = new GraphQLInputObjectType({
     name: 'DeveloperInput',
@@ -10,7 +13,7 @@ const developerInputType = new GraphQLInputObjectType({
         studio: { type: GraphQLString },
         website: { type: GraphQLString },
     // TODO
-    }
+    },
 });
 
 export default developerInputType;

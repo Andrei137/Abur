@@ -1,5 +1,10 @@
-import { GraphQLInt, GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql';
 import userType from './userType.js';
+import {
+    GraphQLInt,
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLNonNull,
+} from 'graphql';
 
 const developerType = new GraphQLObjectType({
     name: 'Developer',
@@ -13,7 +18,7 @@ const developerType = new GraphQLObjectType({
         studio: { type: new GraphQLNonNull(GraphQLString) },
         website: { type: GraphQLString },
     // TODO
-    }
+    },
 });
 
 export default developerType;
