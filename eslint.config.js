@@ -42,6 +42,12 @@ export default [
     }
   },
   {
-    ignores: ['dist/**', 'build/**'],
+    ignores: [
+      'dist/**',
+      'build/**',
+      'models',
+      'seeders',
+      'migrations',
+    ],
   }
 ];

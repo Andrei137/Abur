@@ -82,7 +82,7 @@ module.exports = {
         updatedAt: developer.updatedAt
       }
     }), {});
-    
+
     await queryInterface.bulkInsert('Developers', mockDevelopers.map((developer) => {
       return {
         id: developer.id,
@@ -103,7 +103,7 @@ module.exports = {
         updatedAt: customer.updatedAt
       }
     }), {});
-    
+
     await queryInterface.bulkInsert('Customers', mockCustomers.map((customer) => {
       return {
         id: customer.id,

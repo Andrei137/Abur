@@ -4,12 +4,12 @@ import updateDeveloperMutation from '../mutations/updateDeveloperMutation.js';
 import updateCustomerMutation from '../mutations/updateCustomerMutation.js';
 
 const mutationType = new graphql.GraphQLObjectType({
-    name: "Mutation",
-    fields: {
-        login: loginMutation,
-        updateDeveloper: updateDeveloperMutation,
-        updateCustomer: updateCustomerMutation,
-    }
+  name: 'Mutation',
+  fields: {
+    login: loginMutation,
+    updateDeveloper: updateDeveloperMutation,
+    updateCustomer: updateCustomerMutation,
+  }
 });
 
 export default mutationType;
