@@ -22,14 +22,9 @@ pnpm install
 4. Rename <kbd>.env.example</kbd> to <kbd>.env</kbd> and add your secret (for jwt)
 
 5. Create the database
-##### Windows
 ```sh
-pnpm run db:win
-```
-
-##### Linux
-```sh
-pnpm run db:linux
+pnpm run db:win     # For Windows
+pnpm run db:linux   # For Linux
 ```
 
 6. Start the server
