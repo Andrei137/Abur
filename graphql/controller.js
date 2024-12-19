@@ -1,7 +1,7 @@
 import { GraphQLSchema } from 'graphql';
 import queryType from './rootTypes/queryType.js';
-import { createHandler } from 'graphql-http/lib/use/express';
 import mutationType from './rootTypes/mutationType.js';
+import { createHandler } from 'graphql-http/lib/use/express';
 
 const schema = new GraphQLSchema({
     query: queryType,
@@ -10,7 +10,7 @@ const schema = new GraphQLSchema({
 
 const graphqlController = createHandler({
     schema,
-    context: req => ({ user_id: req.raw.user_id })
+    context: req => ({ user_id: req.raw.user_id }),
 });
 
 export default graphqlController;

@@ -1,38 +1,40 @@
 import customerType from '../types/customerType.js';
 import customerInputType from '../types/customerInputType.js';
+import { encrypt } from '../../core/services/authenticationService.js';
+import requestService from '../../core/services/requestService.js';
 import bcrypt from 'bcrypt';
 import db from '../../models/index.js';
 
+const { findUserById, findCustomerById } = requestService;
+const { updateUser, updateCustomer } = requestService;
+
 const updateCustomerMutationResolver = async (_, input, context) => {
-    const isAuthorized = !!context.user_id
-    if (!isAuthorized) {
+    if (!context.user_id) {
         return false;
     }
 
-    const user = await db.User.findOne({
-        where: { id: context.user_id }
-    });
-
-    const customer = await db.Customer.findOne({
-        where: { id: context.user_id }
-    });
+    const [user, customer] = await Promise.all([
+        findUserById(context.user_id),
+        findCustomerById(context.user_id)
+    ]);
 
     if (!user || !customer) {
         return false;
     }
 
-    const updatedUser = await user.update({
-        ...input.customer,
-        password: await bcrypt.hash(input.customer.password, 5)
-    });
-
-    const updatedCustomer = await customer.update({
-        ...input.customer
-    });
+    const [updatedUser, updatedCustomer] = await Promise.all([
+        updateUser(user, {
+            ...input.customer,
+            password: await encrypt(input.customer.password),
+        }),
+        updateCustomer(customer, {
+            ...input.customer,
+        })
+    ]);
 
     return {
         ...updatedUser.dataValues,
-        ...updatedCustomer.dataValues
+        ...updatedCustomer.dataValues,
     };
 }
 

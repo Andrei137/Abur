@@ -1,28 +1,18 @@
 import { GraphQLInt, GraphQLNonNull } from 'graphql';
 import developerType from '../types/developerType.js';
-import db from '../../models/index.js'
+import requestService from '../../core/services/requestService.js';
+
+const { findUserById, findDeveloperById } = requestService;
 
 const developerQueryResolver = async (_, { id }) => {
-    const user = await db.User.findOne({
-        where: {
-            id
-        }
-    });
+    const [user, developer] = await Promise.all([
+        findUserById(id),
+        findDeveloperById(id)
+    ]);
 
-    const developer = await db.Developer.findOne({
-        where: {
-            id
-        }
-    });
-
-    if (!user || !developer) {
-        return null;
-    }
-
-    return {
-        ...user.dataValues,
-        ...developer.dataValues
-    };
+    return user && developer
+        ? { ...user.dataValues, ...developer.dataValues }
+        : null;
 };
 
 const developerQuery = {

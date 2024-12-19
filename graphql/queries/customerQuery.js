@@ -1,28 +1,18 @@
 import { GraphQLInt, GraphQLNonNull } from 'graphql';
 import customerType from '../types/customerType.js';
-import db from '../../models/index.js'
+import requestService from '../../core/services/requestService.js';
+
+const { findUserById, findCustomerById } = requestService;
 
 const customerQueryResolver = async (_, { id }) => {
-    const user = await db.User.findOne({
-        where: {
-            id
-        }
-    });
+    const [user, customer] = await Promise.all([
+        findUserById(id),
+        findCustomerById(id)
+    ]);
 
-    const customer = await db.Customer.findOne({
-        where: {
-            id
-        }
-    });
-
-    if (!user || !customer) {
-        return null;
-    }
-
-    return {
-        ...user.dataValues,
-        ...customer.dataValues
-    };
+    return user && customer
+        ? { ...user.dataValues, ...customer.dataValues }
+        : null;
 };
 
 const customerQuery = {

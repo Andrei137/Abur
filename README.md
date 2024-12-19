@@ -19,7 +19,7 @@ cd Abur
 pnpm install
 ```
 
-4. Rename <kbd>.env.example</kbd> to <kbd>.env</kbd> and add your secret (for jwt)
+4. Rename <kbd>.env.example</kbd> to <kbd>.env</kbd> and add the missing variables
 
 5. Create the database
 ```sh
