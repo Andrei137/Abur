@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from '../../utils/config.js';
 
 const encrypt = async (password) =>
-    bcrypt.hash(password, config.SALT_ROUNDS);
+    await bcrypt.hash(password, config.SALT_ROUNDS);
 
 const validPassword = async (providedPassword, actualPassword) =>
     await bcrypt.compare(providedPassword, actualPassword);

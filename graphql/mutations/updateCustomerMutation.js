@@ -2,8 +2,6 @@ import customerType from '../types/customerType.js';
 import customerInputType from '../types/customerInputType.js';
 import { encrypt } from '../../core/services/authenticationService.js';
 import requestService from '../../core/services/requestService.js';
-import bcrypt from 'bcrypt';
-import db from '../../models/index.js';
 
 const { findUserById, findCustomerById } = requestService;
 const { updateUser, updateCustomer } = requestService;
