@@ -1,0 +1,22 @@
+meta {
+  name: LoginUser
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: https://abur.fly.dev/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  mutation LoginUser {
+    login(credentials: {
+      username: "FixBambucea"
+      password: "FixBambucea1234"
+    }) {
+      token
+    }
+  }
+}

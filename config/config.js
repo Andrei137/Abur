@@ -1,4 +1,8 @@
 export default {
+  'production': {
+    'dialect': 'sqlite',
+    'storage': 'db.sqlite'
+  },
   'development': {
     'dialect': 'sqlite',
     'storage': 'db.sqlite'

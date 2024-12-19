@@ -1,7 +1,9 @@
 # Abur
 
-## Setup
+## Deployed server
+- https://abur.fly.dev
 
+## Setup
 1. Clone the repository
 ```sh
 git clone https://github.com/Andrei137/Abur
@@ -17,7 +19,9 @@ cd Abur
 pnpm install
 ```
 
-4. Create the database
+4. Rename <kbd>.env.example</kbd> to <kbd>.env</kbd> and add your secret (for jwt)
+
+5. Create the database
 ##### Windows
 ```sh
 pnpm run db:win
@@ -28,7 +32,7 @@ pnpm run db:win
 pnpm run db:linux
 ```
 
-5. Start the server
+6. Start the server
 ```sh
 pnpm run start
 ```

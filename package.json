@@ -8,9 +8,12 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test node --test",
-    "lint": "pnpx eslint .",
     "db:win": "scripts\\refresh.bat",
-    "db:linux": "bash ./scripts/refresh.sh"
+    "db:linux": "bash ./scripts/refresh.sh",
+    "deploy": "fly deploy",
+    "deploy:open": "fly apps open",
+    "deploy:logs": "fly logs",
+    "lint": "pnpx eslint ."
   },
   "keywords": [],
   "author": "",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@faker-js/faker": "^9.3.0",
+    "@flydotio/dockerfile": "^0.5.9",
     "@stylistic/eslint-plugin-js": "^2.11.0",
     "eslint": "^9.16.0",
     "faker": "^6.6.6",
