@@ -11,8 +11,7 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       Developer.belongsTo(models.User, {
-        foreignKey: 'id',
-        targetKey: 'id'
+        foreignKey: 'id'
       });
     }
   }
@@ -22,6 +21,7 @@ export default (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Developer',
+    timestamps: false,
   });
   return Developer;
 };

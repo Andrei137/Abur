@@ -12,8 +12,7 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       User.hasOne(models.Developer, {
         foreignKey: 'id',
-        allowNull: true,
-        as: 'Developer'
+        allowNull: true
       });
     }
   }
