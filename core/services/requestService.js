@@ -1,38 +1,36 @@
 import db from '../../models/index.js';
 
-const readBy = async (model, field, value) =>
+const findBy = async (model, field, value) =>
     await db[model].findOne({
         where: {
             [field]: value
         }
     });
-const findByField = modelName => async (field, value) => await readBy(modelName, field, value);
-const findById = modelName => async id => await readBy(modelName, 'id', id);
-const update = async (entity, body) => await entity.update(body);
 
-const join = async (model1, model2) => {
-    const data = await model1.findAll({
+const findAllWithJoin = async (model, joinWith) => {
+    const data = await db[model].findAll({
         include: [{
-            model: model2,
+            model: db[joinWith],
             required: true
         }]
     });
-
-    const parsedData = data.map(d => ({
-        ...d.dataValues,
-        ...d.dataValues[model2.name].dataValues
+    return data.map(item => ({
+        ...item.dataValues,
+        ...item.dataValues[joinWith].dataValues
     }));
-
-    return parsedData;
 }
 
-const findAllDevelopers = async () => await join(db.User, db.Developer);
-const findAllCustomers = async () => await join(db.User, db.Customer);
+const findAll = async (model, joinWith) => {
+    return joinWith === null
+        ? await db[model].findAll()
+        : await findAllWithJoin(model, joinWith);
+}
 
 const generateFunctions = modelName => ({
-    [`update${modelName}`]: update,
-    [`find${modelName}ById`]: findById(modelName),
-    [`find${modelName}ByField`]: findByField(modelName),
+    [`update${modelName}`]: async (entity, body) => await entity.update(body),
+    [`find${modelName}ById`]: async id => await findBy(modelName, 'id', id),
+    [`find${modelName}ByField`]: async (field, value) => await findBy(modelName, field, value),
+    [`findAll${modelName}s`]: async (props = {})  => findAll(modelName, props.joinWith ?? null),
 });
 
 export default Object.keys(db).reduce((acc, modelName) => {
@@ -43,7 +41,4 @@ export default Object.keys(db).reduce((acc, modelName) => {
         ...acc,
         ...generateFunctions(modelName),
     };
-}, {
-    findAllDevelopers,
-    findAllCustomers
-});
+}, {});
