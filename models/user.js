@@ -14,6 +14,11 @@ export default (sequelize, DataTypes) => {
         foreignKey: 'id',
         allowNull: true
       });
+
+      User.hasOne(models.Customer, {
+        foreignKey: 'id',
+        allowNull: true
+      });
     }
   }
   User.init({
