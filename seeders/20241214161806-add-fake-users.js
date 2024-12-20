@@ -87,9 +87,7 @@ module.exports = {
       return {
         id: developer.id,
         studio: developer.studio,
-        website: developer.website,
-        createdAt: developer.createdAt,
-        updatedAt: developer.updatedAt
+        website: developer.website
       }
     }), {});
 
@@ -108,9 +106,7 @@ module.exports = {
       return {
         id: customer.id,
         firstName: customer.firstName,
-        lastName: customer.lastName,
-        createdAt: customer.createdAt,
-        updatedAt: customer.updatedAt
+        lastName: customer.lastName
       }
     }), {});
 

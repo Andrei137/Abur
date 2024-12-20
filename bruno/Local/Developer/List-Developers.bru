@@ -1,7 +1,7 @@
 meta {
-  name: Get-Developer
+  name: List-Developers
   type: graphql
-  seq: 1
+  seq: 3
 }
 
 post {
@@ -11,13 +11,13 @@ post {
 }
 
 body:graphql {
-  query GetDeveloper {
-    developer(id: 2) {
+  query ListDevelopers {
+    developers {
       id
       username
       password
       email
-  
+      
       studio
       website
     }

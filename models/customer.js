@@ -19,6 +19,7 @@ export default (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Customer',
+    timestamps: false,
   });
   return Customer;
 };

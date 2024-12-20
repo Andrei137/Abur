@@ -10,6 +10,24 @@ const findByField = modelName => async (field, value) => await readBy(modelName,
 const findById = modelName => async id => await readBy(modelName, 'id', id);
 const update = async (entity, body) => await entity.update(body);
 
+const join = async (model1, model2) => {
+    const data = await model1.findAll({
+        include: [{
+            model: model2,
+            required: true
+        }]
+    });
+
+    const parsedData = data.map(d => ({
+        ...d.dataValues,
+        ...d.dataValues[model2.name].dataValues
+    }));
+
+    return parsedData;
+}
+
+const findAllDevelopers = async () => await join(db.User, db.Developer);
+
 const generateFunctions = modelName => ({
     [`update${modelName}`]: update,
     [`find${modelName}ById`]: findById(modelName),
@@ -24,4 +42,6 @@ export default Object.keys(db).reduce((acc, modelName) => {
         ...acc,
         ...generateFunctions(modelName),
     };
-}, {});
+}, {
+    findAllDevelopers
+});
