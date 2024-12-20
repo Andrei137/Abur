@@ -5,8 +5,7 @@ import graphqlController from './graphql/controller.js';
 
 const app = express();
 app.use(express.json());
-app.use(middleware.requestLogger);
-app.get('/health', (req, res) => res.send('Server is running'));
+app.get('/health', (_, res) => res.send('Server is running'));
 app.all('/graphql', middleware.userExtractor, graphqlController);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

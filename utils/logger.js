@@ -1,18 +1,41 @@
-import config from './config.js';
+import winston from 'winston';
 
-const info = (...params) => {
-    if (config.NODE_ENV !== 'test') {
-        console.log(...params);
-    }
-};
+const format = query => {
+    const sqlKeywords = [
+        'SELECT',
+        'FROM',
+        'WHERE',
+        'UPDATE',
+        'INSERT',
+        'DELETE',
+        'JOIN',
+        'ON',
+        'GROUP',
+        'ORDER',
+        'BY',
+    ];
+    return query.replace(
+        new RegExp(`\\b(${sqlKeywords.join('|')})\\b`, 'g'),
+        '\n$&'
+    );
+}
 
-const error = (...params) => {
-    if (config.NODE_ENV !== 'test') {
-        console.error(...params);
-    }
-};
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.colorize(),
+        winston.format.printf(({ timestamp, level, message }) =>
+            `\n${timestamp} [${level}]\n` +
+        '===============================\n' +
+        'Running the query\n' +
+        `${format(message)}\n` +
+        '==============================='
+        )
+    ),
+    transports: [
+        new winston.transports.Console({ level: 'info' })
+    ],
+});
 
-export default {
-    info,
-    error
-};
+export default logger;

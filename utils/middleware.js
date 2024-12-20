@@ -1,23 +1,11 @@
-import morgan from 'morgan';
-import jwt from 'jsonwebtoken';
-import logger from './logger.js';
-import config from './config.js';
+import { verifyToken } from '../core/services/authenticationService.js';
 
-const requestLogger = config.NODE_ENV !== 'test'
-    ? morgan(':method :url :status - :response-time ms')
-    : (req, res, next) => next();
-
-const unknownEndpoint = (req, res) => {
+const unknownEndpoint = (_, res) => {
     res.status(404).json({ error: 'unknown endpoint' });
 };
 
-const errorHandler = (error, req, res, next) => {
-    logger.error(error.message);
-
-    if (error.name === 'CastError') {
-        return res.status(400).json({ error: 'Malformatted id' });
-    }
-    else if (error.name === 'ValidationError') {
+const errorHandler = (error, _, res, next) => {
+    if (error.name === 'ValidationError') {
         return res.status(400).json({ error: error.message })
     }
     else if (error.name ===  'JsonWebTokenError') {
@@ -30,21 +18,15 @@ const errorHandler = (error, req, res, next) => {
     next(error);
 };
 
-const userExtractor = async (req, res, next) => {
+const userExtractor = async (req, _, next) => {
     const token = req.headers.authorization?.replace('Bearer ', '');
-    if (!token) {
-        next();
-        return;
+    if (token) {
+        req.user_id = verifyToken(token).user_id;
     }
-
-    const decodedToken = jwt.verify(token, config.SECRET);
-    req.user_id = decodedToken.user_id;
-
     next();
 };
 
 export default {
-    requestLogger,
     unknownEndpoint,
     errorHandler,
     userExtractor

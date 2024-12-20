@@ -13,7 +13,10 @@ const getToken = async (user, actualPassword) =>
         ? jwt.sign({ user_id: user.user_id }, config.SECRET)
         : null;
 
+const verifyToken = token => jwt.verify(token, config.SECRET);
+
 export {
     encrypt,
     getToken,
+    verifyToken
 };

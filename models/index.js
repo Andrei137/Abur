@@ -6,6 +6,7 @@ import Sequelize from 'sequelize';
 import process from 'process';
 import { pathToFileURL } from 'url';
 import config from '../config/config.js';
+import logger from '../utils/logger.js';
 
 const __dirname = import.meta.dirname;
 const env = process.env.NODE_ENV || 'development';
@@ -13,9 +14,13 @@ const env = process.env.NODE_ENV || 'development';
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config[env]);
-} else {
+}
+else {
   sequelize = new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
 }
+sequelize.options.logging = (msg) => {
+  logger.info(msg.replace('Executing (default): ', ''));
+};
 
 const models = await Promise.all(fs
   .readdirSync(__dirname)
