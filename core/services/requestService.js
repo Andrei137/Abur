@@ -27,6 +27,7 @@ const join = async (model1, model2) => {
 }
 
 const findAllDevelopers = async () => await join(db.User, db.Developer);
+const findAllCustomers = async () => await join(db.User, db.Customer);
 
 const generateFunctions = modelName => ({
     [`update${modelName}`]: update,
@@ -43,5 +44,6 @@ export default Object.keys(db).reduce((acc, modelName) => {
         ...generateFunctions(modelName),
     };
 }, {
-    findAllDevelopers
+    findAllDevelopers,
+    findAllCustomers
 });

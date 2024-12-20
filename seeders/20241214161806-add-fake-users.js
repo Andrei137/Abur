@@ -53,6 +53,17 @@ module.exports = {
 
         firstName: 'Bambucea',
         lastName: 'Fix'
+      },
+      {
+        id: 4,
+        username: 'FixBambucea-2',
+        password: await bcrypt.hash('FixBambucea1234', 5),
+        email: 'FixBambucea-2@gmail.com',
+        createdAt: Date(),
+        updatedAt: Date(),
+
+        firstName: 'Bambucea-2',
+        lastName: 'Fix'
       }
     ];
 
