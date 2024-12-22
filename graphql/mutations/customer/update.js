@@ -1,7 +1,7 @@
-import customerType from '../types/customerType.js';
-import customerInputType from '../types/customerInputType.js';
-import { encrypt } from '../../core/services/authenticationService.js';
-import requestService from '../../core/services/requestService.js';
+import requestService from '@services/request.js';
+import customerType from '@types/entity/customer.js';
+import { encrypt } from '@services/authentication.js';
+import customerInputType from '@types/input/customer.js';
 
 const { findUserById, findCustomerById } = requestService;
 const { updateUser, updateCustomer } = requestService;

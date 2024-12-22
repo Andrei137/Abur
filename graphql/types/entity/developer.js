@@ -1,4 +1,4 @@
-import userType from './userType.js';
+import userType from './user.js';
 import {
     GraphQLInt,
     GraphQLObjectType,

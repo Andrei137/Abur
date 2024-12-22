@@ -1,4 +1,4 @@
-import { verifyToken } from '../core/services/authenticationService.js';
+import { verifyToken } from '@services/authentication.js';
 
 const unknownEndpoint = (_, res) => {
     res.status(404).json({ error: 'unknown endpoint' });

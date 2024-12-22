@@ -1,7 +1,7 @@
 import graphql from 'graphql';
-import loginMutation from '../mutations/loginMutation.js';
-import updateCustomerMutation from '../mutations/updateCustomerMutation.js';
-import updateDeveloperMutation from '../mutations/updateDeveloperMutation.js';
+import loginMutation from '@mutations/auth/login.js';
+import updateCustomerMutation from '@mutations/customer/update.js';
+import updateDeveloperMutation from '@mutations/developer/update.js';
 
 const mutationType = new graphql.GraphQLObjectType({
     name: 'Mutation',

@@ -1,4 +1,4 @@
-import db from '../../models/index.js';
+import db from '@models/index.js';
 
 const findBy = async (model, field, value) =>
     await db[model].findOne({

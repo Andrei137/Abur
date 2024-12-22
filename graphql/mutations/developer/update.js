@@ -1,7 +1,7 @@
-import developerType from '../types/developerType.js';
-import developerInputType from '../types/developerInputType.js';
-import { encrypt } from '../../core/services/authenticationService.js';
-import requestService from '../../core/services/requestService.js';
+import requestService from '@services/request.js';
+import { encrypt } from '@services/authentication.js';
+import developerType from '@types/entity/developer.js';
+import developerInputType from '@types/input/developer.js';
 
 const { findUserById, findDeveloperById } = requestService;
 const { updateUser, updateDeveloper } = requestService;

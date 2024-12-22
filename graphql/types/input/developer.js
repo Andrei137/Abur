@@ -1,6 +1,6 @@
 import {
     GraphQLInputObjectType,
-    GraphQLString
+    GraphQLString,
 } from 'graphql';
 
 const developerInputType = new GraphQLInputObjectType({

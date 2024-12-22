@@ -1,8 +1,8 @@
 import { GraphQLObjectType } from 'graphql';
-import developerQuery from '../queries/developerQuery.js';
-import developersQuery from '../queries/developersQuery.js';
-import customerQuery from '../queries/customerQuery.js';
-import customersQuery from '../queries/customersQuery.js';
+import customerQuery from '@queries/customer/single.js';
+import customersQuery from '@queries/customer/list.js';
+import developerQuery from '@queries/developer/single.js';
+import developersQuery from '@queries/developer/list.js';
 
 const queryType = new GraphQLObjectType({
     name: 'Query',

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import config from '../../utils/config.js';
+import config from '@utils/config.js';
 
 const encrypt = async (password) =>
     await bcrypt.hash(password, config.SALT_ROUNDS);

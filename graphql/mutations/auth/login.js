@@ -1,7 +1,7 @@
-import loginInputType from '../types/loginInputType.js';
-import loginResultType from '../types/loginResultType.js';
-import requestService from '../../core/services/requestService.js';
-import { getToken } from '../../core/services/authenticationService.js';
+import requestService from '@services/request.js';
+import loginInputType from '@types/login/input.js';
+import loginResultType from '@types/login/result.js';
+import { getToken } from '@services/authentication.js';
 
 const { findUserByField } = requestService;
 

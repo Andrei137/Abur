@@ -1,6 +1,6 @@
 import { GraphQLList } from 'graphql';
-import customerType from '../types/customerType.js';
-import requestService from '../../core/services/requestService.js';
+import requestService from '@services/request.js';
+import customerType from '@types/entity/customer.js';
 
 const { findAllCustomers } = requestService;
 

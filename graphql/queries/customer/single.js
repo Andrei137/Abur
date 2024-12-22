@@ -1,6 +1,6 @@
+import requestService from '@services/request.js';
+import customerType from '@types/entity/customer.js';
 import { GraphQLInt, GraphQLNonNull } from 'graphql';
-import customerType from '../types/customerType.js';
-import requestService from '../../core/services/requestService.js';
 
 const { findUserById, findCustomerById } = requestService;
 
