@@ -1,25 +1,25 @@
 meta {
-  name: List-Customers
+  name: Read All
   type: graphql
-  seq: 3
+  seq: 2
 }
 
 post {
-  url: http://localhost:3001/graphql
+  url: https://abur.fly.dev/graphql
   body: graphql
   auth: none
 }
 
 body:graphql {
-  query ListCustomers {
-    customers {
+  query ListDevelopers {
+    developers {
       id
       username
       password
       email
       
-      firstName
-      lastName
+      studio
+      website
     }
   }
 }

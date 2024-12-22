@@ -1,7 +1,7 @@
 meta {
-  name: List-Customers
+  name: Read
   type: graphql
-  seq: 3
+  seq: 1
 }
 
 post {
@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  query ListCustomers {
-    customers {
+  query GetCustomer {
+    customer(id: 3) {
       id
       username
       password

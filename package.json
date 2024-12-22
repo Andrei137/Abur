@@ -22,13 +22,20 @@
   },
   "aliases": {
     "@root": ".",
-    "@utils": "utils",
+    "@core": "core",
     "@models": "models",
     "@graphql": "graphql",
     "@types": "graphql/types",
     "@services": "core/services",
-    "@queries": "graphql/queries",
-    "@mutations": "graphql/mutations"
+    "@modules": "core/module.js",
+    "@middleware": "core/middleware/index.js",
+    "@auth-mutations": "graphql/mutations/auth/index.js",
+    "@game-queries": "graphql/queries/game/index.js",
+    "@game-mutations": "graphql/mutations/game/index.js",
+    "@customer-queries": "graphql/queries/customer/index.js",
+    "@customer-mutations": "graphql/mutations/customer/index.js",
+    "@developer-queries": "graphql/queries/developer/index.js",
+    "@developer-mutations": "graphql/mutations/developer/index.js"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +48,7 @@
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
     "graphql": "^16.9.0",
+    "graphql-date": "^1.0.3",
     "graphql-http": "^1.22.3",
     "jsonwebtoken": "^9.0.2",
     "sequelize": "^6.37.5",
@@ -55,7 +63,7 @@
     "eslint": "^9.16.0",
     "faker": "^6.6.6",
     "globals": "^15.13.0",
-    "nodemon": "^3.1.7",
+    "nodemon": "^3.1.9",
     "sequelize-cli": "^6.6.2"
   }
 }

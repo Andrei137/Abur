@@ -29,6 +29,9 @@ importers:
       graphql:
         specifier: ^16.9.0
         version: 16.9.0
+      graphql-date:
+        specifier: ^1.0.3
+        version: 1.0.3(graphql@16.9.0)
       graphql-http:
         specifier: ^1.22.3
         version: 1.22.3(graphql@16.9.0)
@@ -67,8 +70,8 @@ importers:
         specifier: ^15.13.0
         version: 15.13.0
       nodemon:
-        specifier: ^3.1.7
-        version: 3.1.7
+        specifier: ^3.1.9
+        version: 3.1.9
       sequelize-cli:
         specifier: ^6.6.2
         version: 6.6.2
@@ -276,6 +279,9 @@ packages:
 
   array-flatten@1.1.1:
     resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
+
+  assert-err@1.1.0:
+    resolution: {integrity: sha512-dEOsK5ngosvrne66QiI3D3nsvTesIMhiiH0tYC5sISAFFzvZza0PFxWWanNcoBX90McFTRsebVkR0ApXxtkGqA==}
 
   async@3.2.6:
     resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
@@ -588,6 +594,10 @@ packages:
   escape-html@1.0.3:
     resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
 
+  escape-string-regexp@1.0.5:
+    resolution: {integrity: sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==}
+    engines: {node: '>=0.8.0'}
+
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
@@ -796,6 +806,11 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  graphql-date@1.0.3:
+    resolution: {integrity: sha512-qRcdjyenXGby5PMSn8GqDY/jNm5jb8FJ+DoKprvnDz2pcFGIwPmPFzRh+83cr+6QD/mHK4pVE06kR4JS/aVN/A==}
+    peerDependencies:
+      graphql: '>=0.5.0'
 
   graphql-http@1.22.3:
     resolution: {integrity: sha512-sgUz/2DZt+QvY6WrpAsAXUvhnIkp2eX9jN78V8DAtFcpZi/nfDrzDt2byYjyoJzRcWuqhE0K63g1QMewt73U6A==}
@@ -1194,8 +1209,8 @@ packages:
     engines: {node: '>= 10.12.0'}
     hasBin: true
 
-  nodemon@3.1.7:
-    resolution: {integrity: sha512-hLj7fuMow6f0lbB0cD14Lz2xNjwsyruH251Pk4t/yIitCFJbmY1myuLlHm/q06aST4jg6EgAh74PIBBrRqpVAQ==}
+  nodemon@3.1.9:
+    resolution: {integrity: sha512-hdr1oIb2p6ZSxu3PB2JWWYS7ZQ0qvaZsc3hK8DR8f02kRzc8rjYmxAIvdz+aYC+8F2IjNaB7HMcSDg8nQpJxyg==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1948,6 +1963,11 @@ snapshots:
 
   array-flatten@1.1.1: {}
 
+  assert-err@1.1.0:
+    dependencies:
+      escape-string-regexp: 1.0.5
+      object-assign: 4.1.1
+
   async@3.2.6: {}
 
   at-least-node@1.0.0: {}
@@ -2287,6 +2307,8 @@ snapshots:
 
   escape-html@1.0.3: {}
 
+  escape-string-regexp@1.0.5: {}
+
   escape-string-regexp@4.0.0: {}
 
   eslint-scope@8.2.0:
@@ -2568,6 +2590,11 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
+
+  graphql-date@1.0.3(graphql@16.9.0):
+    dependencies:
+      assert-err: 1.1.0
+      graphql: 16.9.0
 
   graphql-http@1.22.3(graphql@16.9.0):
     dependencies:
@@ -2985,7 +3012,7 @@ snapshots:
       - supports-color
     optional: true
 
-  nodemon@3.1.7:
+  nodemon@3.1.9:
     dependencies:
       chokidar: 3.6.0
       debug: 4.4.0(supports-color@5.5.0)
