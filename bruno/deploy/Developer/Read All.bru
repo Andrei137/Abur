@@ -1,0 +1,25 @@
+meta {
+  name: Read All
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: https://abur.fly.dev/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query ListDevelopers {
+    developers {
+      id
+      username
+      password
+      email
+      
+      studio
+      website
+    }
+  }
+}

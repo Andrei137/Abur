@@ -1,0 +1,44 @@
+meta {
+  name: Create
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: http://localhost:3001/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MzQ1NjI3NzJ9.5MzuZuGe4blUu4rCvdgDvmEszJw0gmcDNXR0QSa-lJU
+}
+
+body:graphql {
+  mutation CreateGame($game: GameInput!, $developer: String) {
+    createGame(game: $game, developer: $developer) {
+      id
+      name
+      price
+      releaseDate
+      developer {
+        username
+        email
+  
+        studio
+        website
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "game": {
+      "name": "God of War Ragnarok",
+      "price": 59.99,
+      "releaseDate": "2024-09-19T00:00:00.000Z"
+    },
+    "developer": "PlayStationStudios"
+  }
+}

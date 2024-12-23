@@ -1,15 +1,15 @@
-import graphql from 'graphql';
-import loginMutation from '../mutations/loginMutation.js';
-import updateCustomerMutation from '../mutations/updateCustomerMutation.js';
-import updateDeveloperMutation from '../mutations/updateDeveloperMutation.js';
+import { GraphQLObjectType } from 'graphql';
+import authMutations from '@auth-mutations';
+import gameMutations from '@game-mutations';
+import customerMutations from '@customer-mutations';
+import developerMutations from '@developer-mutations';
 
-const mutationType = new graphql.GraphQLObjectType({
+export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        login: loginMutation,
-        updateDeveloper: updateDeveloperMutation,
-        updateCustomer: updateCustomerMutation,
+        ...authMutations,
+        ...gameMutations,
+        ...customerMutations,
+        ...developerMutations,
     },
 });
-
-export default mutationType;

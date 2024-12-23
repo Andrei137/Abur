@@ -1,17 +1,13 @@
 import { GraphQLObjectType } from 'graphql';
-import developerQuery from '../queries/developerQuery.js';
-import developersQuery from '../queries/developersQuery.js';
-import customerQuery from '../queries/customerQuery.js';
-import customersQuery from '../queries/customersQuery.js';
+import gameQueries from '@game-queries';
+import customerQueries from '@customer-queries';
+import developerQueries from '@developer-queries';
 
-const queryType = new GraphQLObjectType({
+export default new GraphQLObjectType({
     name: 'Query',
     fields: {
-        developer: developerQuery,
-        developers: developersQuery,
-        customer: customerQuery,
-        customers: customersQuery,
+        ...gameQueries,
+        ...customerQueries,
+        ...developerQueries,
     },
 });
-
-export default queryType;

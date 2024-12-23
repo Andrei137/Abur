@@ -3,26 +3,26 @@
 import { Model } from 'sequelize';
 
 export default (sequelize, DataTypes) => {
-  class Developer extends Model {
+  class Game extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Developer.belongsTo(models.User, {
-        foreignKey: 'id'
+      Game.belongsTo(models.Developer, {
+        foreignKey: 'developerId',
       });
-      Developer.hasMany(models.Game)
     }
   }
-  Developer.init({
-    studio: DataTypes.STRING,
-    website: DataTypes.STRING
+  Game.init({
+    name: DataTypes.STRING,
+    price: DataTypes.DOUBLE,
+    releaseDate: DataTypes.DATE,
+    developerId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Developer',
-    timestamps: false,
+    modelName: 'Game',
   });
-  return Developer;
+  return Game;
 };

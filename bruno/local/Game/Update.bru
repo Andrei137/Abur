@@ -1,0 +1,41 @@
+meta {
+  name: Update
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: http://localhost:3001/graphql
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MzQ1NjI3NzJ9.5MzuZuGe4blUu4rCvdgDvmEszJw0gmcDNXR0QSa-lJU
+}
+
+body:graphql {
+  mutation UpdateGame($game: GameInput!) {
+    updateGame(id: 1, game: $game) {
+      id
+      name
+      price
+      releaseDate
+      developer {
+        username
+        email
+  
+        studio
+        website
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "game": {
+      "name": "Life is Strange 2"
+    }
+  }
+}

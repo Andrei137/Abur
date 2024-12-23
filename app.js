@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
-import middleware from './utils/middleware.js';
-import graphqlController from './graphql/controller.js';
+import middleware from '@middleware';
+import graphqlController from '@graphql/controller.js';
 
 const app = express();
 app.use(express.json());
