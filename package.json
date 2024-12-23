@@ -28,6 +28,7 @@
     "@types": "graphql/types",
     "@services": "core/services",
     "@modules": "core/module.js",
+    "@config": "config/config.js",
     "@middleware": "core/middleware/index.js",
     "@auth-mutations": "graphql/mutations/auth/index.js",
     "@game-queries": "graphql/queries/game/index.js",
