@@ -1,0 +1,29 @@
+meta {
+  name: Read All
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: http://localhost:3001/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query ListGames {
+    games {
+      id
+      name
+      releaseDate
+      price
+      developer {
+        username
+        email
+  
+        studio
+        website
+      }
+    }
+  }
+}

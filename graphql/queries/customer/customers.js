@@ -4,11 +4,13 @@ import customerType from '@types/entity/customer.js';
 
 const { findAllCustomers } = requestService;
 
-const customersQueryResolver = async () => await findAllCustomers({ joinWith: 'User' });
+const customersQueryResolver = async () =>
+    await findAllCustomers({
+        joinWith: 'User'
+    });
 
-const customersQuery = {
+export default {
     type: new GraphQLList(customerType),
     resolve: customersQueryResolver,
 };
 
-export default customersQuery;

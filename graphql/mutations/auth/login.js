@@ -5,15 +5,12 @@ import { getToken } from '@services/authentication.js';
 
 const { findUserByField } = requestService;
 
-const loginMutationResolver = async (_, { credentials }) => {
-    const user = await findUserByField('username', credentials.username);
+const loginMutationResolver = async (_, { credentials }) => getToken(
+    await findUserByField('username', credentials.username),
+    credentials.password,
+);
 
-    return {
-        token: getToken(user, credentials.password)
-    };
-}
-
-const loginMutation = {
+export default {
     type: loginResultType,
     args: {
         credentials: { type: loginInputType },
@@ -21,4 +18,3 @@ const loginMutation = {
     resolve: loginMutationResolver,
 };
 
-export default loginMutation;

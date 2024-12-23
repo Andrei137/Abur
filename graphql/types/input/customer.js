@@ -1,19 +1,15 @@
 import {
-    GraphQLInputObjectType,
     GraphQLString,
+    GraphQLInputObjectType,
 } from 'graphql';
 
-const customerInputType = new GraphQLInputObjectType({
+export default new GraphQLInputObjectType({
     name: 'CustomerInput',
     fields: {
-        username: { type: GraphQLString },
-        password: { type: GraphQLString },
-        email: { type: GraphQLString },
-
+        username : { type: GraphQLString },
+        password : { type: GraphQLString },
+        email    : { type: GraphQLString },
         firstName: { type: GraphQLString },
-        lastName: { type: GraphQLString },
-    // TODO
+        lastName : { type: GraphQLString },
     },
 });
-
-export default customerInputType;

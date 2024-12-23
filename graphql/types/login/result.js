@@ -1,13 +1,11 @@
 import {
-    GraphQLObjectType,
     GraphQLString,
+    GraphQLObjectType,
 } from 'graphql';
 
-const loginResultType = new GraphQLObjectType({
+export default new GraphQLObjectType({
     name: 'LoginResult',
     fields: {
         token: { type: GraphQLString },
     },
 });
-
-export default loginResultType;

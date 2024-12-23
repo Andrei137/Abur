@@ -1,15 +1,13 @@
 import {
-    GraphQLInputObjectType,
     GraphQLString,
     GraphQLNonNull,
+    GraphQLInputObjectType,
 } from 'graphql';
 
-const loginInputType = new GraphQLInputObjectType({
+export default new GraphQLInputObjectType({
     name: 'LoginInput',
     fields: {
         username: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
     },
 });
-
-export default loginInputType;

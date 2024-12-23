@@ -1,18 +1,16 @@
 import {
     GraphQLInt,
-    GraphQLInterfaceType,
     GraphQLString,
     GraphQLNonNull,
+    GraphQLInterfaceType,
 } from 'graphql';
 
-const userType = new GraphQLInterfaceType({
+export default new GraphQLInterfaceType({
     name: 'User',
     fields: {
-        id: { type: new GraphQLNonNull(GraphQLInt) },
+        id      : { type: new GraphQLNonNull(GraphQLInt) },
         username: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: new GraphQLNonNull(GraphQLString) },
+        email   : { type: new GraphQLNonNull(GraphQLString) },
     },
 });
-
-export default userType;

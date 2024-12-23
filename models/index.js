@@ -2,11 +2,11 @@
 
 import fs from 'fs';
 import path from 'path';
-import Sequelize from 'sequelize';
 import process from 'process';
+import Sequelize from 'sequelize';
 import { pathToFileURL } from 'url';
+import logger from '@core/logger.js';
 import config from '../config/config.js';
-import logger from '../utils/logger.js';
 
 const __dirname = import.meta.dirname;
 const env = process.env.NODE_ENV || 'development';

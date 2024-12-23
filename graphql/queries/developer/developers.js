@@ -4,11 +4,13 @@ import developerType from '@types/entity/developer.js';
 
 const { findAllDevelopers } = requestService;
 
-const developersQueryResolver = async () => await findAllDevelopers({ joinWith: 'User' });
+const developersQueryResolver = async () =>
+    await findAllDevelopers({
+        joinWith: 'User'
+    });
 
-const developersQuery = {
+export default {
     type: new GraphQLList(developerType),
     resolve: developersQueryResolver,
 };
 
-export default developersQuery;
