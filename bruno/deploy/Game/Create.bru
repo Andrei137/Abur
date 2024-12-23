@@ -1,7 +1,7 @@
 meta {
-  name: Update
+  name: Create
   type: graphql
-  seq: 4
+  seq: 1
 }
 
 post {
@@ -15,8 +15,8 @@ headers {
 }
 
 body:graphql {
-  mutation UpdateGame($game: GameInput!) {
-    updateGame(id: 1, game: $game) {
+  mutation CreateGame($game: GameInput!, $developer: String) {
+    createGame(game: $game, developer: $developer) {
       id
       name
       price
@@ -35,7 +35,10 @@ body:graphql {
 body:graphql:vars {
   {
     "game": {
-      "name": "Life is Strange 2"
-    }
+      "name": "God of War Ragnarok",
+      "price": 59.99,
+      "releaseDate": "2024-09-19T00:00:00.000Z"
+    },
+    "developer": "PlayStationStudios"
   }
 }

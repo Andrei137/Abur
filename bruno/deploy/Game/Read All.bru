@@ -1,7 +1,7 @@
 meta {
   name: Read All
   type: graphql
-  seq: 2
+  seq: 3
 }
 
 post {
@@ -11,15 +11,19 @@ post {
 }
 
 body:graphql {
-  query ListCustomers {
-    customers {
+  query ListGames {
+    games {
       id
-      username
-      password
-      email
-      
-      firstName
-      lastName
+      name
+      releaseDate
+      price
+      developer {
+        username
+        email
+  
+        studio
+        website
+      }
     }
   }
 }

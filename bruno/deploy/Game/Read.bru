@@ -1,7 +1,7 @@
 meta {
   name: Read
   type: graphql
-  seq: 1
+  seq: 2
 }
 
 post {
@@ -11,15 +11,19 @@ post {
 }
 
 body:graphql {
-  query GetCustomer {
-    customer(id: 3) {
+  query GetGame {
+    game(id: 1) {
       id
-      username
-      password
-      email
-      
-      firstName
-      lastName
+      name
+      price
+      releaseDate
+    	developer {
+        username
+        email
+  
+        studio
+        website
+      }
     }
   }
 }
