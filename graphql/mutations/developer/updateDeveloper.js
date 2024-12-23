@@ -13,9 +13,7 @@ const updateDeveloperMutationResolver = async (_, { developer }, { user_id }) =>
             ...developer,
             password: await encrypt(developer.password),
         }),
-        updateDeveloper(user_id, {
-            ...developer,
-        })
+        updateDeveloper(user_id, developer)
     ]);
 
     return {

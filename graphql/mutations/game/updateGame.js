@@ -4,24 +4,18 @@ import gameInputType from '@types/input/game.js';
 import requestService from '@services/request.js';
 import { encrypt } from '@services/authentication.js';
 
-const { findGameById, updateGame } = requestService;
+const { updateGame } = requestService;
 
 const updateGameMutationResolver = async (_, { id, game }, { user_id }) => {
     if (!user_id) return false;
 
-    const updatedGame = await updateGame(id, {
-        ...game,
-    })
-
-    return {
-        ...updatedGame.dataValues,
-    };
+    return (await updateGame(id, game)).dataValues;
 }
 
 export default {
     type: gameType,
     args: {
-        id: { type: GraphQLInt },
+        id  : { type: GraphQLInt },
         game: { type: gameInputType },
     },
     resolve: updateGameMutationResolver,

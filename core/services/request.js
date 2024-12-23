@@ -35,7 +35,9 @@ const findSomeByField = async (model, field, value, joinWith) =>
     await findQuery(model, joinWith, field, value, false);
 
 const findAll = async (model, joinWith) =>
-    await findQuery(model, joinWith)
+    await findQuery(model, joinWith);
+
+const create = async (model, body) => spreadData(await db[model].create(body));
 
 const updateById = async (model, id, body) => {
     const where = { id };
@@ -46,6 +48,8 @@ const updateById = async (model, id, body) => {
     return await entity.update(body);
 }
 
+const deleteById = async (model, id) => await db[model].destroy({ where: { id } })
+
 const generateFunctions = model => ({
     [`find${model}ById`]: async (id, props = {}) =>
         await findByField(model, 'id', id, props?.joinWith),
@@ -55,8 +59,12 @@ const generateFunctions = model => ({
         await findSomeByField(model, field, value, props?.joinWith),
     [`findAll${model}s`]: async (props = {}) =>
         await findAll(model, props?.joinWith),
+    [`create${model}`]: async body =>
+        await create(model, body),
     [`update${model}`]: async (id, body) =>
         await updateById(model, id, body),
+    [`delete${model}`]: async id =>
+        await deleteById(model, id),
 });
 
 export default Object.keys(db).reduce((acc, model) => {

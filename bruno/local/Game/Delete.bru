@@ -1,7 +1,7 @@
 meta {
-  name: Update
+  name: Delete
   type: graphql
-  seq: 4
+  seq: 5
 }
 
 post {
@@ -15,20 +15,8 @@ headers {
 }
 
 body:graphql {
-  mutation UpdateGame($game: GameInput!) {
-    updateGame(id: 1, game: $game) {
-      id
-      name
-      price
-      releaseDate
-      developer {
-        username
-        email
-  
-        studio
-        website
-      }
-    }
+  mutation DeleteGame {
+    deleteGame(id: 4)
   }
 }
 

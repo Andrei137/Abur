@@ -13,9 +13,7 @@ const updateCustomerMutationResolver = async (_, { customer }, { user_id }) => {
             ...customer,
             password: await encrypt(customer.password),
         }),
-        updateCustomer(user_id, {
-            ...customer,
-        })
+        updateCustomer(user_id, customer)
     ]);
 
     return {
