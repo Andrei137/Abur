@@ -10,7 +10,8 @@ const createGameMutationResolver = async (_, { game, developer }, { user_id }) =
 
     return await createGame({
         ...game,
-        developerId: (await findUserByField('username', developer)).id
+        developerId: (await findUserByField('username', developer)).id,
+        type: 'game',
     });
 }
 

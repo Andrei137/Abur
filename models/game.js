@@ -19,7 +19,8 @@ export default (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     price: DataTypes.DOUBLE,
     releaseDate: DataTypes.DATE,
-    developerId: DataTypes.INTEGER
+    developerId: DataTypes.INTEGER,
+    type: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Game',
