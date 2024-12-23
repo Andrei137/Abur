@@ -1,12 +1,11 @@
 import db from '@models/index.js';
 
-const spreadData = (data, joinWith) =>
-    data
-        ? {
-            ...data.dataValues,
-            ...(joinWith ? data.dataValues[joinWith].dataValues : {})
-          }
-        : null;
+const spreadData = (data, joinWith) => data
+    ? {
+        ...data.dataValues,
+        ...(joinWith ? data.dataValues[joinWith].dataValues : {})
+    }
+    : null;
 
 const findQuery = async (model, joinWith, field = null, value = null, isSingle = false) => {
     const where = field !== null && value !== null
@@ -16,12 +15,13 @@ const findQuery = async (model, joinWith, field = null, value = null, isSingle =
         ? [{
             model: db[joinWith],
             required: true,
-          }]
+        }]
         : [];
+    const params = { where, include };
 
     const result = isSingle
-        ? await db[model].findOne({where, include})
-        : await db[model].findAll({where, include});
+        ? await db[model].findOne(params)
+        : await db[model].findAll(params);
 
     return isSingle
         ? spreadData(result, joinWith)

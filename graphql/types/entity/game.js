@@ -15,8 +15,8 @@ export default new GraphQLObjectType({
     name: 'Game',
     fields: () => ({
         id         : { type: new GraphQLNonNull(GraphQLInt) },
-        name       : { type: new GraphQLNonNull(GraphQLString)},
-        price      : { type: new GraphQLNonNull(GraphQLFloat)},
+        name       : { type: new GraphQLNonNull(GraphQLString) },
+        price      : { type: new GraphQLNonNull(GraphQLFloat) },
         releaseDate: { type: GraphQLDate },
         developer  : {
             type   : developerType,

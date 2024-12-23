@@ -10,6 +10,6 @@ export default new GraphQLInputObjectType({
     fields: {
         name       : { type: GraphQLString },
         price      : { type: GraphQLFloat },
-        releaseDate: { type: GraphQLString },
+        releaseDate: { type: GraphQLDate },
     },
 });

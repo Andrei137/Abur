@@ -2,7 +2,6 @@ import { GraphQLInt } from 'graphql';
 import gameType from '@types/entity/game.js';
 import gameInputType from '@types/input/game.js';
 import requestService from '@services/request.js';
-import { encrypt } from '@services/authentication.js';
 
 const { updateGame } = requestService;
 
