@@ -5,14 +5,18 @@ import {
     GraphQLBoolean
 } from 'graphql';
 
-const { deleteGame } = requestService;
+const {
+    deleteGame,
+    deleteDLCsByField,
+} = requestService;
 
 const deleteGameMutationResolver = async (_, { id }, { userId }) => {
     await validateGame({
         id,
         userId,
     });
-    return await deleteGame(id)
+    await deleteDLCsByField('baseGameId', id);
+    return await deleteGame(id);
 };
 
 export default {

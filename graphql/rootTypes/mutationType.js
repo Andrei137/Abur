@@ -4,6 +4,9 @@ import dlcMutations from '@dlc-mutations';
 import gameMutations from '@game-mutations';
 import customerMutations from '@customer-mutations';
 import developerMutations from '@developer-mutations';
+import requestService from '@services/request.js';
+
+const { findDeveloperById } = requestService;
 
 const authHandler = (mutations, access = 'all') => Object
     .entries(mutations)
@@ -11,7 +14,8 @@ const authHandler = (mutations, access = 'all') => Object
         acc[mutationName] = {
             ...mutation,
             resolve: async (_, params, context) => {
-                if (context.userId === undefined) throw new Error('Unauthorized');
+                const id = context.userId;
+                if (id === undefined) throw new Error('Unauthorized');
                 if (access === 'developer' && !(await findDeveloperById(id))) throw new Error('Unauthorized');
                 return mutation.resolve(_, params, context);
             }

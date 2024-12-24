@@ -8,6 +8,7 @@ const {
     findAllGames,
     findGameByField,
     findGamesByField,
+    deleteDLCsByField,
 } = requestService;
 
 const findValidGame = async id => {
@@ -16,7 +17,7 @@ const findValidGame = async id => {
 };
 
 const validator = async validationData => {
-    const { id, name } = validationData;
+    const { id = null, name = null } = validationData;
     if (id !== null) {
         const game = await findValidGame(id);
         const { userId = game?.developerId } = validationData;
@@ -60,3 +61,4 @@ export const validateAndCreateDLC = async (dlc, forGame) => {
 
     return createdDLC;
 };
+
