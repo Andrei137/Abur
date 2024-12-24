@@ -11,12 +11,12 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenDeveloper}}
+  Authorization: Bearer {{tokenSquareEnix}}
 }
 
 body:graphql {
-  mutation UpdateGame($game: GameInput!) {
-    updateGame(id: 1, game: $game) {
+  mutation UpdateDLC($dlc: DLCInput!) {
+    updateDLC(id: 4, dlc: $dlc) {
       id
       name
       price
@@ -34,8 +34,8 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "game": {
-      "name": "Life is Strange 2"
+    "dlc": {
+      "name": "Life is Strange 2 Bonus Outfits"
     }
   }
 }

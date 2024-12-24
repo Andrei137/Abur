@@ -8,21 +8,16 @@ const {
     findAllGames,
     findGameByField,
     findGamesByField,
-    deleteDLCsByField,
 } = requestService;
 
-const findValidGame = async id => {
-    const game = await findGameById(id);
-    return game?.type === 'game' && game || null;
-};
-
 const validator = async validationData => {
-    const { id = null, name = null } = validationData;
+    const { id = null, name = null, type = 'game' } = validationData;
     if (id !== null) {
-        const game = await findValidGame(id);
+        const game = await findGameById(id);
         const { userId = game?.developerId } = validationData;
 
-        if (!game) return 'Game not found';
+        if (!game) return 'Not found';
+        if (game.type !== type) return 'Invalid type';
         if (game.developerId !== userId) return 'Unauthorized';
     }
     if (name !== null) {
@@ -43,13 +38,16 @@ export const filterGames = async props => {
     ).filter(game => game.type === type);
 };
 
-export const validateAndCreateDLC = async (dlc, forGame) => {
+export const validateAndCreateDLC = async (dlc, forGame, userId) => {
     const baseGame = await findGameByField('name', forGame);
     if (!baseGame) return new Error('Base game not found');
 
+    const developerId = baseGame.developerId;
+    if (developerId !== userId) return new Error('Unauthorized');
+
     const createdDLC = await createGame({
         ...dlc,
-        developerId: baseGame.developerId,
+        developerId,
         type: 'dlc'
     });
     if (!createdDLC) return new Error('Failed to create DLC');

@@ -11,12 +11,12 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenDeveloper}}
+  Authorization: Bearer {{tokenCdProjectRed}}
 }
 
 body:graphql {
-  mutation DeleteGame {
-    deleteGame(id: 5)
+  mutation DeleteDLC {
+    deleteDLC(id: 3)
   }
 }
 
