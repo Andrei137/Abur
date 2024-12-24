@@ -6,8 +6,6 @@ import customerInputType from '@types/input/customer.js';
 const { updateUser, updateCustomer } = requestService;
 
 const updateCustomerMutationResolver = async (_, { customer }, { userId }) => {
-    if (!userId) return false;
-
     const [updatedUser, updatedCustomer] = await Promise.all([
         updateUser(userId, {
             ...customer,

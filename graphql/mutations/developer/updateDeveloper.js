@@ -6,8 +6,6 @@ import developerInputType from '@types/input/developer.js';
 const { updateUser, updateDeveloper } = requestService;
 
 const updateDeveloperMutationResolver = async (_, { developer }, { userId }) => {
-    if (!userId) return false;
-
     const [updatedUser, updatedDeveloper] = await Promise.all([
         updateUser(userId, {
             ...developer,
@@ -29,4 +27,3 @@ export default {
     },
     resolve: updateDeveloperMutationResolver,
 };
-
