@@ -1,0 +1,34 @@
+meta {
+  name: Read
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query GetDLC {
+    dlc(id: 4) {
+      id
+      name
+      price
+      releaseDate
+  
+    	developer {
+        username
+        email
+  
+        studio
+        website
+      }
+      baseGame {
+        name
+        price
+      }
+    }
+  }
+}
