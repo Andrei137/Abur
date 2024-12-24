@@ -1,12 +1,17 @@
 import gameType from '@types/entity/game.js';
-import { findValidGame } from '@repositories/games.js';
+import requestService from '@services/request.js';
+import { validateGame } from '@repositories/games.js';
 import {
     GraphQLInt,
     GraphQLNonNull
 } from 'graphql';
 
-const gameQueryResolver = async (_, { id }) =>
-    await findValidGame(id) ?? new Error('Game not found');
+const { findGameById } = requestService;
+
+const gameQueryResolver = async (_, { id }) => {
+    await validateGame({ id });
+    return await findGameById(id);
+}
 
 export default {
     type: gameType,

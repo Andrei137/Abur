@@ -29,8 +29,7 @@ export default new GraphQLObjectType({
         },
         baseGame: {
             type: gameType,
-            resolve: async dlc =>
-                await findGameById(dlc.baseGameId),
+            resolve: async dlc => await findGameById(dlc.baseGameId),
         }
     }),
 });

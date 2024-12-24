@@ -11,19 +11,11 @@ post {
 }
 
 headers {
-  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTczNTAzODYyOX0.FJRGxVewDmshQ5mUKzt_DsJoN2fPK6S_fzfQbAuJ_RM
+  Authorization: Bearer {{tokenPSStudios}}
 }
 
 body:graphql {
   mutation DeleteGame {
-    deleteGame(id: 14)
-  }
-}
-
-body:graphql:vars {
-  {
-    "game": {
-      "name": "Life is Strange 2"
-    }
+    deleteGame(id: 5)
   }
 }

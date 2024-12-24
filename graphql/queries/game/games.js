@@ -1,8 +1,8 @@
 import { GraphQLList } from 'graphql';
+import { filterGames } from '@repositories/games.js';
 import gameType from '@types/entity/game.js';
-import { findAllValidGames } from '@repositories/games.js';
 
-const gamesQueryResolver = async () => await findAllValidGames();
+const gamesQueryResolver = async () => await filterGames({ type: 'game' });
 
 export default {
     type: new GraphQLList(gameType),

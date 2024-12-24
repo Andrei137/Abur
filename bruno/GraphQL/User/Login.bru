@@ -13,8 +13,8 @@ post {
 body:graphql {
   mutation LoginUser {
     login(credentials: {
-      username: "FixBambucea"
-      password: "FixBambucea1234"
+      username: "{{username}}"
+      password: "{{username}}1234"
     }) {
       token
     }

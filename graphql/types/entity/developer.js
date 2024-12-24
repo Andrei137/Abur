@@ -1,6 +1,7 @@
+import dlcType from './game.js';
 import gameType from './game.js';
 import userType from './user.js';
-import requestService from '@services/request.js';
+import { filterGames } from '@repositories/games.js';
 import {
     GraphQLInt,
     GraphQLList,
@@ -8,8 +9,6 @@ import {
     GraphQLObjectType,
     GraphQLNonNull,
 } from 'graphql';
-
-const { findGamesByField } = requestService;
 
 export default new GraphQLObjectType({
     name: 'Developer',
@@ -24,7 +23,19 @@ export default new GraphQLObjectType({
 
         games: {
             type   : new GraphQLList(gameType),
-            resolve: async developer => await findGamesByField('developerId', developer.id),
+            resolve: async developer => await filterGames({
+                type : 'game',
+                field: 'developerId',
+                value: developer.id,
+            }),
         },
+        dlcs: {
+            type: new GraphQLList(dlcType),
+            resolve: async developer => await filterGames({
+                type : 'dlc',
+                field: 'developerId',
+                value: developer.id,
+            }),
+        }
     }),
 });

@@ -2,14 +2,18 @@ import { GraphQLInt } from 'graphql';
 import gameType from '@types/entity/game.js';
 import gameInputType from '@types/input/game.js';
 import requestService from '@services/request.js';
-import { findValidGame } from '@repositories/games.js';
+import { validateGame } from '@repositories/games.js';
 
 const { updateGame } = requestService;
 
-const updateGameMutationResolver = async (_, { id, game }, { userId }) =>
-    userId && await findValidGame(id)
-        ? (await updateGame(id, game))
-        : new Error('Game not found');
+const updateGameMutationResolver = async (_, { id, game }, { userId }) => {
+    await validateGame({
+        id,
+        userId,
+        name: game.name,
+    });
+    return await updateGame(id, game);
+};
 
 export default {
     type: gameType,
