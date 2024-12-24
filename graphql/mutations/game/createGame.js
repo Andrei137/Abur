@@ -1,12 +1,13 @@
+import { GraphQLString } from 'graphql';
 import gameType from '@types/entity/game.js';
 import gameInputType from '@types/input/game.js';
 import requestService from '@services/request.js';
-import { GraphQLString } from 'graphql';
+import { validGameName } from '@repositories/games.js';
 
 const { createGame, findUserByField, findGameByField } = requestService;
 
 const createGameMutationResolver = async (_, { game, developer }, { userId }) =>
-    userId && !(await findGameByField('name', game.name))
+    userId && await validGameName(game.name)
         ? await createGame({
             ...game,
             developerId: (await findUserByField('username', developer)).id,

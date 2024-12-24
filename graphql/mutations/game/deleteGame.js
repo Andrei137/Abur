@@ -1,10 +1,14 @@
 import requestService from '@services/request.js';
-import { GraphQLInt, GraphQLBoolean } from 'graphql';
+import { findValidGame } from '@repositories/games.js';
+import {
+    GraphQLInt,
+    GraphQLBoolean
+} from 'graphql';
 
-const { findGameById, deleteGame } = requestService;
+const { deleteGame } = requestService;
 
 const createGameMutationResolver = async (_, { id }, { userId }) =>
-    userId && (await findGameById(id))?.type === 'game'
+    userId && await findValidGame(id)
         ? await deleteGame(id)
         : false;
 
