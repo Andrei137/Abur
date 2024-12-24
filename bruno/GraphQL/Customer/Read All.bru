@@ -1,0 +1,25 @@
+meta {
+  name: Read All
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query ListCustomers {
+    customers {
+      id
+      username
+      password
+      email
+      
+      firstName
+      lastName
+    }
+  }
+}

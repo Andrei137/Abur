@@ -1,0 +1,34 @@
+meta {
+  name: Read All
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query ListDevelopers {
+    developers {
+      id
+      username
+      password
+      email
+      
+      studio
+      website
+      
+      games {
+        name
+        price
+      }
+      dlcs {
+        name
+        price
+      }
+    }
+  }
+}

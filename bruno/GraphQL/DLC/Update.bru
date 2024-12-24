@@ -1,0 +1,41 @@
+meta {
+  name: Update
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenSquareEnix}}
+}
+
+body:graphql {
+  mutation UpdateDLC($dlc: DLCInput!) {
+    updateDLC(id: 4, dlc: $dlc) {
+      id
+      name
+      price
+      releaseDate
+      developer {
+        username
+        email
+  
+        studio
+        website
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "dlc": {
+      "name": "Life is Strange 2 Bonus Outfits"
+    }
+  }
+}

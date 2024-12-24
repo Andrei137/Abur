@@ -6,16 +6,17 @@ import {
 } from 'graphql';
 
 const {
+    deleteDLC,
     deleteGame,
-    deleteDLCsByField,
 } = requestService;
 
-const deleteGameMutationResolver = async (_, { id }, { userId }) => {
+const deleteDLCMutationResolver = async (_, { id }, { userId }) => {
     await validateGame({
         id,
         userId,
+        type: 'dlc',
     });
-    await deleteDLCsByField('baseGameId', id);
+    await deleteDLC(id);
     return await deleteGame(id);
 };
 
@@ -24,5 +25,5 @@ export default {
     args: {
         id: { type: GraphQLInt },
     },
-    resolve: deleteGameMutationResolver,
+    resolve: deleteDLCMutationResolver,
 };

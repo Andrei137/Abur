@@ -1,0 +1,29 @@
+meta {
+  name: Delete
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCdProjectRed}}
+}
+
+body:graphql {
+  mutation DeleteDLC {
+    deleteDLC(id: 3)
+  }
+}
+
+body:graphql:vars {
+  {
+    "game": {
+      "name": "Life is Strange 2"
+    }
+  }
+}

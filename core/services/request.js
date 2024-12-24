@@ -45,10 +45,13 @@ const updateById = async (model, id, body) => {
     if (!entity) {
         return null;
     }
-    return await entity.update(body);
+    return spreadData(await entity.update(body));
 }
 
-const deleteById = async (model, id) => await db[model].destroy({ where: { id } })
+const deleteById = async (model, id) => await db[model].destroy({ where: { id } });
+
+const deleteByField = async (model, field, value) =>
+    await db[model].destroy({ where: { [field]: value } });
 
 const generateFunctions = model => ({
     [`find${model}ById`]: async (id, props = {}) =>
@@ -65,6 +68,8 @@ const generateFunctions = model => ({
         await updateById(model, id, body),
     [`delete${model}`]: async id =>
         await deleteById(model, id),
+    [`delete${model}sByField`]: async (field, value) =>
+        await deleteByField(model, field, value),
 });
 
 export default Object.keys(db).reduce((acc, model) => {

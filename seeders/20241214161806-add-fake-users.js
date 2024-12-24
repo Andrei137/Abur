@@ -9,61 +9,61 @@ module.exports = {
     const mockDevelopers = [
       {
         id: 0,
-        username: 'PlayStationStudios',
-        password: await bcrypt.hash('PlayStationStudios1234', 5),
-        email: 'contact@sony.com',
+        username : 'PlayStationStudios',
+        password : await bcrypt.hash('PlayStationStudios1234', 5),
+        email    : 'contact@sony.com',
         createdAt: Date(),
         updatedAt: Date(),
 
-        studio: 'PlayStation Studios',
-        website: 'https://www.playstation.com/playstation-studios/'
+        studio   : 'PlayStation Studios',
+        website  : 'https://www.playstation.com/playstation-studios/',
       },
       {
         id: 1,
-        username: 'CD_PROJEKT_RED',
-        password: await bcrypt.hash('CD_PROJEKT_RED1234', 5),
-        email: 'contact@cdpr.com',
+        username : 'CD_PROJEKT_RED',
+        password : await bcrypt.hash('CD_PROJEKT_RED1234', 5),
+        email    : 'contact@cdpr.com',
         createdAt: Date(),
         updatedAt: Date(),
 
-        studio: 'CD PROJEKT RED',
-        website: 'https://www.cdprojektred.com/en'
+        studio   : 'CD PROJEKT RED',
+        website  : 'https://www.cdprojektred.com/en',
       },
       {
         id: 2,
-        username: 'SquareEnix',
-        password: await bcrypt.hash('SquareEnix1234', 5),
-        email: 'contact@square.com',
+        username : 'SquareEnix',
+        password : await bcrypt.hash('SquareEnix1234', 5),
+        email    : 'contact@square.com',
         createdAt: Date(),
         updatedAt: Date(),
 
-        studio: 'Square Enix',
-        website: 'https://www.square-enix.com/'
+        studio   : 'Square Enix',
+        website  : 'https://www.square-enix.com/',
       }
     ];
 
     const mockCustomers = [
       {
         id: 3,
-        username: 'FixBambucea',
-        password: await bcrypt.hash('FixBambucea1234', 5),
-        email: 'FixBambucea@gmail.com',
+        username : 'FixBambucea',
+        password : await bcrypt.hash('FixBambucea1234', 5),
+        email    : 'FixBambucea@gmail.com',
         createdAt: Date(),
         updatedAt: Date(),
 
         firstName: 'Bambucea',
-        lastName: 'Fix'
+        lastName : 'Fix',
       },
       {
         id: 4,
-        username: 'FixBambucea-2',
-        password: await bcrypt.hash('FixBambucea1234', 5),
-        email: 'FixBambucea-2@gmail.com',
+        username : 'FixBambucea-2',
+        password : await bcrypt.hash('FixBambucea1234', 5),
+        email    : 'FixBambucea-2@gmail.com',
         createdAt: Date(),
         updatedAt: Date(),
 
         firstName: 'Bambucea-2',
-        lastName: 'Fix'
+        lastName : 'Fix',
       }
     ];
 
@@ -83,43 +83,35 @@ module.exports = {
     //   }
     // });
 
-    await queryInterface.bulkInsert('Users', mockDevelopers.map((developer) => {
-      return {
-        id: developer.id,
-        username: developer.username,
-        password: developer.password,
-        email: developer.email,
-        createdAt: developer.createdAt,
-        updatedAt: developer.updatedAt
-      }
-    }), {});
+    await queryInterface.bulkInsert('Users', mockDevelopers.map(developer => ({
+      id       : developer.id,
+      username : developer.username,
+      password : developer.password,
+      email    : developer.email,
+      createdAt: developer.createdAt,
+      updatedAt: developer.updatedAt,
+    })));
 
-    await queryInterface.bulkInsert('Developers', mockDevelopers.map((developer) => {
-      return {
-        id: developer.id,
-        studio: developer.studio,
-        website: developer.website
-      }
-    }), {});
+    await queryInterface.bulkInsert('Developers', mockDevelopers.map(developer => ({
+      id     : developer.id,
+      studio : developer.studio,
+      website: developer.website,
+    })));
 
-    await queryInterface.bulkInsert('Users', mockCustomers.map((customer) => {
-      return {
-        id: customer.id,
-        username: customer.username,
-        password: customer.password,
-        email: customer.email,
-        createdAt: customer.createdAt,
-        updatedAt: customer.updatedAt
-      }
-    }), {});
+    await queryInterface.bulkInsert('Users', mockCustomers.map(customer => ({
+      id       : customer.id,
+      username : customer.username,
+      password : customer.password,
+      email    : customer.email,
+      createdAt: customer.createdAt,
+      updatedAt: customer.updatedAt,
+    })));
 
-    await queryInterface.bulkInsert('Customers', mockCustomers.map((customer) => {
-      return {
-        id: customer.id,
-        firstName: customer.firstName,
-        lastName: customer.lastName
-      }
-    }), {});
+    await queryInterface.bulkInsert('Customers', mockCustomers.map(customer => ({
+      id       : customer.id,
+      firstName: customer.firstName,
+      lastName : customer.lastName,
+    })));
 
     /**
      * Add seed commands here.
