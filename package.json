@@ -31,6 +31,7 @@
     "@config": "config/config.js",
     "@middleware": "core/middleware/index.js",
     "@auth-mutations": "graphql/mutations/auth/index.js",
+    "@dlc-queries": "graphql/queries/dlc/index.js",
     "@game-queries": "graphql/queries/game/index.js",
     "@game-mutations": "graphql/mutations/game/index.js",
     "@customer-queries": "graphql/queries/customer/index.js",

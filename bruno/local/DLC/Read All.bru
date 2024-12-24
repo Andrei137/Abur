@@ -1,7 +1,7 @@
 meta {
-  name: Read
+  name: Read All
   type: graphql
-  seq: 2
+  seq: 3
 }
 
 post {
@@ -11,22 +11,22 @@ post {
 }
 
 body:graphql {
-  query GetGame {
-    game(id: 1) {
+  query ListDLCs {
+    dlcs {
       id
       name
-      price
       releaseDate
+      price
   
-    	developer {
+      developer {
         username
         email
   
         studio
         website
       }
-      dlcs {
-        name
+      baseGame {
+      	name
         price
       }
     }

@@ -13,6 +13,11 @@ export default (sequelize, DataTypes) => {
       Game.belongsTo(models.Developer, {
         foreignKey: 'developerId',
       });
+      // If foreignKey isn't used, it creates a default GameId
+      // Because DLC has two foreign keys pointing to Game
+      Game.hasMany(models.DLC, {
+        foreignKey: 'baseGameId',
+      });
     }
   }
   Game.init({

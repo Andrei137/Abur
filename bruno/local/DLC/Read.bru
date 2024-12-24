@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  query GetGame {
-    game(id: 1) {
+  query GetDLC {
+    dlc(id: 4) {
       id
       name
       price
@@ -25,7 +25,7 @@ body:graphql {
         studio
         website
       }
-      dlcs {
+      baseGame {
         name
         price
       }

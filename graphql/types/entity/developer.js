@@ -21,7 +21,8 @@ export default new GraphQLObjectType({
         email   : { type: new GraphQLNonNull(GraphQLString) },
         studio  : { type: new GraphQLNonNull(GraphQLString) },
         website : { type: GraphQLString },
-        games   : {
+
+        games: {
             type   : new GraphQLList(gameType),
             resolve: async developer => await findGamesByField('developerId', developer.id),
         },
