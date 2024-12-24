@@ -5,20 +5,20 @@ import developerInputType from '@types/input/developer.js';
 
 const { updateUser, updateDeveloper } = requestService;
 
-const updateDeveloperMutationResolver = async (_, { developer }, { user_id }) => {
-    if (!user_id) return false;
+const updateDeveloperMutationResolver = async (_, { developer }, { userId }) => {
+    if (!userId) return false;
 
     const [updatedUser, updatedDeveloper] = await Promise.all([
-        updateUser(user_id, {
+        updateUser(userId, {
             ...developer,
             password: await encrypt(developer.password),
         }),
-        updateDeveloper(user_id, developer)
+        updateDeveloper(userId, developer)
     ]);
 
     return {
-        ...updatedUser.dataValues,
-        ...updatedDeveloper.dataValues,
+        ...updatedUser,
+        ...updatedDeveloper,
     };
 }
 

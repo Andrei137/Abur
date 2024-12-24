@@ -1,13 +1,13 @@
 import requestService from '@services/request.js';
 import { GraphQLInt, GraphQLBoolean } from 'graphql';
 
-const { deleteGame } = requestService;
+const { findGameById, deleteGame } = requestService;
 
-const createGameMutationResolver = async (_, { id }, { user_id }) => {
-    if (!user_id) return false;
+const createGameMutationResolver = async (_, { id }, { userId }) =>
+    userId && (await findGameById(id))?.type === 'game'
+        ? await deleteGame(id)
+        : false;
 
-    return await deleteGame(id);
-}
 
 export default {
     type: GraphQLBoolean,

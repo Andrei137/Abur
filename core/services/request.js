@@ -45,7 +45,7 @@ const updateById = async (model, id, body) => {
     if (!entity) {
         return null;
     }
-    return await entity.update(body);
+    return spreadData(await entity.update(body));
 }
 
 const deleteById = async (model, id) => await db[model].destroy({ where: { id } })

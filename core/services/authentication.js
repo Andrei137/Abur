@@ -10,7 +10,7 @@ const validPassword = async (providedPassword, actualPassword) =>
 
 const getToken = async (user, actualPassword) => ({
     token: user && (await validPassword(actualPassword, user.password))
-        ? jwt.sign({ user_id: user.user_id }, config.SECRET)
+        ? jwt.sign({ userId: user.id }, config.SECRET)
         : null
 });
 

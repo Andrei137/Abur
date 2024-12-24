@@ -5,8 +5,7 @@ import requestService from '@services/request.js';
 const { findAllGames } = requestService;
 
 const gamesQueryResolver = async () =>
-    (await findAllGames())
-    .filter(game => game.type === 'game');
+    (await findAllGames()).filter(game => game.type === 'game');
 
 export default {
     type: new GraphQLList(gameType),

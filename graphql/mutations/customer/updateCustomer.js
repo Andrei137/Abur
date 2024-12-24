@@ -5,20 +5,20 @@ import customerInputType from '@types/input/customer.js';
 
 const { updateUser, updateCustomer } = requestService;
 
-const updateCustomerMutationResolver = async (_, { customer }, { user_id }) => {
-    if (!user_id) return false;
+const updateCustomerMutationResolver = async (_, { customer }, { userId }) => {
+    if (!userId) return false;
 
     const [updatedUser, updatedCustomer] = await Promise.all([
-        updateUser(user_id, {
+        updateUser(userId, {
             ...customer,
             password: await encrypt(customer.password),
         }),
-        updateCustomer(user_id, customer)
+        updateCustomer(userId, customer)
     ]);
 
     return {
-        ...updatedUser.dataValues,
-        ...updatedCustomer.dataValues,
+        ...updatedUser,
+        ...updatedCustomer,
     };
 }
 
