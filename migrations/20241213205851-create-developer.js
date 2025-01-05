@@ -18,7 +18,8 @@ module.exports = {
       },
       studio: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       website: {
         type: Sequelize.STRING

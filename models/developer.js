@@ -17,8 +17,13 @@ export default (sequelize, DataTypes) => {
     }
   }
   Developer.init({
-    studio: DataTypes.STRING,
-    website: DataTypes.STRING
+    studio: {
+      type: DataTypes.STRING,
+      unique: true
+    },
+    website: { 
+      type: DataTypes.STRING
+    }
   }, {
     sequelize,
     modelName: 'Developer',

@@ -1,0 +1,46 @@
+meta {
+  name: Create
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  mutation CreateDeveloper($developer: DeveloperInput!) {
+    createDeveloper(developer: $developer) {
+      id
+      username
+      password
+      email
+      
+      studio
+      website
+      
+      games {
+        name
+        price
+      }
+      dlcs {
+        name
+        price
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "developer": {
+      "username": "RockstarGames",
+      "password": "RockstarGames1234",
+      "email": "contact@rockstar.com",
+      "studio": "Rockstar Games",
+      "website": "https://www.rockstargames.com/"
+    }
+  }
+}
