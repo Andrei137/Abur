@@ -31,5 +31,7 @@ export default new GraphQLObjectType({
         ...authHandler(gameMutations, 'developer'),
         ...authHandler(customerMutations),
         ...authHandler(developerMutations),
+        createDeveloper: developerMutations.createDeveloper,
+        createCustomer: customerMutations.createCustomer,
     },
 });
