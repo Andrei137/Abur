@@ -1,7 +1,7 @@
 meta {
-  name: Create
+  name: SignupDeveloper
   type: graphql
-  seq: 4
+  seq: 3
 }
 
 post {
@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  mutation CreateDeveloper($developer: DeveloperInput!) {
-    createDeveloper(developer: $developer) {
+  mutation SignupDeveloper($developer: DeveloperInput!) {
+    signupDeveloper(developer: $developer) {
       id
       username
       password
@@ -20,15 +20,6 @@ body:graphql {
       
       studio
       website
-      
-      games {
-        name
-        price
-      }
-      dlcs {
-        name
-        price
-      }
     }
   }
 }

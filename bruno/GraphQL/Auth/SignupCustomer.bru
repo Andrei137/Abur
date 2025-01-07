@@ -1,7 +1,7 @@
 meta {
-  name: Create
+  name: SignupCustomer
   type: graphql
-  seq: 4
+  seq: 2
 }
 
 post {
@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  mutation CreateCustomer($customer: CustomerInput!) {
-    createCustomer(customer: $customer) {
+  mutation SignupCustomer($customer: CustomerInput!) {
+    signupCustomer(customer: $customer) {
       id
       username
       password
