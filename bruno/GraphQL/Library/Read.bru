@@ -6,6 +6,29 @@ meta {
 
 post {
   url: {{url}}
-  body: none
+  body: graphql
   auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  query GetLibrary {
+    library {
+      customer {
+        firstName
+      }
+      games {
+        name
+        price
+  
+        dlcs{
+          name
+          price
+        }
+      }
+    }
+  }
 }

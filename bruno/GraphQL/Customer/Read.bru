@@ -20,6 +20,18 @@ body:graphql {
       
       firstName
       lastName
+      
+      library {
+        games {
+          name
+          price
+  
+          dlcs{
+            name
+            price
+          }
+        }
+      }
     }
   }
 }
