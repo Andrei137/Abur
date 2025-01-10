@@ -4,6 +4,7 @@ import gameQueries from '@game-queries';
 import customerQueries from '@customer-queries';
 import developerQueries from '@developer-queries';
 import reviewQueries from '@review-queries';
+import cartQueries from '@cart-queries';
 import libraryQueries from '@library-queries';
 import { authHandler } from './authHandler.js';
 
@@ -15,6 +16,7 @@ export default new GraphQLObjectType({
         ...customerQueries,
         ...developerQueries,
         ...reviewQueries,
+        ...authHandler(cartQueries, 'customer'),
         ...authHandler(libraryQueries, 'customer'),
     },
 });

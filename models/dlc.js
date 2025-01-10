@@ -10,14 +10,12 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
         static associate(models) {
-            // Might need later
-            /*
-      DLC.belongsTo(models.Game, {
-        foreignKey: 'baseGameId',
-        as: 'baseGame',
-      });
-      */
-
+            /* Might need later
+            DLC.belongsTo(models.Game, {
+                foreignKey: 'baseGameId',
+                as: 'baseGame',
+            });
+            */
             DLC.belongsTo(models.Game, {
                 foreignKey: 'id',
             });

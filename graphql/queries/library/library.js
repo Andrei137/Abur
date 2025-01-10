@@ -1,8 +1,6 @@
 import libraryType from '@types/entity/library.js';
 
-const libraryQueryResolver = async (_, {}, { userId }) => {
-    return { userId };
-};
+const libraryQueryResolver = async (_, {}, { userId }) => ({ userId });
 
 export default {
     type: libraryType,
