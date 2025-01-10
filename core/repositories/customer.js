@@ -4,11 +4,12 @@ import { validateAndCreateUser } from '@repositories/user.js';
 
 const { createCustomer } = requestService;
 
-const validator = async validationData => {
+const validator = async (/*validationData*/) => {
     return null;
 };
 
-const validateCustomer = async validationData => await handleValidation(validator, validationData);
+const validateCustomer = async (validationData) =>
+    await handleValidation(validator, validationData);
 
 export const validateAndCreateCustomer = async (customer) => {
     await validateCustomer(customer);
@@ -17,11 +18,11 @@ export const validateAndCreateCustomer = async (customer) => {
 
     const createdCustomer = await createCustomer({
         ...customer,
-        id: createdUser.id
+        id: createdUser.id,
     });
 
     return {
         ...createdUser,
         ...createdCustomer,
     };
-}
+};

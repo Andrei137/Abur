@@ -39,7 +39,9 @@
     "@customer-queries": "graphql/queries/customer/index.js",
     "@customer-mutations": "graphql/mutations/customer/index.js",
     "@developer-queries": "graphql/queries/developer/index.js",
-    "@developer-mutations": "graphql/mutations/developer/index.js"
+    "@developer-mutations": "graphql/mutations/developer/index.js",
+    "@review-mutations": "graphql/mutations/review/index.js",
+    "@review-queries": "graphql/queries/review/index.js"
   },
   "keywords": [],
   "author": "",
