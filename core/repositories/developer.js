@@ -1,8 +1,8 @@
 import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
-import { validateAndCreateUser } from '@repositories/user.js';
+import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
 
-const { createDeveloper, findDeveloperByField } = requestService;
+const { createDeveloper, findDeveloperByField, updateDeveloper } = requestService;
 
 const validator = async validationData => {
     const { studio = null } = validationData;
@@ -30,5 +30,21 @@ export const validateAndCreateDeveloper = async (developer) => {
     return {
         ...createdUser,
         ...createdDeveloper,
+    };
+}
+
+export const validateAndUpdateDeveloper = async (userId, developer) => {
+    await validateDeveloper(developer);
+
+    const updatedUser = await validateAndUpdateUser(userId, developer);
+    const updatedDeveloper = await updateDeveloper(userId, developer);
+
+    // TODO: delete
+    console.log(updatedUser);
+    console.log(updatedDeveloper);
+
+    return {
+        ...updatedUser,
+        ...updatedDeveloper,
     };
 }

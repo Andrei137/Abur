@@ -1,4 +1,3 @@
-import dlcType from './game.js';
 import gameType from './game.js';
 import customerType from './customer.js';
 import requestService from '@services/request.js';

@@ -2,7 +2,7 @@ import requestService from '@services/request.js';
 import { encrypt } from '@services/authentication.js';
 import { handleValidation } from '@services/validation.js';
 
-const { createUser, findUserByField } = requestService;
+const { createUser, findUserByField, updateUser } = requestService;
 
 const validator = async validationData => {
     const { username = null, email = null } = validationData;
@@ -25,12 +25,17 @@ const validateUser = async validationData => await handleValidation(validator, v
 export const validateAndCreateUser = async (user) => {
     await validateUser(user);
 
-    const createdUser = await createUser({
+    return await createUser({
         ...user,
         password: await encrypt(user.password),
     });
+}
 
-    return {
-        ...createdUser
-    };
+export const validateAndUpdateUser = async (userId, user) => {
+    await validateUser(user);
+    
+    return await updateUser(userId, {
+        ...user,
+        password: await encrypt(user.password),
+    })
 }

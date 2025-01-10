@@ -1,23 +1,9 @@
-import requestService from '@services/request.js';
-import { encrypt } from '@services/authentication.js';
 import developerType from '@types/entity/developer.js';
 import developerInputType from '@types/input/developer.js';
-
-const { updateUser, updateDeveloper } = requestService;
+import { validateAndUpdateDeveloper } from '@repositories/developer.js';
 
 const updateDeveloperMutationResolver = async (_, { developer }, { userId }) => {
-    const [updatedUser, updatedDeveloper] = await Promise.all([
-        updateUser(userId, {
-            ...developer,
-            password: await encrypt(developer.password),
-        }),
-        updateDeveloper(userId, developer)
-    ]);
-
-    return {
-        ...updatedUser,
-        ...updatedDeveloper,
-    };
+    return await validateAndUpdateDeveloper(userId, developer);
 }
 
 export default {
