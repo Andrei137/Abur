@@ -4,6 +4,7 @@ import { handleValidation } from '@services/validation.js';
 const {
     createGame,
     createDLC,
+    findAllDLCs,
     findGameById,
     findAllGames,
     findGameByField,
@@ -61,10 +62,21 @@ export const validateAndCreateDLC = async (dlc, forGame, userId) => {
     return createdDLC;
 };
 
-export const getByCustomerId = async (customerId, type) => {
+const findByCustomerId = async (customerId, type) => {
     const ownedGamesIds = (
         await findLibraryItemsByField('customerId', customerId)
     ).map((libraryItem) => libraryItem.gameId);
-    const allGames = await filterGames({ type });
+
+    // TODO: refactoring
+    const allGames = type === 'game'
+        ? await filterGames({ type })
+        : (await findAllDLCs({
+            joinWith: 'Game',
+          })).filter((dlc) => dlc.type === 'dlc');
     return allGames.filter((game) => ownedGamesIds.includes(game.id));
 };
+
+export const findGamesByCustomerId = async customerId =>
+    await findByCustomerId(customerId, 'game');
+export const findDLCsByCustomerId = async customerId =>
+    await findByCustomerId(customerId, 'dlc');
