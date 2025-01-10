@@ -3,6 +3,7 @@ import dlcQueries from '@dlc-queries';
 import gameQueries from '@game-queries';
 import customerQueries from '@customer-queries';
 import developerQueries from '@developer-queries';
+import reviewQueries from '@review-queries';
 
 export default new GraphQLObjectType({
     name: 'Query',
@@ -11,5 +12,6 @@ export default new GraphQLObjectType({
         ...gameQueries,
         ...customerQueries,
         ...developerQueries,
+        ...reviewQueries,
     },
 });

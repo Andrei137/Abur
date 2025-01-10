@@ -1,0 +1,21 @@
+meta {
+  name: Delete
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  mutation DeleteGame {
+    deleteGame(id: 6)
+  }
+}
