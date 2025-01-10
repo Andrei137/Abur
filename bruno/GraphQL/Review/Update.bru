@@ -1,0 +1,40 @@
+meta {
+  name: Update
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  mutation UpdateReview($review: ReviewInput!) {
+    updateReview(id: 0, review: $review) {
+      id,
+      rating,
+      comment
+  		game {
+        id
+        name
+      }
+      customer {
+        firstName
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "review": {
+      "rating": 9
+    }
+  }
+}

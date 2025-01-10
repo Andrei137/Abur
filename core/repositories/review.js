@@ -6,6 +6,7 @@ const {
     findGameByField,
     createReview,
     deleteReview,
+    updateReview,
 } = requestService;
 
 const validator = async (validationData) => {
@@ -63,4 +64,9 @@ export const validateAndCreateReview = async (review, game, userId) => {
         customerId: userId,
         gameId,
     });
+};
+
+export const validateAndUpdateReview = async (id, userId, review) => {
+    await validateReview({ id, userId, rating: review.rating });
+    return await updateReview(id, review);
 };
