@@ -14,6 +14,9 @@ export default (sequelize, DataTypes) => {
                 foreignKey: 'id',
             });
             Customer.hasMany(models.Review);
+            Customer.belongsToMany(models.Game, {
+                through: 'LibraryItem',
+            });
         }
     }
     Customer.init(
