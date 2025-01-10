@@ -39,10 +39,6 @@ export const validateAndUpdateDeveloper = async (userId, developer) => {
     const updatedUser = await validateAndUpdateUser(userId, developer);
     const updatedDeveloper = await updateDeveloper(userId, developer);
 
-    // TODO: delete
-    console.log(updatedUser);
-    console.log(updatedDeveloper);
-
     return {
         ...updatedUser,
         ...updatedDeveloper,

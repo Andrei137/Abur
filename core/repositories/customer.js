@@ -1,8 +1,8 @@
 import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
-import { validateAndCreateUser } from '@repositories/user.js';
+import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
 
-const { createCustomer } = requestService;
+const { createCustomer, updateCustomer } = requestService;
 
 const validator = async (/*validationData*/) => {
     return null;
@@ -26,3 +26,15 @@ export const validateAndCreateCustomer = async (customer) => {
         ...createdCustomer,
     };
 };
+
+export const validateAndUpdateCustomer = async (userId, customer) => {
+    await validateCustomer(customer);
+
+    const updatedUser = await validateAndUpdateUser(userId, customer);
+    const updatedCustomer = await updateCustomer(userId, customer);
+
+    return {
+        ...updatedUser,
+        ...updatedCustomer,
+    };
+}
