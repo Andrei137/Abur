@@ -10,44 +10,25 @@ export default [
         languageOptions: {
             sourceType: 'module',
             globals: {
-                ...globals.node
+                ...globals.node,
             },
             ecmaVersion: 'latest',
         },
         plugins: {
-            '@stylistic/js': stylisticJs
+            '@stylistic/js': stylisticJs,
         },
         rules: {
-            '@stylistic/js/indent': [
-                'error',
-                4
-            ],
-            '@stylistic/js/linebreak-style': [
-                'error',
-                'unix'
-            ],
-            '@stylistic/js/quotes': [
-                'error',
-                'single'
-            ],
-            'eqeqeq': 'error',
+            '@stylistic/js/indent': ['error', 4],
+            '@stylistic/js/linebreak-style': ['error', 'unix'],
+            '@stylistic/js/quotes': ['error', 'single'],
+            eqeqeq: 'error',
             'no-trailing-spaces': 'error',
-            'object-curly-spacing': [
-                'error', 'always'
-            ],
-            'arrow-spacing': [
-                'error', { 'before': true, 'after': true },
-            ],
-            'no-console': 'off'
-        }
+            'object-curly-spacing': ['error', 'always'],
+            'arrow-spacing': ['error', { before: true, after: true }],
+            'no-console': 'off',
+        },
     },
     {
-        ignores: [
-            'dist/**',
-            'build/**',
-            'models',
-            'seeders',
-            'migrations',
-        ],
-    }
+        ignores: ['dist/**', 'build/**', 'seeders', 'migrations'],
+    },
 ];

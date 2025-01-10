@@ -21,7 +21,7 @@ const authHandler = (mutations, access = 'all') => Object
             }
         };
         return acc;
-}, {});
+    }, {});
 
 export default new GraphQLObjectType({
     name: 'Mutation',
