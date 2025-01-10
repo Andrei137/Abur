@@ -24,7 +24,6 @@ const validator = async (validationData) => {
     }
     if (name !== null) {
         const game = await findGameByField('name', name);
-
         if (game) return 'Name already exists';
     }
     return null;

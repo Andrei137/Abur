@@ -15,6 +15,6 @@ export default new GraphQLObjectType({
         ...customerQueries,
         ...developerQueries,
         ...reviewQueries,
-        ...authHandler(libraryQueries),
+        ...authHandler(libraryQueries, 'customer'),
     },
 });

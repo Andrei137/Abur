@@ -16,7 +16,18 @@ body:graphql {
       id
       rating
       comment
-      game
+      game {
+          ... on Game {
+              id
+              title
+              genre
+          }
+          ... on DLC {
+              id
+              title
+              baseGameId
+          }
+      }
     }
   }
 }

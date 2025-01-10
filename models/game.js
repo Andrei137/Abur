@@ -26,7 +26,10 @@ export default (sequelize, DataTypes) => {
     }
     Game.init(
         {
-            name: DataTypes.STRING,
+            name: {
+                type:DataTypes.STRING,
+                unique: true
+            },
             price: DataTypes.DOUBLE,
             releaseDate: DataTypes.DATE,
             developerId: DataTypes.INTEGER,

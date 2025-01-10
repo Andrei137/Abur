@@ -1,14 +1,22 @@
 import gameType from './game.js';
+import dlcType from './dlc.js';
 import customerType from './customer.js';
 import {
     GraphQLInt,
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLString,
+    GraphQLUnionType,
 } from 'graphql';
 import requestService from '@services/request.js';
 
-const { findGameById, findCustomerById } = requestService;
+const { findDLCById, findGameById, findCustomerById } = requestService;
+
+const gameOrDlcType = new GraphQLUnionType({
+    name: 'GameOrDlc',
+    types: () => ([gameType, dlcType]),
+    resolveType: value => (value.type === 'dlc' ? 'DLC' : 'Game'),
+});
 
 export default new GraphQLObjectType({
     name: 'Review',
@@ -24,8 +32,16 @@ export default new GraphQLObjectType({
 
         // TODO: union between gameType and dlcType
         game: {
-            type: gameType,
-            resolve: async (review) => await findGameById(review.gameId),
+            type: gameOrDlcType,
+            resolve: async (review) => {
+                const dlc = await findDLCById(review.gameId, {
+                    joinWith: 'Game'
+                });
+                if (dlc === null) {
+                    return await findGameById(review.gameId);
+                }
+                return dlc;
+            },
         },
     }),
 });
