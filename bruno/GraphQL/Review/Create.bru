@@ -1,0 +1,42 @@
+meta {
+  name: Create
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  mutation CreateReview($review: ReviewInput!, $game: String!) {
+    createReview(review: $review, game: $game) {
+    	id,
+      rating,
+      comment
+  		game {
+        id
+        name
+      }
+      customer {
+        firstName
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "review": {
+      "rating": 7,
+      "comment": "so so"
+    },
+    "game": "God of War Ragnarok"
+  }
+}
