@@ -2,6 +2,7 @@ import dlcType from './dlc.js';
 import developerType from './developer.js';
 import reviewType from './review.js';
 import requestService from '@services/request.js';
+import { getByCustomerId } from '@repositories/games.js';
 import {
     GraphQLInt,
     GraphQLList,
@@ -33,9 +34,13 @@ export default new GraphQLObjectType({
         dlcs: {
             type: new GraphQLList(dlcType),
             resolve: async (game) =>
-                await findDLCsByField('baseGameId', game.id, {
-                    joinWith: 'Game',
-                }),
+                game?.userId === null
+                    ? await findDLCsByField('baseGameId', game.id, {
+                        joinWith: 'Game',
+                    })
+                    : (await getByCustomerId(userId, 'dlc')).filter(
+                        (dlc) => dlc.baseGameId === game.id
+                    ),
         },
         reviews: {
             type: new GraphQLList(reviewType),

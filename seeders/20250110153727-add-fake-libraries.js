@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    const mockLibraries = [
+  async up(queryInterface, Sequelize) {
+    const mockLibraryItems = [
       {
         customerId: 3,
         gameId: 0,
@@ -34,22 +34,24 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert("LibraryItems", mockLibraries.map((library) => ({
-        customerId: library.customerId,
-        gameId: library.gameId,
-        purchaseDate: library.purchaseDate,
-        createdAt: library.createdAt,
-        updatedAt: library.updatedAt,
+    await queryInterface.bulkInsert(
+      "LibraryItems",
+      mockLibraryItems.map((libraryItem) => ({
+        customerId: libraryItem.customerId,
+        gameId: libraryItem.gameId,
+        purchaseDate: libraryItem.purchaseDate,
+        createdAt: libraryItem.createdAt,
+        updatedAt: libraryItem.updatedAt,
       }))
     );
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
+  },
 };

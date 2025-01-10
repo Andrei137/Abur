@@ -8,9 +8,10 @@ const {
     findAllGames,
     findGameByField,
     findGamesByField,
+    findLibraryItemsByField,
 } = requestService;
 
-const validator = async validationData => {
+const validator = async (validationData) => {
     const { id = null, name = null, type = 'game' } = validationData;
     if (id !== null) {
         const game = await findGameById(id);
@@ -28,14 +29,14 @@ const validator = async validationData => {
     return null;
 };
 
-export const validateGame = async validationData => await handleValidation(validator, validationData);
+export const validateGame = async (validationData) =>
+    await handleValidation(validator, validationData);
 
-export const filterGames = async props => {
+export const filterGames = async (props) => {
     const { type = 'game', field = null, value } = props;
-    return (field
-        ? await findGamesByField(field, value)
-        : await findAllGames()
-    ).filter(game => game.type === type);
+    return (
+        field ? await findGamesByField(field, value) : await findAllGames()
+    ).filter((game) => game.type === type);
 };
 
 export const validateAndCreateDLC = async (dlc, forGame, userId) => {
@@ -48,15 +49,22 @@ export const validateAndCreateDLC = async (dlc, forGame, userId) => {
     const createdDLC = await createGame({
         ...dlc,
         developerId,
-        type: 'dlc'
+        type: 'dlc',
     });
     if (!createdDLC) return new Error('Failed to create DLC');
 
     await createDLC({
         id: createdDLC.id,
-        baseGameId: baseGame.id
+        baseGameId: baseGame.id,
     });
 
     return createdDLC;
 };
 
+export const getByCustomerId = async (customerId, type) => {
+    const ownedGamesIds = (
+        await findLibraryItemsByField('customerId', customerId)
+    ).map((libraryItem) => libraryItem.gameId);
+    const allGames = await filterGames({ type });
+    return allGames.filter((game) => ownedGamesIds.includes(game.id));
+};

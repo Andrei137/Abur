@@ -41,7 +41,8 @@
     "@developer-queries": "graphql/queries/developer/index.js",
     "@developer-mutations": "graphql/mutations/developer/index.js",
     "@review-mutations": "graphql/mutations/review/index.js",
-    "@review-queries": "graphql/queries/review/index.js"
+    "@review-queries": "graphql/queries/review/index.js",
+    "@library-queries": "graphql/queries/library/index.js"
   },
   "keywords": [],
   "author": "",
