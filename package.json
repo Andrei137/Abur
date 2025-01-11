@@ -43,6 +43,7 @@
     "@developer-queries": "graphql/queries/developer/index.js",
     "@developer-mutations": "graphql/mutations/developer/index.js",
     "@cart-queries": "graphql/queries/cart/index.js",
+    "@cart-mutations": "graphql/mutations/cart/index.js",
     "@library-queries": "graphql/queries/library/index.js"
   },
   "keywords": [],

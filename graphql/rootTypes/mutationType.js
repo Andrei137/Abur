@@ -5,6 +5,7 @@ import gameMutations from '@game-mutations';
 import customerMutations from '@customer-mutations';
 import developerMutations from '@developer-mutations';
 import reviewMutations from '@review-mutations';
+import cartMutations from '@cart-mutations';
 import { authHandler } from './authHandler.js';
 
 export default new GraphQLObjectType({
@@ -16,5 +17,6 @@ export default new GraphQLObjectType({
         ...authHandler(customerMutations),
         ...authHandler(developerMutations),
         ...authHandler(reviewMutations),
+        ...authHandler(cartMutations),
     },
 });
