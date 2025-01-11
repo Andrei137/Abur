@@ -13,10 +13,25 @@ post {
 body:graphql {
   query GetReview {
     review(id: 1) {
-    	id,
-      rating,
+    	id
+      rating
       comment
-  
+  		customer {
+        firstName
+      }
+      game {
+          ... on Game {
+              id
+  						name
+          }
+          ... on DLC {
+              id
+              name
+            	baseGame {
+                name
+              }
+          }
+      }
     }
   }
 }

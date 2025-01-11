@@ -16,7 +16,7 @@ headers {
 
 body:graphql {
   mutation UpdateDLC($dlc: DLCInput!) {
-    updateDLC(id: 4, dlc: $dlc) {
+    updateDLC(id: 12, dlc: $dlc) {
       id
       name
       price
@@ -24,9 +24,12 @@ body:graphql {
       developer {
         username
         email
-  
         studio
         website
+      }
+      baseGame {
+        name
+        price
       }
     }
   }

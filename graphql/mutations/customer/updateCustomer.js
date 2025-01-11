@@ -3,7 +3,7 @@ import customerInputType from '@types/input/customer.js';
 import { validateAndUpdateCustomer } from '@repositories/customer.js';
 
 const updateCustomerMutationResolver = async (_, { customer }, { userId }) => {
-    return await validateAndUpdateCustomer(userId, customer);
+    return await validateAndUpdateCustomer({ userId, customer });
 }
 
 export default {

@@ -30,7 +30,7 @@ const validator = async validationData => {
 const validateUser = async validationData =>
     await handleValidation(validator, validationData);
 
-export const validateAndCreateUser = async user => {
+export const validateAndCreateUser = async ({ user }) => {
     await validateUser(user);
     return await createUser({
         ...user,
@@ -38,7 +38,7 @@ export const validateAndCreateUser = async user => {
     });
 }
 
-export const validateAndUpdateUser = async (userId, user) => {
+export const validateAndUpdateUser = async ({ userId, user }) => {
     await validateUser(user);
     return await updateUser(userId, {
         ...user,

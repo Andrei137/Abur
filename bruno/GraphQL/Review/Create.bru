@@ -20,9 +20,21 @@ body:graphql {
     	id,
       rating,
       comment
+      customer {
+        firstName
+      }
   		game {
-        id
-        name
+          ... on Game {
+              id
+  						name
+          }
+          ... on DLC {
+              id
+              name
+            	baseGame {
+                name
+              }
+          }
       }
       customer {
         firstName

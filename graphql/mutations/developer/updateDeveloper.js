@@ -3,7 +3,7 @@ import developerInputType from '@types/input/developer.js';
 import { validateAndUpdateDeveloper } from '@repositories/developer.js';
 
 const updateDeveloperMutationResolver = async (_, { developer }, { userId }) => {
-    return await validateAndUpdateDeveloper(userId, developer);
+    return await validateAndUpdateDeveloper({ userId, developer });
 }
 
 export default {

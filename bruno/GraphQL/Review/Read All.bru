@@ -16,6 +16,9 @@ body:graphql {
       id
       rating
       comment
+      customer {
+        firstName
+      }
       game {
           ... on Game {
               id

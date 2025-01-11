@@ -1,24 +1,11 @@
-import requestService from '@services/request.js';
-import { validateGame } from '@repositories/games.js';
 import {
     GraphQLInt,
     GraphQLBoolean
 } from 'graphql';
+import { validateAndDeleteDLC } from '@repositories/dlcs.js';
 
-const {
-    deleteDLC,
-    deleteGame,
-} = requestService;
-
-const deleteDLCMutationResolver = async (_, { id }, { userId }) => {
-    await validateGame({
-        id,
-        userId,
-        type: 'dlc',
-    });
-    await deleteDLC(id);
-    return await deleteGame(id);
-};
+const deleteDLCMutationResolver = async (_, { id }, { userId }) =>
+    await validateAndDeleteDLC({ id, userId });
 
 export default {
     type: GraphQLBoolean,

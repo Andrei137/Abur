@@ -3,6 +3,9 @@ import { handleValidation } from '@services/validation.js';
 
 const {
     createGame,
+    updateGame,
+    deleteGame,
+    deleteDLCsByField,
     createDLC,
     findAllDLCs,
     findGameById,
@@ -13,13 +16,18 @@ const {
     findLibraryItemsByField,
 } = requestService;
 
-const validator = async (validationData) => {
-    const { id = null, name = null, type = 'game' } = validationData;
+const validator = async validationData => {
+    const {
+        id = null,
+        name = null,
+        type = 'game'
+    } = validationData;
+
     if (id !== null) {
         const game = await findGameById(id);
         const { userId = game?.developerId } = validationData;
 
-        if (!game) return 'Not found';
+        if (!game) return `${type === 'game' ? 'Game' : 'DLC'} not found`;
         if (game.type !== type) return 'Invalid type';
         if (game.developerId !== userId) return 'Unauthorized';
     }
@@ -30,36 +38,33 @@ const validator = async (validationData) => {
     return null;
 };
 
-export const validateGame = async (validationData) =>
+export const validateGame = async validationData =>
     await handleValidation(validator, validationData);
+
+export const validateAndCreateGame = async ({ game, userId }) => {
+    await validateGame({ name: game.name, userId });
+    return await createGame({
+        ...game,
+        developerId: userId,
+        type: 'game',
+    });
+};
+
+export const validateAndUpdateGame = async ({ id, game, userId }) => {
+    await validateGame({ id, name: game.name, userId });
+    return await updateGame(id, game);
+};
+
+export const validateAndDeleteGame = async ({ id, userId }) => {
+    await validateGame({ id, userId });
+    return await deleteDLCsByField('baseGameId', id) && await deleteGame(id);
+}
 
 export const filterGames = async (props) => {
     const { type = 'game', field = null, value } = props;
     return (
         field ? await findGamesByField(field, value) : await findAllGames()
     ).filter((game) => game.type === type);
-};
-
-export const validateAndCreateDLC = async (dlc, forGame, userId) => {
-    const baseGame = await findGameByField('name', forGame);
-    if (!baseGame) return new Error('Base game not found');
-
-    const developerId = baseGame.developerId;
-    if (developerId !== userId) return new Error('Unauthorized');
-
-    const createdDLC = await createGame({
-        ...dlc,
-        developerId,
-        type: 'dlc',
-    });
-    if (!createdDLC) return new Error('Failed to create DLC');
-
-    await createDLC({
-        id: createdDLC.id,
-        baseGameId: baseGame.id,
-    });
-
-    return createdDLC;
 };
 
 const findByCustomerId = async (customerId, type, storedIn) => {

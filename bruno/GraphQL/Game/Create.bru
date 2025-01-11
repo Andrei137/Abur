@@ -11,12 +11,12 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenPSStudios}}
+  Authorization: Bearer {{tokenPSStudio}}
 }
 
 body:graphql {
-  mutation CreateGame($game: GameInput!, $developer: String) {
-    createGame(game: $game, developer: $developer) {
+  mutation CreateGame($game: GameInput!) {
+    createGame(game: $game) {
       id
       name
       price
@@ -38,7 +38,6 @@ body:graphql:vars {
       "name": "Concord",
       "price": 39.99,
       "releaseDate": "2024-08-20T00:00:00.000Z"
-    },
-    "developer": "PlayStationStudios"
+    }
   }
 }

@@ -7,8 +7,8 @@ const {
     updateCustomer
 } = requestService;
 
-export const validateAndCreateCustomer = async (customer) => {
-    const createdUser = await validateAndCreateUser(customer);
+export const validateAndCreateCustomer = async ({ customer }) => {
+    const createdUser = await validateAndCreateUser({ user: customer });
     const createdCustomer = await createCustomer({
         ...customer,
         id: createdUser.id,
@@ -20,9 +20,9 @@ export const validateAndCreateCustomer = async (customer) => {
     };
 };
 
-export const validateAndUpdateCustomer = async (userId, customer) => {
+export const validateAndUpdateCustomer = async ({ userId, customer }) => {
     const [updatedUser, updatedCustomer] = await Promise.all([
-        validateAndUpdateUser(userId, customer),
+        validateAndUpdateUser({ userId, user: customer }),
         updateCustomer(userId, customer),
     ]);
 

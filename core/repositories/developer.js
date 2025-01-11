@@ -22,9 +22,9 @@ const validator = async validationData => {
 const validateDeveloper = async validationData =>
     await handleValidation(validator, validationData);
 
-export const validateAndCreateDeveloper = async developer => {
+export const validateAndCreateDeveloper = async ({ developer }) => {
     await validateDeveloper(developer);
-    const createdUser = await validateAndCreateUser(developer);
+    const createdUser = await validateAndCreateUser({ user: developer });
     const createdDeveloper = await createDeveloper({
         ...developer,
         id: createdUser.id
@@ -36,10 +36,10 @@ export const validateAndCreateDeveloper = async developer => {
     };
 }
 
-export const validateAndUpdateDeveloper = async (userId, developer) => {
+export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
     await validateDeveloper(developer);
     const [updatedUser, updatedDeveloper] = await Promise.all([
-        validateAndUpdateUser(userId, developer),
+        validateAndUpdateUser({ userId, user: developer }),
         updateDeveloper(userId, developer),
     ]);
 

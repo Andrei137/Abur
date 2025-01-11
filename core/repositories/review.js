@@ -49,7 +49,7 @@ const validator = async validationData => {
 const validateReview = async validationData =>
     await handleValidation(validator, validationData);
 
-export const validateAndCreateReview = async (review, game, userId) => {
+export const validateAndCreateReview = async ({ review, game, userId }) => {
     const gameId = (await findGameByField('name', game)).id;
     await validateReview({ rating: review.rating, gameId, userId });
 
@@ -60,12 +60,12 @@ export const validateAndCreateReview = async (review, game, userId) => {
     });
 };
 
-export const validateAndUpdateReview = async (id, userId, review) => {
+export const validateAndUpdateReview = async ({ id, userId, review }) => {
     await validateReview({ id, userId, rating: review.rating });
     return await updateReview(id, review);
 };
 
-export const validateAndDeleteReview = async (id, userId) => {
+export const validateAndDeleteReview = async ({ id, userId }) => {
     await validateReview({ id, userId });
     return await deleteReview(id);
 };
