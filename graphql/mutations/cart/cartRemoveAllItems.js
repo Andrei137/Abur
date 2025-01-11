@@ -1,14 +1,13 @@
-import {
-    GraphQLBoolean
-} from 'graphql';
+import cartType from '@types/entity/cart.js';
 import { deleteCartItems } from '@repositories/cart.js';
 
 const cartRemoveAllItemsMutationResolver = async (_, {}, { userId }) => {
-    return await deleteCartItems(userId);
+    await deleteCartItems(userId);
+    return { userId };
 }
 
 export default {
-    type: GraphQLBoolean,
+    type: cartType,
     args: {
     },
     resolve: cartRemoveAllItemsMutationResolver,

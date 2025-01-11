@@ -16,6 +16,23 @@ headers {
 
 body:graphql {
   mutation RemoveItem {
-    cartRemoveItem(id: 5)
+    cartRemoveItem(gameId: 2) {
+      customer {
+        firstName
+      }
+      items {
+          ... on Game {
+              id
+  						name
+          }
+          ... on DLC {
+              id
+              name
+            	baseGame {
+                name
+              }
+          }
+      }
+    }
   }
 }

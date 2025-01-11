@@ -2,7 +2,6 @@ import {
     GraphQLList,
     GraphQLObjectType,
 } from 'graphql';
-import gameType from './game.js';
 import customerType from './customer.js';
 import unionGameDLCType from './unionGameDLC.js'
 import requestService from '@services/request.js';

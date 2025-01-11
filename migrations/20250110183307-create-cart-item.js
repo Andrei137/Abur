@@ -40,6 +40,12 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addConstraint('CartItems', {
+      fields: ['gameId', 'customerId'],
+      type: 'unique',
+      name: 'unique_game_customer_cart'
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('CartItems');

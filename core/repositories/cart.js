@@ -2,6 +2,7 @@ import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
 
 const {
+    createCartItem,
     deleteCartItemByFields,
     deleteCartItemsByField,
 } = requestService;
@@ -21,6 +22,7 @@ const validator = async validationData => {
 
     // TODO: validate CREATE
     // item nu exista in db
+    // item este deja in library
     // item este deja adaugat in cart
 
     return null;
@@ -29,7 +31,20 @@ const validator = async validationData => {
 const validateCartItem = async validationData =>
     await handleValidation(validator, validationData);
 
+export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
+    // TODO
+    // validateCartItem();
+
+    await createCartItem({
+        gameId,
+        customerId,
+    });
+}
+
 export const deleteCartItems = async (customerId) => {
+    // TODO
+    // validateCartItem();
+
     return await deleteCartItemsByField('customerId', customerId);
 };
 

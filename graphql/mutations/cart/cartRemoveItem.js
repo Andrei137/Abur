@@ -1,15 +1,16 @@
 import {
-    GraphQLInt,
-    GraphQLBoolean
+    GraphQLInt
 } from 'graphql';
+import cartType from '@types/entity/cart.js';
 import { validateAndDeleteCartItem } from '@repositories/cart.js';
 
 const cartRemoveItemMutationResolver = async (_, { gameId }, { userId }) => {
-    return await validateAndDeleteCartItem({ gameId, customerId: userId });
+    await validateAndDeleteCartItem({ gameId, customerId: userId });
+    return { userId };
 }
 
 export default {
-    type: GraphQLBoolean,
+    type: cartType,
     args: {
         gameId: { type: GraphQLInt },
     },
