@@ -71,6 +71,13 @@ const deleteById = async (model, id) =>
 const deleteByField = async (model, field, value) =>
     await db[model].destroy({ where: { [field]: value } });
 
+const deleteByFields = async (model, fields, values) =>
+    await db[model].destroy({ where: fields.reduce((acc, field, index) => {
+        acc[field] = values[index];
+        return acc;
+      }, {}) 
+    })
+
 const generateFunctions = (model) => ({
     [`find${model}ById`]: async (id, props = {}) =>
         await findByField(model, 'id', id, props?.joinWith),
@@ -87,6 +94,7 @@ const generateFunctions = (model) => ({
     [`create${model}`]: async (body) => await create(model, body),
     [`update${model}`]: async (id, body) => await updateById(model, id, body),
     [`delete${model}`]: async (id) => await deleteById(model, id),
+    [`delete${model}ByFields`]: async (fields, values) => await deleteByFields(model, fields, values),
     [`delete${model}sByField`]: async (field, value) =>
         await deleteByField(model, field, value),
 });

@@ -6,6 +6,16 @@ meta {
 
 post {
   url: {{url}}
-  body: none
+  body: graphql
   auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  mutation Checkout {
+    
+  }
 }

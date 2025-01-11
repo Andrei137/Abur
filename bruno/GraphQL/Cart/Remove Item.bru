@@ -1,7 +1,7 @@
 meta {
-  name: Remove All
+  name: Remove Item
   type: graphql
-  seq: 4
+  seq: 3
 }
 
 post {
@@ -15,7 +15,7 @@ headers {
 }
 
 body:graphql {
-  mutation RemoveAll {
-    cartRemoveAllItems
+  mutation RemoveItem {
+    cartRemoveItem(id: 5)
   }
 }
