@@ -1,6 +1,6 @@
-import gameType from './game.js';
-import dlcType from './dlc.js';
 import { GraphQLUnionType } from "graphql";
+import dlcType from './dlc.js';
+import gameType from './game.js';
 
 export default new GraphQLUnionType({
     name: 'GameOrDlc',

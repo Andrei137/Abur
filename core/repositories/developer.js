@@ -2,7 +2,11 @@ import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
 import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
 
-const { createDeveloper, findDeveloperByField, updateDeveloper } = requestService;
+const {
+    createDeveloper,
+    updateDeveloper,
+    findDeveloperByField,
+} = requestService;
 
 const validator = async validationData => {
     const { studio = null } = validationData;
@@ -15,13 +19,12 @@ const validator = async validationData => {
     return null;
 };
 
-const validateDeveloper = async validationData => await handleValidation(validator, validationData);
+const validateDeveloper = async validationData =>
+    await handleValidation(validator, validationData);
 
-export const validateAndCreateDeveloper = async (developer) => {
+export const validateAndCreateDeveloper = async developer => {
     await validateDeveloper(developer);
-
     const createdUser = await validateAndCreateUser(developer);
-
     const createdDeveloper = await createDeveloper({
         ...developer,
         id: createdUser.id
@@ -35,9 +38,10 @@ export const validateAndCreateDeveloper = async (developer) => {
 
 export const validateAndUpdateDeveloper = async (userId, developer) => {
     await validateDeveloper(developer);
-
-    const updatedUser = await validateAndUpdateUser(userId, developer);
-    const updatedDeveloper = await updateDeveloper(userId, developer);
+    const [updatedUser, updatedDeveloper] = await Promise.all([
+        validateAndUpdateUser(userId, developer),
+        updateDeveloper(userId, developer),
+    ]);
 
     return {
         ...updatedUser,

@@ -1,6 +1,3 @@
-import gameType from './game.js';
-import developerType from './developer.js';
-import requestService from '@services/request.js';
 import {
     GraphQLInt,
     GraphQLFloat,
@@ -9,8 +6,14 @@ import {
     GraphQLObjectType,
 } from 'graphql';
 import GraphQLDate from 'graphql-date';
+import gameType from './game.js';
+import developerType from './developer.js';
+import requestService from '@services/request.js';
 
-const { findDeveloperById, findGameById } = requestService;
+const {
+    findGameById,
+    findDeveloperById,
+} = requestService;
 
 export default new GraphQLObjectType({
     name: 'DLC',
@@ -19,15 +22,14 @@ export default new GraphQLObjectType({
         name       : { type: new GraphQLNonNull(GraphQLString) },
         price      : { type: new GraphQLNonNull(GraphQLFloat) },
         releaseDate: { type: GraphQLDate },
-
-        developer: {
+        developer  : {
             type   : developerType,
             resolve: async dlc =>
                 await findDeveloperById(dlc.developerId, {
                     joinWith: 'User'
                 }),
         },
-        baseGame: {
+        baseGame   : {
             type: gameType,
             resolve: async dlc => await findGameById(dlc.baseGameId),
         }

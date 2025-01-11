@@ -1,18 +1,16 @@
-import dlcType from './game.js';
-import gameType from './game.js';
-import userType from './user.js';
-import { filterGames } from '@repositories/games.js';
 import {
     GraphQLInt,
     GraphQLList,
     GraphQLString,
-    GraphQLObjectType,
     GraphQLNonNull,
+    GraphQLObjectType,
 } from 'graphql';
+import { filterGames } from '@repositories/games.js';
+import dlcType from './game.js';
+import gameType from './game.js';
 
 export default new GraphQLObjectType({
     name: 'Developer',
-    interfaces: [userType],
     fields: () => ({
         id      : { type: new GraphQLNonNull(GraphQLInt) },
         username: { type: new GraphQLNonNull(GraphQLString) },
@@ -20,8 +18,7 @@ export default new GraphQLObjectType({
         email   : { type: new GraphQLNonNull(GraphQLString) },
         studio  : { type: new GraphQLNonNull(GraphQLString) },
         website : { type: GraphQLString },
-
-        games: {
+        games   : {
             type   : new GraphQLList(gameType),
             resolve: async developer => await filterGames({
                 type : 'game',
@@ -29,13 +26,5 @@ export default new GraphQLObjectType({
                 value: developer.id,
             }),
         },
-        dlcs: {
-            type: new GraphQLList(dlcType),
-            resolve: async developer => await filterGames({
-                type : 'dlc',
-                field: 'developerId',
-                value: developer.id,
-            }),
-        }
     }),
 });
