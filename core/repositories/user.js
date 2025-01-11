@@ -10,18 +10,23 @@ const {
 
 const validator = async validationData => {
     const {
+        id = null,
         username = null,
+        password = null,
         email = null
     } = validationData;
 
-    if (username !== null) {
-        const user = await findUserByField('username', username);
-        if (user) return 'username already exists';
+    if (id !== null) { // Update
+        if (username !== null && await findUserByField('username', username)) return 'username already exists';
+        if (email !== null && await findUserByField('email', email)) return 'email already exists';
     }
-
-    if (email !== null) {
-        const user = await findUserByField('email', email);
-        if (user) return 'email already exists';
+    else { // Create
+        if (username === null) return 'username cannot be null';
+        if (password === null) return 'password cannot be null';
+        if (email === null) return 'email cannot be null';
+        
+        if (await findUserByField('username', username)) return 'username already exists';
+        if (await findUserByField('email', email)) return 'email already exists';
     }
 
     return null;
@@ -39,7 +44,7 @@ export const validateAndCreateUser = async ({ user }) => {
 }
 
 export const validateAndUpdateUser = async ({ userId, user }) => {
-    await validateUser(user);
+    await validateUser({id: userId, user});
     return await updateUser(userId, {
         ...user,
         password: await encrypt(user.password),

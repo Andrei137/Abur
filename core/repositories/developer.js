@@ -9,11 +9,17 @@ const {
 } = requestService;
 
 const validator = async validationData => {
-    const { studio = null } = validationData;
+    const { 
+        id = null,
+        studio = null 
+    } = validationData;
 
-    if (studio !== null) {
-        const developer = await findDeveloperByField('studio', studio);
-        if (developer) return 'studio already exists';
+    if (id !== null) { // Update
+        if (studio !== null && await findDeveloperByField('studio', studio)) return 'studio already exists';
+    }
+    else { // Create
+        if (studio === null) return 'studio cannot be null';
+        if (studio !== null && await findDeveloperByField('studio', studio)) return 'studio already exists';
     }
 
     return null;
@@ -36,12 +42,10 @@ export const validateAndCreateDeveloper = async ({ developer }) => {
     };
 }
 
-export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
-    await validateDeveloper(developer);
-    const [updatedUser, updatedDeveloper] = await Promise.all([
-        validateAndUpdateUser({ userId, user: developer }),
-        updateDeveloper(userId, developer),
-    ]);
+export const validateAndUpdateDeveloper = async ({ userId, developer }) => {   
+    await validateDeveloper({id: userId, developer});
+    const updatedUser = await validateAndUpdateUser({ userId, user: developer });
+    const updatedDeveloper = await updateDeveloper(userId, developer);
 
     return {
         ...updatedUser,

@@ -1,5 +1,4 @@
 import requestService from '@services/request.js';
-import { handleValidation } from '@services/validation.js';
 import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
 
 const {
