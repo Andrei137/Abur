@@ -7,7 +7,7 @@ import {
     GraphQLObjectType,
 } from 'graphql';
 import GraphQLDate from 'graphql-date';
-import { findDLCsInLibraryByCustomerId } from '@repositories/games.js';
+import { findDLCsInLibraryByCustomerId } from '@repositories/dlcs.js';
 import dlcType from './dlc.js';
 import reviewType from './review.js';
 import developerType from './developer.js';

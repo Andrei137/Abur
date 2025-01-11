@@ -5,11 +5,9 @@ import dlcType from '@types/entity/dlc.js';
 const { findAllDLCs } = requestService;
 
 const dlcsQueryResolver = async () =>
-    (
-        await findAllDLCs({
-            joinWith: 'Game',
-        })
-    ).filter((dlc) => dlc.type === 'dlc');
+    await findAllDLCs({
+        joinWith: 'Game',
+    });
 
 export default {
     type: new GraphQLList(dlcType),

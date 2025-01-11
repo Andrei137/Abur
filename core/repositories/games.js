@@ -5,13 +5,11 @@ const {
     createGame,
     updateGame,
     deleteGame,
-    deleteDLCsByField,
-    createDLC,
-    findAllDLCs,
     findGameById,
     findAllGames,
     findGameByField,
     findGamesByField,
+    deleteDLCsByField,
     findCartItemsByField,
     findLibraryItemsByField,
 } = requestService;
@@ -41,6 +39,11 @@ const validator = async validationData => {
 export const validateGame = async validationData =>
     await handleValidation(validator, validationData);
 
+export const validateAndReadGame = async ({ id }) => {
+    await validateGame({ id });
+    return await findGameById(id);
+};
+
 export const validateAndCreateGame = async ({ game, userId }) => {
     await validateGame({ name: game.name, userId });
     return await createGame({
@@ -58,39 +61,26 @@ export const validateAndUpdateGame = async ({ id, game, userId }) => {
 export const validateAndDeleteGame = async ({ id, userId }) => {
     await validateGame({ id, userId });
     return await deleteDLCsByField('baseGameId', id) && await deleteGame(id);
-}
-
-export const filterGames = async (props) => {
-    const { type = 'game', field = null, value } = props;
-    return (
-        field ? await findGamesByField(field, value) : await findAllGames()
-    ).filter((game) => game.type === type);
 };
 
-const findByCustomerId = async (customerId, type, storedIn) => {
-    const fetchStoredItems = {
+export const filterGames = async ({ field = null, value } = {}) =>
+    (field ? await findGamesByField(field, value) : await findAllGames())
+    .filter(game => game.type === 'game');
+
+export const getIdsByCustomer = async (customerId, storedIn) => {
+    const fetchItems = {
         library: async () => await findLibraryItemsByField('customerId', customerId),
         cart: async () => await findCartItemsByField('customerId', customerId),
     };
-    const storedItems = fetchStoredItems[storedIn]
-        ? await fetchStoredItems[storedIn]()
-        : [];
-    const ownedGamesIds = storedItems.map((item) => item.gameId);
+    return (await fetchItems[storedIn]()).map(item => item.gameId);
+};
 
-    // TODO: refactoring
-    const allGames = type === 'game'
-        ? await filterGames({ type })
-        : (await findAllDLCs({
-            joinWith: 'Game',
-          })).filter((dlc) => dlc.type === 'dlc');
-    return allGames.filter((game) => ownedGamesIds.includes(game.id));
+const findByCustomerId = async (customerId, storedIn) => {
+    const ids = await getIdsByCustomer(customerId, storedIn);
+    return (await filterGames()).filter(game => ids.includes(game.id));
 };
 
 export const findGamesInLibraryByCustomerId = async customerId =>
-    await findByCustomerId(customerId, 'game', 'library');
-export const findDLCsInLibraryByCustomerId = async customerId =>
-    await findByCustomerId(customerId, 'dlc', 'library');
+    await findByCustomerId(customerId, 'library');
 export const findGamesInCartByCustomerId = async customerId =>
-    await findByCustomerId(customerId, 'game', 'cart');
-export const findDLCsInCartByCustomerId = async customerId =>
-    await findByCustomerId(customerId, 'dlc', 'cart');
+    await findByCustomerId(customerId, 'cart');

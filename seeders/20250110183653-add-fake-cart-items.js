@@ -6,50 +6,39 @@ module.exports = {
     const mockCartItems = [
       {
         customerId: 3,
-        gameId: 2,
-        createdAt: Date(),
-        updatedAt: Date(),
+        gameId    : 2,
+        createdAt : Date(),
+        updatedAt : Date(),
       },
       {
         customerId: 4,
-        gameId: 0,
-        purchaseDate: Date(),
-        createdAt: Date(),
-        updatedAt: Date(),
+        gameId    : 0,
+        createdAt : Date(),
+        updatedAt : Date(),
       },
       {
         customerId: 4,
-        gameId: 1,
-        purchaseDate: Date(),
-        createdAt: Date(),
-        updatedAt: Date(),
+        gameId    : 1,
+        createdAt : Date(),
+        updatedAt : Date(),
       },
       {
         customerId: 3,
-        gameId: 5,
-        purchaseDate: Date(),
-        createdAt: Date(),
-        updatedAt: Date(),
+        gameId    : 5,
+        createdAt : Date(),
+        updatedAt : Date(),
       },
     ];
 
-    await queryInterface.bulkInsert(
-      "CartItems",
-      mockCartItems.map((cartItem) => ({
-        customerId: cartItem.customerId,
-        gameId: cartItem.gameId,
-        createdAt: cartItem.createdAt,
-        updatedAt: cartItem.updatedAt,
-      }))
-    );
+    await queryInterface.bulkInsert("CartItems", mockCartItems.map(cartItem => ({
+      customerId: cartItem.customerId,
+      gameId    : cartItem.gameId,
+      createdAt : cartItem.createdAt,
+      updatedAt : cartItem.updatedAt,
+    })));
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("CartItems", null, {});
   }
 };

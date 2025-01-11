@@ -8,35 +8,32 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const mockDevelopers = [
       {
-        id: 0,
+        id       : 0,
         username : 'PlayStationStudios',
         password : await bcrypt.hash('PlayStationStudios1234', 5),
         email    : 'contact@sony.com',
         createdAt: Date(),
         updatedAt: Date(),
-
         studio   : 'PlayStation Studios',
         website  : 'https://www.playstation.com/playstation-studios/',
       },
       {
-        id: 1,
+        id       : 1,
         username : 'CD_PROJEKT_RED',
         password : await bcrypt.hash('CD_PROJEKT_RED1234', 5),
         email    : 'contact@cdpr.com',
         createdAt: Date(),
         updatedAt: Date(),
-
         studio   : 'CD PROJEKT RED',
         website  : 'https://www.cdprojektred.com/en',
       },
       {
-        id: 2,
+        id       : 2,
         username : 'SquareEnix',
         password : await bcrypt.hash('SquareEnix1234', 5),
         email    : 'contact@square.com',
         createdAt: Date(),
         updatedAt: Date(),
-
         studio   : 'Square Enix',
         website  : 'https://www.square-enix.com/',
       }
@@ -44,24 +41,22 @@ module.exports = {
 
     const mockCustomers = [
       {
-        id: 3,
+        id       : 3,
         username : 'FixBambucea',
         password : await bcrypt.hash('FixBambucea1234', 5),
         email    : 'FixBambucea@gmail.com',
         createdAt: Date(),
         updatedAt: Date(),
-
         firstName: 'Bambucea',
         lastName : 'Fix',
       },
       {
-        id: 4,
+        id       : 4,
         username : 'FixBambucea-2',
         password : await bcrypt.hash('FixBambucea1234', 5),
         email    : 'FixBambucea-2@gmail.com',
         createdAt: Date(),
         updatedAt: Date(),
-
         firstName: 'Bambucea-2',
         lastName : 'Fix',
       }
@@ -112,24 +107,11 @@ module.exports = {
       firstName: customer.firstName,
       lastName : customer.lastName,
     })));
-
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+    await queryInterface.bulkDelete('Developers', null, {});
+    await queryInterface.bulkDelete('Customers', null, {});
+    await queryInterface.bulkDelete('Users', null, {});
+  },
 };

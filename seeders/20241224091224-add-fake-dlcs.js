@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const mockDLCs = [
       {
-        id: 3,
+        id         : 3,
         developerId: 1,
         name       : 'Cyberpunk 2077 Phantom Liberty',
         price      : 29.99,
@@ -13,11 +13,10 @@ module.exports = {
         type       : 'dlc',
         createdAt  : Date(),
         updatedAt  : Date(),
-
         baseGameId : 0,
       },
       {
-        id: 4,
+        id         : 4,
         developerId: 2,
         name       : 'Life is Strange 2 Mascot Bundle',
         price      : 1.99,
@@ -25,11 +24,10 @@ module.exports = {
         type       : 'dlc',
         createdAt  : Date(),
         updatedAt  : Date(),
-
         baseGameId : 1,
       },
       {
-        id: 5,
+        id         : 5,
         developerId: 0,
         name       : 'God Of War Ragnarok Valhalla',
         price      : 0,
@@ -37,7 +35,6 @@ module.exports = {
         type       : 'dlc',
         createdAt  : Date(),
         updatedAt  : Date(),
-
         baseGameId : 2,
       },
     ];
@@ -60,11 +57,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('DLCs', null, {});
+    await queryInterface.bulkDelete('Games', null, {});
   }
 };

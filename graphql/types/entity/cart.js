@@ -2,18 +2,14 @@ import {
     GraphQLList,
     GraphQLObjectType,
 } from 'graphql';
-import {
-    findDLCsInCartByCustomerId,
-    findGamesInCartByCustomerId,
-} from '@repositories/games.js';
 import gameType from './game.js';
 import customerType from './customer.js';
 import unionGameDLCType from './unionGameDLC.js'
 import requestService from '@services/request.js';
+import { filterGames, getIdsByCustomer } from '@repositories/games.js';
 
 const {
     findAllDLCs,
-    findAllGames,
     findCustomerById,
 } = requestService;
 
@@ -30,16 +26,16 @@ export default new GraphQLObjectType({
         items   : {
             type: new GraphQLList(unionGameDLCType),
             resolve: async ({ userId }) => {
-                // TODO: refactoring
-                const gameIds = (await findGamesInCartByCustomerId(userId)).map(game => game.id);
-                const dlcIds = (await findDLCsInCartByCustomerId(userId)).map(dlc => dlc.id);
-                const games = await findAllGames();
-                const dlcs = await findAllDLCs({
-                    joinWith: 'Game'
-                });
+                const [ids, games, dlcs] = await Promise.all([
+                    getIdsByCustomer(userId, 'cart'),
+                    filterGames(),
+                    findAllDLCs({
+                        joinWith: 'Game'
+                    }),
+                ]);
                 return [
-                    ...games.filter(({ id }) => gameIds.includes(id)),
-                    ...dlcs.filter(({ id }) => dlcIds.includes(id)),
+                    ...games.filter(({ id }) => ids.includes(id)),
+                    ...dlcs.filter(({ id }) => ids.includes(id)),
                 ];
             },
         },

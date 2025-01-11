@@ -6,7 +6,6 @@ import {
     GraphQLObjectType,
 } from 'graphql';
 import { filterGames } from '@repositories/games.js';
-import dlcType from './game.js';
 import gameType from './game.js';
 
 export default new GraphQLObjectType({
@@ -21,7 +20,6 @@ export default new GraphQLObjectType({
         games   : {
             type   : new GraphQLList(gameType),
             resolve: async developer => await filterGames({
-                type : 'game',
                 field: 'developerId',
                 value: developer.id,
             }),

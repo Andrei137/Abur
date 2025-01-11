@@ -15,7 +15,7 @@ module.exports = {
         updatedAt  : Date(),
       },
       {
-        id: 1,
+        id         : 1,
         developerId: 2,
         name       : 'Life is Strange 2',
         price      : 31.96,
@@ -25,7 +25,7 @@ module.exports = {
         updatedAt  : Date(),
       },
       {
-        id: 2,
+        id         : 2,
         developerId: 0,
         name       : 'God of War Ragnarok',
         price      : 59.99,
@@ -40,11 +40,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+    await queryInterface.bulkDelete('Games', null, {});
+  },
 };

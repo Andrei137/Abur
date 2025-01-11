@@ -22,7 +22,7 @@ export default new GraphQLObjectType({
         games   : {
             type: new GraphQLList(gameType),
             resolve: async ({ userId }) =>
-                (await findGamesInLibraryByCustomerId(userId, 'game'))
+                (await findGamesInLibraryByCustomerId(userId))
                 .map(game => ({ ...game, userId })),
         },
     }),
