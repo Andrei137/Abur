@@ -15,6 +15,7 @@ const {
     deleteWishlistItemsByField,
     findWishlistItemByFields,
     deleteWishlistItemsByFields,
+    findAllGames,
 } = requestService;
 
 export const validateAndCreateWishlistItem = async ({ gameId, customerId }) => {
@@ -66,4 +67,17 @@ export const getWishlistItems = async (customerId) => {
 
 export const validateAndMoveItemToCart = async ({ gameId, customerId }) => {
     return await validateAndCreateCartItem({ gameId, customerId });
+}
+
+export const validateAndMoveAllItemsToCart = async (customerId) => {
+    const [ids, games] = await Promise.all([
+        getIdsByCustomer(customerId, 'wishlist'),
+        findAllGames()
+    ]);
+
+    await Promise.all(games
+        .filter(({ id }) => ids.includes(id))
+        .map(game => { validateAndCreateCartItem({ gameId: game.id, customerId })
+            .catch(() => null) })
+    );
 }

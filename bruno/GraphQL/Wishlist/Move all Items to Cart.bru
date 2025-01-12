@@ -16,6 +16,32 @@ headers {
 
 body:graphql {
   mutation MoveAllItemsToCart {
-    
+    wishlistAddAllItemsToCart {
+      totalItems
+      
+      customer {
+        firstName
+      }
+      
+      items {
+          ... on Game {
+              id
+  						name
+            	initialPrice
+            	price
+              discount
+          }
+          ... on DLC {
+              id
+              name
+            	initialPrice
+            	price
+              discount
+            	baseGame {
+                name
+              }
+          }
+      }
+    }
   }
 }
