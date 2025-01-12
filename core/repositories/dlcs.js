@@ -48,16 +48,22 @@ export const validateAndDeleteDLC = async ({ id, userId }) => {
     return (await deleteDLC(id)) && (await deleteGame(id));
 };
 
+export const findByDeveloperId = async developerId =>
+    (await findAllDLCs({
+        joinWith: 'Game'
+    })).filter(dlc => dlc.developerId === developerId);
+
 const findByCustomerId = async (customerId, storedIn) => {
     const ids = await getIdsByCustomer(customerId, storedIn);
     return (
         await findAllDLCs({
             joinWith: 'Game',
         })
-    ).filter((dlc) => ids.includes(dlc.id));
+    ).filter(dlc => ids.includes(dlc.id));
 };
 
 export const findDLCsInLibraryByCustomerId = async (customerId) =>
     await findByCustomerId(customerId, 'library');
+
 export const findDLCsInCartByCustomerId = async (customerId) =>
     await findByCustomerId(customerId, 'cart');

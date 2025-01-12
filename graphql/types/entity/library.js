@@ -25,7 +25,7 @@ export default new GraphQLObjectType({
             resolve: async ({ userId, sortOption, order }) => {
                 const games = (await findGamesInLibraryByCustomerId(userId))
                     .map(game => ({ ...game, userId }));
-                return sort(games, selectGameOption(sortOption), selectOrder(order));
+                return await sort(games, selectGameOption(sortOption), selectOrder(order));
             },
         },
     }),

@@ -1,10 +1,14 @@
 import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
 import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
+import { findByDeveloperId } from '@repositories/dlcs.js';
+import { filterGames } from '@repositories/games.js';
+import { sort, selectGameOption, selectOrder } from '@services/sorter.js';
 
 const {
     createDeveloper,
     updateDeveloper,
+    findGamesByField,
     findDeveloperByField,
 } = requestService;
 
@@ -52,3 +56,30 @@ export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
         ...updatedDeveloper,
     };
 }
+
+const getBestGameByOption = async (developerId, option) => (await sort(
+    await filterGames({
+        field: 'developerId',
+        value: developerId,
+    }),
+    selectGameOption(option),
+    'descending')
+)[0];
+
+const getBestDLCByOption = async (developerId, option) => (await sort(
+    await findByDeveloperId(developerId),
+    selectGameOption(option),
+    'descending')
+)[0];
+
+export const getBestRatedGame = async developerId =>
+    await getBestGameByOption(developerId, 'rating');
+
+export const getMostPopularGame = async developerId =>
+    await getBestGameByOption(developerId, 'popularity');
+
+export const getBestRatedDLC = async developerId =>
+    await getBestDLCByOption(developerId, 'rating');
+
+export const getMostPopularDLC = async developerId =>
+    await getBestDLCByOption(developerId, 'popularity');

@@ -70,7 +70,8 @@ export const validateAndUpdateGame = async ({ id, game, userId }) => {
 
 export const validateAndDeleteGame = async ({ id, userId }) => {
     await validateGame({ id, userId });
-    return (await deleteDLCsByField('baseGameId', id)) && (await deleteGame(id));
+    await deleteDLCsByField('baseGameId', id);
+    return await deleteGame(id);
 };
 
 export const filterGames = async ({ field = null, value } = {}) =>

@@ -5,8 +5,15 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
 } from 'graphql';
-import { filterGames } from '@repositories/games.js';
+import dlcType from './dlc.js';
 import gameType from './game.js';
+import { filterGames } from '@repositories/games.js';
+import {
+    getBestRatedDLC,
+    getBestRatedGame,
+    getMostPopularDLC,
+    getMostPopularGame,
+} from '@repositories/developer.js';
 
 export default new GraphQLObjectType({
     name: 'Developer',
@@ -23,6 +30,22 @@ export default new GraphQLObjectType({
                 field: 'developerId',
                 value: developer.id,
             }),
+        },
+        bestRatedGame: {
+            type: gameType,
+            resolve: async developer => await getBestRatedGame(developer.id),
+        },
+        mostPopularGame: {
+            type: gameType,
+            resolve: async developer => await getMostPopularGame(developer.id),
+        },
+        bestRatedDLC: {
+            type: dlcType,
+            resolve: async developer => await getBestRatedDLC(developer.id),
+        },
+        mostPopularGame: {
+            type: dlcType,
+            resolve: async developer => await getMostPopularDLC(developer.id),
         },
     }),
 });

@@ -40,8 +40,9 @@ export default new GraphQLObjectType({
         },
         price: {
             type: new GraphQLNonNull(GraphQLFloat),
-            resolve: (game) =>
-                game.price - game.price * (game.discountPercentage / 100),
+            resolve: (game) => game.discountPercentage === undefined
+                ? game.price
+                : game.price - game.price * (game.discountPercentage / 100),
         },
         discount: {
             type: new GraphQLNonNull(GraphQLString),

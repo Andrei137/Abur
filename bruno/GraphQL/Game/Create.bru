@@ -11,7 +11,7 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenPSStudio}}
+  Authorization: Bearer {{tokenSquareEnix}}
 }
 
 body:graphql {
@@ -20,6 +20,7 @@ body:graphql {
       id
       name
       price
+      initialPrice
       releaseDate
       developer {
         username
@@ -35,7 +36,7 @@ body:graphql {
 body:graphql:vars {
   {
     "game": {
-      "name": "Concord",
+      "name": "Final Fantasy VII Remake",
       "price": 39.99,
       "releaseDate": "2024-08-20T00:00:00.000Z"
     }
