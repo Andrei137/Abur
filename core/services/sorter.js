@@ -18,8 +18,8 @@ export const sort = async (list, getSortKey, order = 'ascending') => {
             }))
         )
     )
-    .sort((a, b) => (a.sortKey > b.sortKey ? 1 : -1))
-    .map(({ item }) => item);
+        .sort((a, b) => (a.sortKey > b.sortKey ? 1 : -1))
+        .map(({ item }) => item);
 
     return order === 'ascending' ? sortedList : sortedList.reverse();
 };

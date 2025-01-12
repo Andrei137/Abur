@@ -11,12 +11,13 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenSeb}}
+  ~Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
   mutation AddItem {
-    cartAddItem(gameId: 2) {
+    cartAddItem(gameId: 16) {
       totalPrice
       
       customer {

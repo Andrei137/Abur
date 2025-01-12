@@ -5,7 +5,6 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
 } from 'graphql';
-import dlcType from './dlc.js';
 import gameType from './game.js';
 import developerStatsType from './developerStats.js';
 import { filterGames } from '@repositories/games.js';

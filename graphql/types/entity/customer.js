@@ -8,6 +8,7 @@ import {
 import reviewType from './review.js';
 import libraryType from './library.js';
 import wishlistType from './wishlist.js';
+import customerStatsType from './customerStats.js';
 import requestService from '@services/request.js';
 
 const { findReviewsByField } = requestService;
@@ -23,16 +24,20 @@ export default new GraphQLObjectType({
         lastName : { type: GraphQLString },
         reviews  : {
             type: new GraphQLList(reviewType),
-            resolve: async customer =>
-                await findReviewsByField('customerId', customer.id),
+            resolve: async ({ id }) =>
+                await findReviewsByField('customerId', id),
         },
         library  : {
             type: libraryType,
-            resolve: customer => ({ userId: customer.id }),
+            resolve: ({ id }) => ({ userId: id }),
         },
         wishlist : {
             type: wishlistType,
-            resolve: customer => ({ userId: customer.id }),
+            resolve: ({ id }) => ({ userId: id }),
+        },
+        stats: {
+            type: customerStatsType,
+            resolve: ({ id }) => id,
         },
     }),
 });

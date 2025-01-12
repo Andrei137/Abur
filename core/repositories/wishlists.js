@@ -3,7 +3,7 @@ import {
     filterGames,
     getIdsByCustomer,
 } from '@repositories/games.js';
-import { validateAndCreateCartItem } from '@repositories/carts.js'; 
+import { validateAndCreateCartItem } from '@repositories/carts.js';
 import { sendError } from '@services/validation.js';
 
 const {

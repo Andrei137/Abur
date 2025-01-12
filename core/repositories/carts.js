@@ -118,12 +118,12 @@ export const validateAndCheckoutCart = async (customerId) => {
         cartDLCs.map(item => addItemToLibrary({ gameId: item.id, customerId }))
     );
 
-    // delete items from wishlist    
+    // delete items from wishlist
     await Promise.all(
         cartGames.map(item => deleteWishlistItemsByFields(['gameId', 'customerId'], [item.id, customerId])),
         cartDLCs.map(item => deleteWishlistItemsByFields(['gameId', 'customerId'], [item.id, customerId])),
     );
-    
+
     // delete all items from cart
     return await deleteCartItems({ userId: customerId });
 };
