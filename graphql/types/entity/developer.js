@@ -13,39 +13,40 @@ import {
     getBestRatedGame,
     getMostPopularDLC,
     getMostPopularGame,
-} from '@repositories/developer.js';
+} from '@repositories/developers.js';
 
 export default new GraphQLObjectType({
     name: 'Developer',
     fields: () => ({
-        id      : { type: new GraphQLNonNull(GraphQLInt) },
+        id: { type: new GraphQLNonNull(GraphQLInt) },
         username: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
-        email   : { type: new GraphQLNonNull(GraphQLString) },
-        studio  : { type: new GraphQLNonNull(GraphQLString) },
-        website : { type: GraphQLString },
-        games   : {
-            type   : new GraphQLList(gameType),
-            resolve: async developer => await filterGames({
-                field: 'developerId',
-                value: developer.id,
-            }),
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        studio: { type: new GraphQLNonNull(GraphQLString) },
+        website: { type: GraphQLString },
+        games: {
+            type: new GraphQLList(gameType),
+            resolve: async (developer) =>
+                await filterGames({
+                    field: 'developerId',
+                    value: developer.id,
+                }),
         },
         bestRatedGame: {
             type: gameType,
-            resolve: async developer => await getBestRatedGame(developer.id),
+            resolve: async (developer) => await getBestRatedGame(developer.id),
         },
         mostPopularGame: {
             type: gameType,
-            resolve: async developer => await getMostPopularGame(developer.id),
+            resolve: async (developer) => await getMostPopularGame(developer.id),
         },
         bestRatedDLC: {
             type: dlcType,
-            resolve: async developer => await getBestRatedDLC(developer.id),
+            resolve: async (developer) => await getBestRatedDLC(developer.id),
         },
         mostPopularDLC: {
             type: dlcType,
-            resolve: async developer => await getMostPopularDLC(developer.id),
+            resolve: async (developer) => await getMostPopularDLC(developer.id),
         },
     }),
 });

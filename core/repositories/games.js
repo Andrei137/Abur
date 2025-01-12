@@ -1,6 +1,6 @@
 import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
-import { findCustomersByGameInLibrary } from '@repositories/customer.js';
+import { findCustomersByGameInLibrary } from '@repositories/customers.js';
 
 const {
     createGame,

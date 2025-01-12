@@ -1,5 +1,5 @@
 import { GraphQLBoolean } from 'graphql';
-import { validateAndCheckoutCart } from '@repositories/cart.js';
+import { validateAndCheckoutCart } from '@repositories/carts.js';
 
 const cartCheckoutMutationResolver = async (_, __, { userId }) => {
     return await validateAndCheckoutCart(userId);

@@ -1,4 +1,4 @@
-import { validateAndDeleteReview } from '@repositories/review.js';
+import { validateAndDeleteReview } from '@repositories/reviews.js';
 import { GraphQLInt, GraphQLBoolean } from 'graphql';
 
 const deleteReviewMutationResolver = async (_, { id }, { userId }) =>

@@ -1,7 +1,7 @@
 import { GraphQLInt } from 'graphql';
 import reviewType from '@types/entity/review.js';
 import reviewInputType from '@types/input/review.js';
-import { validateAndUpdateReview } from '@repositories/review.js';
+import { validateAndUpdateReview } from '@repositories/reviews.js';
 
 const updateReviewMutationResolver = async (_, { id, review }, { userId }) =>
     await validateAndUpdateReview({ id, userId, review });

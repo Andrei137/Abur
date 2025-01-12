@@ -2,7 +2,7 @@ import requestService from '@services/request.js';
 import {
     validateAndCreateUser,
     validateAndUpdateUser,
-} from '@repositories/user.js';
+} from '@repositories/users.js';
 
 const {
     createCustomer,
