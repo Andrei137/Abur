@@ -3,12 +3,11 @@ import { handleValidation } from '@services/validation.js';
 import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
 import { findByDeveloperId } from '@repositories/dlcs.js';
 import { filterGames } from '@repositories/games.js';
-import { sort, selectGameOption, selectOrder } from '@services/sorter.js';
+import { sort, selectGameOption } from '@services/sorter.js';
 
 const {
     createDeveloper,
     updateDeveloper,
-    findGamesByField,
     findDeveloperByField,
 } = requestService;
 

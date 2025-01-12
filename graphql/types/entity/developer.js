@@ -43,7 +43,7 @@ export default new GraphQLObjectType({
             type: dlcType,
             resolve: async developer => await getBestRatedDLC(developer.id),
         },
-        mostPopularGame: {
+        mostPopularDLC: {
             type: dlcType,
             resolve: async developer => await getMostPopularDLC(developer.id),
         },

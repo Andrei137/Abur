@@ -1,10 +1,16 @@
 import requestService from '@services/request.js';
 import { addItemToLibrary } from '@repositories/library.js';
 import { findDLCsInCartByCustomerId } from '@repositories/dlcs.js';
-import { findGamesInCartByCustomerId, findGamesInLibraryByCustomerId } from '@repositories/games.js';
+import {
+    filterGames,
+    getIdsByCustomer,
+    findGamesInCartByCustomerId,
+    findGamesInLibraryByCustomerId
+} from '@repositories/games.js';
 import { sendError } from '@services/validation.js';
 
 const {
+    findAllDLCs,
     findGameById,
     createCartItem,
     findCartItemByFields,
@@ -33,8 +39,8 @@ export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
     return await createCartItem({ gameId, customerId });
 }
 
-export const deleteCartItems = async customerId => {
-    return await deleteCartItemsByField('customerId', customerId);
+export const deleteCartItems = async ({ userId }) => {
+    return await deleteCartItemsByField('customerId', userId);
 };
 
 export const validateAndDeleteCartItem = async ({ gameId, customerId }) => {
@@ -85,15 +91,23 @@ export const validateAndCheckoutCart = async (customerId) => {
     return await deleteCartItems(customerId);
 };
 
-export const getCartTotalPrice = async (customerId) => {
-    const [cartGames, cartDLCs ] = await Promise.all([
-        findGamesInCartByCustomerId(customerId),
-        findDLCsInCartByCustomerId(customerId)
+export const getCartItems = async customerId => {
+    const [ids, games, dlcs] = await Promise.all([
+        getIdsByCustomer(customerId, 'cart'),
+        filterGames(),
+        findAllDLCs({
+            joinWith: 'Game'
+        }),
     ]);
 
-    const cartItems = cartGames.concat(cartDLCs);
-    return cartItems.reduce((total, game) => {
+    return [
+        ...games.filter(({ id }) => ids.includes(id)),
+        ...dlcs.filter(({ id }) => ids.includes(id)),
+    ];
+};
+
+export const getCartTotalPrice = async (customerId) =>
+    (await getCartItems(customerId)).reduce((total, game) => {
         const discountedPrice = game.price - (game.price * (game.discountPercentage / 100));
         return total + discountedPrice;
     }, 0);
-};
