@@ -1,5 +1,5 @@
 import requestService from '@services/request.js';
-import handleValidation from '@services/validation.js';
+import { handleValidation, sendError } from '@services/validation.js';
 import { addItemToLibrary } from '@repositories/library.js';
 import { findDLCsInCartByCustomerId } from '@repositories/dlcs.js';
 import { findGamesInCartByCustomerId, findGamesInLibraryByCustomerId } from '@repositories/games.js';
@@ -13,9 +13,6 @@ const {
     deleteCartItemsByField,
     findLibraryItemsByFields
 } = requestService;
-
-const sendError = async errMsg =>
-    await handleValidation((_) => Promise.resolve(errMsg), {});
 
 export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
     // item NU exista in db

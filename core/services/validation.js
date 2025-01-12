@@ -1,4 +1,7 @@
-export default async (validator, validationData) => {
+export const handleValidation = async (validator, validationData) => {
     const err = await validator(validationData);
     if (err) throw new Error(err);
 };
+
+export const sendError = async errMsg =>
+    await handleValidation((_) => Promise.resolve(errMsg), {});

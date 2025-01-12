@@ -1,5 +1,5 @@
 import requestService from '@services/request.js';
-import handleValidation from '@services/validation.js';
+import { handleValidation } from '@services/validation.js';
 import { encrypt } from '@services/authentication.js';
 
 const {
