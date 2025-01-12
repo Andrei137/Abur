@@ -6,13 +6,22 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
 } from 'graphql';
-import GraphQLDate from 'graphql-date';
 import gameType from './game.js';
 import reviewType from './review.js';
 import developerType from './developer.js';
+import {
+    findGameSales,
+    findActualPrice,
+    findGameWishlists,
+    findGamePopularity,
+    findGameAverageRating,
+    findPurchaseDateByCustomer,
+} from '@repositories/games.js';
 import requestService from '@services/request.js';
+import { extractDate } from '@services/utils.js';
 
 const {
+    getActualPrice,
     findGameById,
     findDeveloperById,
     findReviewsByField,
@@ -23,21 +32,47 @@ export default new GraphQLObjectType({
     fields: () => ({
         id          : { type: new GraphQLNonNull(GraphQLInt) },
         name        : { type: new GraphQLNonNull(GraphQLString) },
+        releaseDate: {
+            type: GraphQLString,
+            resolve: (game) => extractDate(game.releaseDate),
+        },
+        purchaseDate: {
+            type: GraphQLString,
+            resolve: async dlc =>
+                dlc.userId === undefined
+                    ? null
+                    : extractDate(await findPurchaseDateByCustomer(dlc)),
+        },
         initialPrice: {
             type: new GraphQLNonNull(GraphQLFloat),
-            resolve: game => game.price,
+            resolve: dlc => dlc.price,
         },
         price: {
             type: new GraphQLNonNull(GraphQLFloat),
-            resolve: (game) => game.discountPercentage === undefined
-                ? game.price
-                : game.price - game.price * (game.discountPercentage / 100),
+            resolve: dlc => findActualPrice(dlc),
         },
-        discount    : {
+        discount: {
             type: new GraphQLNonNull(GraphQLString),
-            resolve: game => `${game.discountPercentage}%`,
+            resolve: dlc => dlc.discountPercentage
+                ? `${dlc.discountPercentage}%`
+                : '0%',
         },
-        releaseDate : { type: GraphQLDate },
+        sales: {
+            type: new GraphQLNonNull(GraphQLInt),
+            resolve: async dlc => await findGameSales(dlc.id),
+        },
+        wishlists: {
+            type: new GraphQLNonNull(GraphQLInt),
+            resolve: async dlc => await findGameWishlists(dlc.id),
+        },
+        popularity: {
+            type: new GraphQLNonNull(GraphQLInt),
+            resolve: async dlc => await findGamePopularity(dlc.id),
+        },
+        averageRating: {
+            type: GraphQLFloat,
+            resolve: async dlc => await findGameAverageRating(dlc.id),
+        },
         developer   : {
             type    : developerType,
             resolve: async dlc =>

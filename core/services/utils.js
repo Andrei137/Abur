@@ -1,0 +1,1 @@
+export const extractDate = date => date.toISOString().split('T')[0];

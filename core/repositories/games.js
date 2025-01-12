@@ -97,6 +97,10 @@ const findByCustomerId = async (customerId, storedIn) => {
     return (await filterGames()).filter((game) => ids.includes(game.id));
 };
 
+export const findActualPrice = game => game.discountPercentage
+    ? game.price - game.price * (game.discountPercentage / 100)
+    : game.price;
+
 export const findGamesInLibraryByCustomerId = async customerId =>
     await findByCustomerId(customerId, 'library');
 

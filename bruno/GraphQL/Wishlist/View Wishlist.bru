@@ -11,12 +11,12 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenAndrei}}
 }
 
 body:graphql {
-  query ViewWishlist {
-    wishlist {
+  query ViewWishlist($sortOption: String, $order: String) {
+    wishlist(sortOption: $sortOption, order: $order) {
       totalItems
       
       customer {
@@ -30,6 +30,15 @@ body:graphql {
             	initialPrice
             	price
               discount
+            	averageRating
+            	sales
+            	wishlists
+            	popularity
+            	releaseDate
+            	purchaseDate
+            	developer {
+                username
+              }
           }
           ... on DLC {
               id
@@ -37,6 +46,14 @@ body:graphql {
             	initialPrice
             	price
               discount
+            	averageRating
+            	sales
+            	wishlists
+            	popularity
+            	releaseDate
+            	developer {
+                username
+              }
             	baseGame {
                 name
               }
@@ -45,4 +62,11 @@ body:graphql {
     }
   }
   
+}
+
+body:graphql:vars {
+  {
+    "sortOption": "purchaseDate",
+    "order": "descending"
+  }
 }
