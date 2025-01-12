@@ -5,36 +5,20 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const mockCartItems = [
       {
-        customerId: 3,
-        gameId    : 2,
-        createdAt : Date(),
-        updatedAt : Date(),
-      },
-      {
-        customerId: 4,
-        gameId    : 0,
-        createdAt : Date(),
-        updatedAt : Date(),
-      },
-      {
-        customerId: 4,
+        customerId: 12,
         gameId    : 1,
-        createdAt : Date(),
-        updatedAt : Date(),
       },
       {
-        customerId: 3,
-        gameId    : 5,
-        createdAt : Date(),
-        updatedAt : Date(),
+        customerId: 13,
+        gameId    : 0,
       },
     ];
 
     await queryInterface.bulkInsert("CartItems", mockCartItems.map(cartItem => ({
       customerId: cartItem.customerId,
       gameId    : cartItem.gameId,
-      createdAt : cartItem.createdAt,
-      updatedAt : cartItem.updatedAt,
+      createdAt : Date(),
+      updatedAt : Date(),
     })));
   },
 

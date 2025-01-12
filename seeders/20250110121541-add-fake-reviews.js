@@ -6,53 +6,60 @@ module.exports = {
     const mockReviews = [
       {
         id: 0,
-        customerId: 3,
+        customerId: 10,
         gameId: 0,
-        rating: 9,
-        comment: "Most fun bugs",
-        createdAt: Date(),
-        updatedAt: Date(),
+        rating: 7,
+        comment: "Great game",
       },
       {
         id: 1,
-        customerId: 3,
+        customerId: 10,
         gameId: 1,
-        rating: 10,
-        comment: "Great game",
-        createdAt: Date(),
-        updatedAt: Date(),
+        rating: 9,
+        comment: "Most fun bugs",
       },
       {
         id: 2,
-        customerId: 4,
-        gameId: 0,
+        customerId: 11,
+        gameId: 9,
         rating: 8,
-        createdAt: Date(),
-        updatedAt: Date(),
+        comment: "Had fun with my brother Echo",
       },
       {
         id: 3,
-        customerId: 4,
+        customerId: 11,
         gameId: 2,
-        rating: 7,
-        comment: "meh",
-        createdAt: Date(),
-        updatedAt: Date(),
+        rating: 2,
+        comment: "Cam ciudata viata asta, nu prea mi-a placut",
+      },
+      {
+        id: 4,
+        customerId: 12,
+        gameId: 4,
+        rating: 10,
+        comment: "Played three days without sleep",
+      },
+      {
+        id: 5,
+        customerId: 13,
+        gameId: 6,
+        rating: 10,
+        comment: "Amazing",
+      },
+      {
+        id: 6,
+        customerId: 14,
+        gameId: 8,
+        rating: 6,
+        comment: "We got project with GTA VI before GTA VI",
       },
     ];
 
-    await queryInterface.bulkInsert(
-      "Reviews",
-      mockReviews.map((review) => ({
-        id: review.id,
-        customerId: review.customerId,
-        gameId: review.gameId,
-        rating: review.rating,
-        comment: review.comment,
-        createdAt: review.createdAt,
-        updatedAt: review.updatedAt,
-      }))
-    );
+    await queryInterface.bulkInsert("Reviews", mockReviews.map(review => ({
+      createdAt: Date(),
+      updatedAt: Date(),
+      ...review,
+    })));
   },
 
   async down(queryInterface, Sequelize) {
