@@ -25,6 +25,9 @@ export default (sequelize, DataTypes) => {
             Game.belongsToMany(models.Customer, {
                 through: 'CartItem',
             });
+            Game.belongsToMany(models.Customer, {
+                through: 'WishlistItem',
+            });
         }
     }
     Game.init(

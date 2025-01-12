@@ -18,6 +18,7 @@ const {
     deleteCartItemsByFields,
     deleteCartItemsByField,
     findLibraryItemsByFields,
+    deleteWishlistItemsByFields,
 } = requestService;
 
 export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
@@ -113,12 +114,18 @@ export const validateAndCheckoutCart = async (customerId) => {
 
     // add new items to library
     await Promise.all(
-        cartGames.map((item) => addItemToLibrary({ gameId: item.id, customerId })),
-        cartDLCs.map((item) => addItemToLibrary({ gameId: item.id, customerId }))
+        cartGames.map(item => addItemToLibrary({ gameId: item.id, customerId })),
+        cartDLCs.map(item => addItemToLibrary({ gameId: item.id, customerId }))
     );
 
+    // delete items from wishlist    
+    await Promise.all(
+        cartGames.map(item => deleteWishlistItemsByFields(['gameId', 'customerId'], [item.id, customerId])),
+        cartDLCs.map(item => deleteWishlistItemsByFields(['gameId', 'customerId'], [item.id, customerId])),
+    );
+    
     // delete all items from cart
-    return await deleteCartItems(customerId);
+    return await deleteCartItems({ userId: customerId });
 };
 
 export const getCartItems = async (customerId) => {
