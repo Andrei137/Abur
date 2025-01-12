@@ -16,7 +16,7 @@ const {
 } = requestService;
 
 export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
-    // 1. item trebuie sa existe in db
+    // 1. item NU exista in db
     if ((await findGameById(gameId)) === null) {
         await handleValidation((_) => Promise.resolve('select a valid item from the store'), {});
     }
