@@ -10,7 +10,8 @@ const {
     findAllDLCs,
     findWishlistItemsByFields,
     findLibraryItemsByFields,
-    createWishlistItem
+    createWishlistItem,
+    deleteWishlistItemsByField
 } = requestService;
 
 export const validateAndCreateWishlistItem = async ({ gameId, customerId }) => {
@@ -31,6 +32,10 @@ export const validateAndCreateWishlistItem = async ({ gameId, customerId }) => {
 
     return await createWishlistItem({ gameId, customerId });
 }
+
+export const deleteWishlistItems = async ({ userId }) => {
+    return await deleteWishlistItemsByField('customerId', userId);
+};
 
 export const getWishlistItems = async (customerId) => {
     const [ids, games, dlcs] = await Promise.all([
