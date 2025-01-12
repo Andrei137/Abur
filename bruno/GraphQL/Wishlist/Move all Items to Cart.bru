@@ -1,0 +1,21 @@
+meta {
+  name: Move all Items to Cart
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  mutation MoveAllItemsToCart {
+    
+  }
+}

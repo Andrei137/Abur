@@ -1,7 +1,7 @@
 meta {
-  name: Remove Item
+  name: Move Item to Cart
   type: graphql
-  seq: 4
+  seq: 5
 }
 
 post {
@@ -15,23 +15,29 @@ headers {
 }
 
 body:graphql {
-  mutation RemoveItem {
-    wishlistRemoveItem(gameId: 6) {
+  mutation MoveItemToCart {
+    wishlistMoveItemToCart(gameId: 5) {
       totalItems
-  
+      
       customer {
         firstName
       }
-  
+      
       items {
           ... on Game {
               id
-              name
+  						name
+            	initialPrice
+            	price
+              discount
           }
           ... on DLC {
               id
               name
-              baseGame {
+            	initialPrice
+            	price
+              discount
+            	baseGame {
                 name
               }
           }

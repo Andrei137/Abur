@@ -1,8 +1,9 @@
 import requestService from '@services/request.js';
 import {
     filterGames,
-    getIdsByCustomer
+    getIdsByCustomer,
 } from '@repositories/games.js';
+import { validateAndCreateCartItem } from '@repositories/carts.js'; 
 import { sendError } from '@services/validation.js';
 
 const {
@@ -61,4 +62,8 @@ export const getWishlistItems = async (customerId) => {
         ...games.filter(({ id }) => ids.includes(id)),
         ...dlcs.filter(({ id }) => ids.includes(id)),
     ];
+}
+
+export const validateAndMoveItemToCart = async ({ gameId, customerId }) => {
+    return await validateAndCreateCartItem({ gameId, customerId });
 }
