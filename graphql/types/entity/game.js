@@ -22,18 +22,29 @@ const {
 export default new GraphQLObjectType({
     name: 'Game',
     fields: () => ({
-        id         : { type: new GraphQLNonNull(GraphQLInt) },
-        name       : { type: new GraphQLNonNull(GraphQLString) },
-        price      : { type: new GraphQLNonNull(GraphQLFloat) },
-        releaseDate: { type: GraphQLDate },
-        developer  : {
+        id          : { type: new GraphQLNonNull(GraphQLInt) },
+        name        : { type: new GraphQLNonNull(GraphQLString) },
+        initialPrice: {
+            type: new GraphQLNonNull(GraphQLFloat),
+            resolve: game => game.price,
+        },
+        price       : { 
+            type: new GraphQLNonNull(GraphQLFloat),
+            resolve: game => game.price - (game.price * (game.percentage / 100)),
+        },
+        discount    : {
+            type: new GraphQLNonNull(GraphQLString),
+            resolve: game => `${game.percentage}%`,
+        },
+        releaseDate : { type: GraphQLDate },
+        developer   : {
             type: developerType,
             resolve: async game =>
                 await findDeveloperById(game.developerId, {
                     joinWith: 'User',
                 }),
         },
-        dlcs       : {
+        dlcs        : {
             type: new GraphQLList(dlcType),
             resolve: async game => game.userId === undefined
                     ? await findDLCsByField('baseGameId', game.id, {
@@ -43,7 +54,7 @@ export default new GraphQLObjectType({
                         dlc => dlc.baseGameId === game.id
                     )
         },
-        reviews    : {
+        reviews     : {
             type: new GraphQLList(reviewType),
             resolve: async game => await findReviewsByField('gameId', game.id),
         },

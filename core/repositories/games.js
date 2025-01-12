@@ -19,6 +19,7 @@ const validator = async validationData => {
     const {
         id = null,
         name = null,
+        percentage = null,
         type = 'game'
     } = validationData;
 
@@ -33,6 +34,9 @@ const validator = async validationData => {
     if (name !== null) {
         const game = await findGameByField('name', name);
         if (game) return 'Name already exists';
+    }
+    if (percentage !== null && !(0 <= percentage && percentage <= 100)) {
+        return 'Percentage must be between 0 and 100';
     }
     return null;
 };

@@ -18,6 +18,10 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
+      percentage: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       releaseDate: {
         type: Sequelize.DATE,
         allowNull: false,

@@ -24,10 +24,16 @@ body:graphql {
           ... on Game {
               id
   						name
+            	initialPrice
+            	price
+              discount
           }
           ... on DLC {
               id
               name
+            	initialPrice
+            	price
+              discount
             	baseGame {
                 name
               }

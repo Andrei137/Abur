@@ -1,5 +1,6 @@
 import GraphQLDate from 'graphql-date';
 import {
+    GraphQLInt,
     GraphQLFloat,
     GraphQLString,
     GraphQLInputObjectType,
@@ -10,6 +11,7 @@ export default new GraphQLInputObjectType({
     fields: {
         name       : { type: GraphQLString },
         price      : { type: GraphQLFloat },
+        percentage : { type: GraphQLInt },
         releaseDate: { type: GraphQLDate },
     },
 });

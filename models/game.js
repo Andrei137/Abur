@@ -34,6 +34,7 @@ export default (sequelize, DataTypes) => {
                 unique: true
             },
             price: DataTypes.DOUBLE,
+            percentage: DataTypes.INTEGER,
             releaseDate: DataTypes.DATE,
             developerId: DataTypes.INTEGER,
             type: DataTypes.STRING,
