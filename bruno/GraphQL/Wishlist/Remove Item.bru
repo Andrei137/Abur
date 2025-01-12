@@ -1,0 +1,41 @@
+meta {
+  name: Remove Item
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{tokenCustomer}}
+}
+
+body:graphql {
+  mutation RemoveItem {
+    wishlistRemoveItem(gameId: 5) {
+      totalItems
+  
+      customer {
+        firstName
+      }
+  
+      items {
+          ... on Game {
+              id
+              name
+          }
+          ... on DLC {
+              id
+              name
+              baseGame {
+                name
+              }
+          }
+      }
+    }
+  }
+}

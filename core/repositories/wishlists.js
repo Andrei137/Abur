@@ -11,7 +11,9 @@ const {
     findWishlistItemsByFields,
     findLibraryItemsByFields,
     createWishlistItem,
-    deleteWishlistItemsByField
+    deleteWishlistItemsByField,
+    findWishlistItemByFields,
+    deleteWishlistItemsByFields,
 } = requestService;
 
 export const validateAndCreateWishlistItem = async ({ gameId, customerId }) => {
@@ -35,6 +37,15 @@ export const validateAndCreateWishlistItem = async ({ gameId, customerId }) => {
 
 export const deleteWishlistItems = async ({ userId }) => {
     return await deleteWishlistItemsByField('customerId', userId);
+};
+
+export const validateAndDeleteWishlistItem = async ({ gameId, customerId }) => {
+    // item NU exista in wishlist
+    if ((await findWishlistItemByFields(['gameId', 'customerId'], [gameId, customerId])) === null) {
+        await sendError('This item is not in your wishlist');
+    }
+
+    return await deleteWishlistItemsByFields(['gameId', 'customerId'], [gameId, customerId]);
 };
 
 export const getWishlistItems = async (customerId) => {
