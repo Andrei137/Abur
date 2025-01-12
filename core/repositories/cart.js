@@ -3,7 +3,7 @@ import { handleValidation } from '@services/validation.js';
 
 const {
     createCartItem,
-    deleteCartItemByFields,
+    deleteCartItemsByFields,
     deleteCartItemsByField,
 } = requestService;
 
@@ -13,7 +13,6 @@ const validator = async validationData => {
         customerId = null
     } = validationData;
 
-    console.log(validationData);
     console.log(gameId);
     console.log(customerId);
 
@@ -32,24 +31,19 @@ const validateCartItem = async validationData =>
     await handleValidation(validator, validationData);
 
 export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
-    // TODO
-    // validateCartItem();
-
-    await createCartItem({
-        gameId,
-        customerId,
-    });
+    await validateCartItem({ gameId, customerId });
+    await createCartItem({ gameId, customerId });
 }
 
-export const deleteCartItems = async (customerId) => {
-    // TODO
-    // validateCartItem();
-
+export const validateAndDeleteCartItems = async (customerId) => {
+    await validateCartItem({ customerId });
     return await deleteCartItemsByField('customerId', customerId);
 };
 
 export const validateAndDeleteCartItem = async ({ gameId, customerId }) => {
-    // TODO
-    // validateCartItem();
-    return await deleteCartItemByFields(['gameId', 'customerId'], [gameId, customerId]);
+    await validateCartItem({ gameId, customerId });
+    return await deleteCartItemsByFields(
+        ['gameId', 'customerId'],
+        [gameId, customerId]
+    );
 };

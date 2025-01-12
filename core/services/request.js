@@ -1,5 +1,13 @@
 import db from '@models/index.js';
 
+const generateWhere = (fields, values) =>
+    fields !== null && values !== null && fields.length === values.length
+        ? fields.reduce((acc, field, index) => {
+            acc[field] = values[index];
+            return acc;
+        }, {})
+        : undefined;
+
 const spreadData = (data, joinWith) =>
     data
         ? {
@@ -7,6 +15,7 @@ const spreadData = (data, joinWith) =>
             ...(joinWith ? data.dataValues[joinWith].dataValues : {}),
         }
         : null;
+
 const findQuery = async (
     model,
     joinWith,
@@ -14,13 +23,6 @@ const findQuery = async (
     values = null,
     isSingle = false
 ) => {
-    const where =
-    fields !== null && values !== null && fields.length === values.length
-        ? fields.reduce((acc, field, index) => {
-            acc[field] = values[index];
-            return acc;
-        }, {})
-        : undefined;
     const include = joinWith
         ? [
             {
@@ -29,7 +31,7 @@ const findQuery = async (
             },
         ]
         : [];
-    const params = { where, include };
+    const params = { where: generateWhere(fields, values), include };
 
     const result = isSingle
         ? await db[model].findOne(params)
@@ -40,17 +42,20 @@ const findQuery = async (
         : result.map((data) => spreadData(data, joinWith));
 };
 
+const deleteQuery = async (model, fields = null, values = null) =>
+    await db[model].destroy({ where: generateWhere(fields, values) });
+
 const findByField = async (model, field, value, joinWith) =>
     await findQuery(model, joinWith, [field], [value], true);
 
 const findSomeByField = async (model, field, value, joinWith) =>
-    await findQuery(model, joinWith, [field], [value], false);
+    await findQuery(model, joinWith, [field], [value]);
 
 const findByFields = async (model, fields, values, joinWith) =>
     await findQuery(model, joinWith, fields, values, true);
 
 const findSomeByFields = async (model, fields, values, joinWith) =>
-    await findQuery(model, joinWith, fields, values, false);
+    await findQuery(model, joinWith, fields, values);
 
 const findAll = async (model, joinWith) => await findQuery(model, joinWith);
 
@@ -66,19 +71,15 @@ const updateById = async (model, id, body) => {
 };
 
 const deleteById = async (model, id) =>
-    await db[model].destroy({ where: { id } });
+    await deleteQuery(model, ['id'], [id]);
 
 const deleteByField = async (model, field, value) =>
-    await db[model].destroy({ where: { [field]: value } });
+    await deleteQuery(model, [field], [value]);
 
 const deleteByFields = async (model, fields, values) =>
-    await db[model].destroy({ where: fields.reduce((acc, field, index) => {
-        acc[field] = values[index];
-        return acc;
-      }, {}) 
-    })
+    await deleteQuery(model, fields, values);
 
-const generateFunctions = (model) => ({
+const generateFunctions = model => ({
     [`find${model}ById`]: async (id, props = {}) =>
         await findByField(model, 'id', id, props?.joinWith),
     [`find${model}ByField`]: async (field, value, props = {}) =>
@@ -91,12 +92,16 @@ const generateFunctions = (model) => ({
         await findSomeByFields(model, fields, values, props?.joinWith),
     [`findAll${model}s`]: async (props = {}) =>
         await findAll(model, props?.joinWith),
-    [`create${model}`]: async (body) => await create(model, body),
-    [`update${model}`]: async (id, body) => await updateById(model, id, body),
-    [`delete${model}`]: async (id) => await deleteById(model, id),
-    [`delete${model}ByFields`]: async (fields, values) => await deleteByFields(model, fields, values),
+    [`create${model}`]: async body =>
+        await create(model, body),
+    [`update${model}`]: async (id, body) =>
+        await updateById(model, id, body),
+    [`delete${model}`]: async id =>
+        await deleteById(model, id),
     [`delete${model}sByField`]: async (field, value) =>
         await deleteByField(model, field, value),
+    [`delete${model}sByFields`]: async (fields, values) =>
+        await deleteByFields(model, fields, values),
 });
 
 export default Object.keys(db).reduce((acc, model) => {
