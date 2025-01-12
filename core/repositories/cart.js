@@ -1,8 +1,8 @@
 import requestService from '@services/request.js';
-import { handleValidation, sendError } from '@services/validation.js';
 import { addItemToLibrary } from '@repositories/library.js';
 import { findDLCsInCartByCustomerId } from '@repositories/dlcs.js';
 import { findGamesInCartByCustomerId, findGamesInLibraryByCustomerId } from '@repositories/games.js';
+import { sendError } from '@services/validation.js';
 
 const {
     findGameById,
@@ -85,3 +85,15 @@ export const validateAndCheckoutCart = async (customerId) => {
     return await deleteCartItems(customerId);
 };
 
+export const getCartTotalPrice = async (customerId) => {
+    const [cartGames, cartDLCs ] = await Promise.all([
+        findGamesInCartByCustomerId(customerId),
+        findDLCsInCartByCustomerId(customerId)
+    ]);
+
+    const cartItems = cartGames.concat(cartDLCs);
+    return cartItems.reduce((total, game) => {
+        const discountedPrice = game.price - (game.price * (game.discountPercentage / 100));
+        return total + discountedPrice;
+      }, 0);
+};

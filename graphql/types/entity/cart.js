@@ -1,4 +1,6 @@
 import {
+    GraphQLNonNull,
+    GraphQLFloat,
     GraphQLList,
     GraphQLObjectType,
 } from 'graphql';
@@ -6,6 +8,7 @@ import customerType from './customer.js';
 import unionGameDLCType from './unionGameDLC.js'
 import requestService from '@services/request.js';
 import { filterGames, getIdsByCustomer } from '@repositories/games.js';
+import { getCartTotalPrice } from '@repositories/cart.js';
 
 const {
     findAllDLCs,
@@ -15,14 +18,14 @@ const {
 export default new GraphQLObjectType({
     name: 'Cart',
     fields: () => ({
-        customer: {
+        customer    : {
             type: customerType,
             resolve: async ({ userId }) =>
                 await findCustomerById(userId, {
                     joinWith: 'User',
                 }),
         },
-        items   : {
+        items       : {
             type: new GraphQLList(unionGameDLCType),
             resolve: async ({ userId }) => {
                 const [ids, games, dlcs] = await Promise.all([
@@ -37,6 +40,10 @@ export default new GraphQLObjectType({
                     ...dlcs.filter(({ id }) => ids.includes(id)),
                 ];
             },
+        },
+        totalPrice  : {
+            type: new GraphQLNonNull(GraphQLFloat),
+            resolve: async ({ userId }) => await getCartTotalPrice(userId),
         },
     }),
 });
