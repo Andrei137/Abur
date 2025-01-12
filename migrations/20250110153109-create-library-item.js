@@ -44,6 +44,12 @@ module.exports = {
         type: Sequelize.DATE,
       }
     });
+
+    await queryInterface.addConstraint('LibraryItems', {
+      fields: ['gameId', 'customerId'],
+      type: 'unique',
+      name: 'unique_game_customer_library'
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('LibraryItems');
