@@ -4,22 +4,26 @@ import {
     validateAndCreateUser,
     validateAndUpdateUser,
 } from '@repositories/users.js';
-import { findByDeveloperId } from '@repositories/dlcs.js';
+import { findDLCsByDeveloperId } from '@repositories/dlcs.js';
 import { filterGames } from '@repositories/games.js';
 import { sort, selectGameOption } from '@services/sorter.js';
 
-const { createDeveloper, updateDeveloper, findDeveloperByField } =
-  requestService;
+const {
+    createDeveloper,
+    updateDeveloper,
+    findDeveloperByField
+} = requestService;
 
 const validator = async (validationData) => {
     const { id = null, studio = null } = validationData;
 
     if (id !== null) {
-    // Update
+        // Update
         if (studio !== null && (await findDeveloperByField('studio', studio)))
             return 'studio already exists';
-    } else {
-    // Create
+    }
+    else {
+        // Create
         if (studio === null) return 'studio cannot be null';
         if (studio !== null && (await findDeveloperByField('studio', studio)))
             return 'studio already exists';
@@ -57,34 +61,36 @@ export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
 };
 
 const getBestGameByOption = async (developerId, option) =>
-    (
-        await sort(
-            await filterGames({
-                field: 'developerId',
-                value: developerId,
-            }),
-            selectGameOption(option),
-            'descending'
-        )
-    )[0];
+    (await sort(
+        await filterGames({
+            field: 'developerId',
+            value: developerId,
+        }),
+        selectGameOption(option),
+        'descending'
+    ))[0];
 
 const getBestDLCByOption = async (developerId, option) =>
-    (
-        await sort(
-            await findByDeveloperId(developerId),
-            selectGameOption(option),
-            'descending'
-        )
-    )[0];
+    (await sort(
+        await findDLCsByDeveloperId(developerId),
+        selectGameOption(option),
+        'descending'
+    ))[0];
 
-export const getBestRatedGame = async (developerId) =>
+export const getBestRatedGame = async developerId =>
     await getBestGameByOption(developerId, 'rating');
 
-export const getMostPopularGame = async (developerId) =>
+export const getBestSelledGame = async developerId =>
+    await getBestGameByOption(developerId, 'sales');
+
+export const getMostPopularGame = async developerId =>
     await getBestGameByOption(developerId, 'popularity');
 
-export const getBestRatedDLC = async (developerId) =>
+export const getBestRatedDLC = async developerId =>
     await getBestDLCByOption(developerId, 'rating');
 
-export const getMostPopularDLC = async (developerId) =>
+export const getBestSelledDLC = async developerId =>
+    await getBestDLCByOption(developerId, 'sales');
+
+export const getMostPopularDLC = async developerId =>
     await getBestDLCByOption(developerId, 'popularity');

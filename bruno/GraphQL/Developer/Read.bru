@@ -12,7 +12,7 @@ post {
 
 body:graphql {
   query GetDeveloper {
-    developer(id: 0) {
+    developer(id: 6) {
       id
       username
       password
@@ -30,17 +30,26 @@ body:graphql {
           price
         }
       }
-      bestRatedGame {
-        name
-      }
-      bestSelledGame {
-        name
-      }
-      bestRatedDLC {
-        name
-      }
-      bestSelledDLC {
-        name
+      stats {
+        bestRatedGame {
+          name
+        }
+        bestSelledGame {
+          name
+        }
+        mostPopularGame {
+          name
+        }
+        bestRatedDLC {
+          name
+        }
+        bestSelledDLC {
+          name
+        }
+        mostPopularDLC
+        {
+          name
+        }
       }
     }
   }

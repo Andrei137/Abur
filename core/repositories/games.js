@@ -1,6 +1,9 @@
 import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
-import { findCustomersByGameInLibrary } from '@repositories/customers.js';
+import {
+    findCustomersByGameInLibrary,
+    findCustomersByGameInWishlist,
+} from '@repositories/customers.js';
 
 const {
     createGame,
@@ -94,17 +97,20 @@ const findByCustomerId = async (customerId, storedIn) => {
     return (await filterGames()).filter((game) => ids.includes(game.id));
 };
 
-export const findGamesInLibraryByCustomerId = async (customerId) =>
+export const findGamesInLibraryByCustomerId = async customerId =>
     await findByCustomerId(customerId, 'library');
 
-export const findGamesInCartByCustomerId = async (customerId) =>
+export const findGamesInCartByCustomerId = async customerId =>
     await findByCustomerId(customerId, 'cart');
 
-export const findGamePopularity = async (gameId) => {
-    return (await findCustomersByGameInLibrary(gameId)).length;
-};
+export const findGameSales = async gameId =>
+    (await findCustomersByGameInLibrary(gameId)).length;
 
-export const findGameAverageRating = async (gameId) => {
+export const findGamePopularity = async gameId =>
+    (await findCustomersByGameInLibrary(gameId)).length +
+    (await findCustomersByGameInWishlist(gameId)).length;
+
+export const findGameAverageRating = async gameId => {
     const gameReviews = await findReviewsByField('gameId', gameId);
     return gameReviews.length !== 0
         ? gameReviews.reduce((acc, review) => acc + review.rating, 0) /

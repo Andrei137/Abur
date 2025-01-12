@@ -29,6 +29,16 @@ body:graphql {
           }
         }
       }
+      wishlist {
+        items {
+          ... on Game {
+  						name
+          }
+          ... on DLC {
+              name
+          }
+        }
+      }
     }
   }
 }

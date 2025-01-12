@@ -7,13 +7,8 @@ import {
 } from 'graphql';
 import dlcType from './dlc.js';
 import gameType from './game.js';
+import devStatsType from './devStats.js';
 import { filterGames } from '@repositories/games.js';
-import {
-    getBestRatedDLC,
-    getBestRatedGame,
-    getMostPopularDLC,
-    getMostPopularGame,
-} from '@repositories/developers.js';
 
 export default new GraphQLObjectType({
     name: 'Developer',
@@ -26,27 +21,15 @@ export default new GraphQLObjectType({
         website: { type: GraphQLString },
         games: {
             type: new GraphQLList(gameType),
-            resolve: async (developer) =>
+            resolve: async ({ id }) =>
                 await filterGames({
                     field: 'developerId',
-                    value: developer.id,
+                    value: id,
                 }),
         },
-        bestRatedGame: {
-            type: gameType,
-            resolve: async (developer) => await getBestRatedGame(developer.id),
-        },
-        mostPopularGame: {
-            type: gameType,
-            resolve: async (developer) => await getMostPopularGame(developer.id),
-        },
-        bestRatedDLC: {
-            type: dlcType,
-            resolve: async (developer) => await getBestRatedDLC(developer.id),
-        },
-        mostPopularDLC: {
-            type: dlcType,
-            resolve: async (developer) => await getMostPopularDLC(developer.id),
+        stats: {
+            type: devStatsType,
+            resolve: async ({ id }) => id,
         },
     }),
 });

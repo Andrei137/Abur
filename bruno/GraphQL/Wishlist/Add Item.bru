@@ -11,12 +11,12 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
   mutation AddItem {
-    wishlistAddItem(gameId: 5) {
+    wishlistAddItem(gameId: 20) {
       totalItems
       
       customer {

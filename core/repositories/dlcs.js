@@ -48,7 +48,7 @@ export const validateAndDeleteDLC = async ({ id, userId }) => {
     return (await deleteDLC(id)) && (await deleteGame(id));
 };
 
-export const findByDeveloperId = async developerId =>
+export const findDLCsByDeveloperId = async developerId =>
     (await findAllDLCs({
         joinWith: 'Game'
     })).filter(dlc => dlc.developerId === developerId);

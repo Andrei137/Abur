@@ -1,5 +1,6 @@
 import requestService from '@services/request.js';
 import {
+    findGameSales,
     findGamePopularity,
     findGameAverageRating,
     findPurchaseDateByCustomer,
@@ -16,32 +17,32 @@ export const sort = async (list, getSortKey, order = 'ascending') => {
             }))
         )
     )
-        .sort((a, b) => (a.sortKey > b.sortKey ? 1 : -1))
-        .map(({ item }) => item);
+    .sort((a, b) => (a.sortKey > b.sortKey ? 1 : -1))
+    .map(({ item }) => item);
 
     return order === 'ascending' ? sortedList : sortedList.reverse();
 };
 
 const gamesOptions = {
-    default: (game) => game.id,
-    name: (game) => game.name,
-    releaseDate: (game) => game.releaseDate,
-    developer: async (game) =>
+    default: game => game.id,
+    name: game => game.name,
+    releaseDate: game => game.releaseDate,
+    price: game => game.price,
+    discount: game => game.discountPercentage,
+    sales: async game => await findGameSales(game.id),
+    popularity: async game => await findGamePopularity(game.id),
+    rating: async game => await findGameAverageRating(game.id),
+    purchaseDate: async game => await findPurchaseDateByCustomer(game),
+    developer: async game =>
         (
             await findDeveloperById(game.developerId, {
                 joinWith: 'User',
             })
         ).username,
-    price: (game) => game.price,
-    discount: (game) => game.discountPercentage,
-    popularity: async (game) => await findGamePopularity(game.id),
-    rating: async (game) => await findGameAverageRating(game.id),
-    purchaseDate: async (game) => {
-        return await findPurchaseDateByCustomer(game);
-    },
 };
 
 export const selectGameOption = (key) =>
     gamesOptions[key] || gamesOptions.default;
+
 export const selectOrder = (order) =>
     order === 'descending' ? 'descending' : 'ascending';

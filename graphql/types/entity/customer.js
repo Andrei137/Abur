@@ -7,6 +7,7 @@ import {
 } from 'graphql';
 import reviewType from './review.js';
 import libraryType from './library.js';
+import wishlistType from './wishlist.js';
 import requestService from '@services/request.js';
 
 const { findReviewsByField } = requestService;
@@ -27,7 +28,11 @@ export default new GraphQLObjectType({
         },
         library  : {
             type: libraryType,
-            resolve: customer => ({ userId: customer.id })
+            resolve: customer => ({ userId: customer.id }),
+        },
+        wishlist : {
+            type: wishlistType,
+            resolve: customer => ({ userId: customer.id }),
         },
     }),
 });

@@ -8,7 +8,7 @@ const {
     createCustomer,
     updateCustomer,
     findLibraryItemsByField,
-    findCartItemsByField,
+    findWishlistItemsByField,
 } = requestService;
 
 export const validateAndCreateCustomer = async ({ customer }) => {
@@ -39,11 +39,13 @@ export const validateAndUpdateCustomer = async ({ userId, customer }) => {
 const getIdsByGame = async (gameId, storedIn) => {
     const fetchItems = {
         library: async () => await findLibraryItemsByField('gameId', gameId),
-        cart: async () => await findCartItemsByField('gameId', gameId),
+        wishlist: async () => await findWishlistItemsByField('gameId', gameId),
     };
     return (await fetchItems[storedIn]()).map((item) => item.customerId);
 };
 
-export const findCustomersByGameInLibrary = async (gameId) => {
-    return await getIdsByGame(gameId, 'library');
-};
+export const findCustomersByGameInLibrary = async gameId =>
+    await getIdsByGame(gameId, 'library');
+
+export const findCustomersByGameInWishlist = async gameId =>
+    await getIdsByGame(gameId, 'wishlist');

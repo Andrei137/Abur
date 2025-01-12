@@ -5,45 +5,27 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const mockWishlistItems = [
       {
-        customerId: 3,
+        customerId: 12,
+        gameId    : 6,
+      },
+      {
+        customerId: 13,
+        gameId    : 4,
+      },
+      {
+        customerId: 14,
         gameId    : 2,
-        createdAt : Date(),
-        updatedAt : Date(),
-      },
-      {
-        customerId: 4,
-        gameId    : 0,
-        createdAt : Date(),
-        updatedAt : Date(),
-      },
-      {
-        customerId: 4,
-        gameId    : 1,
-        createdAt : Date(),
-        updatedAt : Date(),
-      },
-      {
-        customerId: 3,
-        gameId    : 5,
-        createdAt : Date(),
-        updatedAt : Date(),
       },
     ];
 
     await queryInterface.bulkInsert("WishlistItems", mockWishlistItems.map(wishlistItem => ({
-      customerId: wishlistItem.customerId,
-      gameId    : wishlistItem.gameId,
-      createdAt : wishlistItem.createdAt,
-      updatedAt : wishlistItem.updatedAt,
+      createdAt : Date(),
+      updatedAt : Date(),
+      ...wishlistItem,
     })));
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("WishlistItems", null, {});
   }
 };

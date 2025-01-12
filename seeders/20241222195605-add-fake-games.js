@@ -71,6 +71,14 @@ module.exports = {
         price             : 28.99,
         releaseDate       : new Date('2015-09-22'),
       },
+      {
+        id                : 20,
+        developerId       : 6,
+        name              : 'Sekiro Shadows Die Twice',
+        discountPercentage: 20,
+        price             : 59.99,
+        releaseDate       : new Date('2019-03-22'),
+      }
     ];
 
     await queryInterface.bulkInsert('Games', mockGames.map(game => ({
