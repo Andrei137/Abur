@@ -1,9 +1,14 @@
 import requestService from '@services/request.js';
-import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
+import {
+    validateAndCreateUser,
+    validateAndUpdateUser,
+} from '@repositories/user.js';
 
 const {
     createCustomer,
-    updateCustomer
+    updateCustomer,
+    findLibraryItemsByField,
+    findCartItemsByField,
 } = requestService;
 
 export const validateAndCreateCustomer = async ({ customer }) => {
@@ -29,4 +34,16 @@ export const validateAndUpdateCustomer = async ({ userId, customer }) => {
         ...updatedUser,
         ...updatedCustomer,
     };
-}
+};
+
+const getIdsByGame = async (gameId, storedIn) => {
+    const fetchItems = {
+        library: async () => await findLibraryItemsByField('gameId', gameId),
+        cart: async () => await findCartItemsByField('gameId', gameId),
+    };
+    return (await fetchItems[storedIn]()).map((item) => item.customerId);
+};
+
+export const findCustomersByGameInLibrary = async (gameId) => {
+    return await getIdsByGame(gameId, 'library');
+};

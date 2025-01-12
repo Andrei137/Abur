@@ -1,4 +1,4 @@
-import { GraphQLUnionType } from "graphql";
+import { GraphQLUnionType } from 'graphql';
 import dlcType from './dlc.js';
 import gameType from './game.js';
 

@@ -1,5 +1,4 @@
 import requestService from '@services/request.js';
-import { handleValidation } from '@services/validation.js';
 import { validateGame, getIdsByCustomer } from './games.js';
 
 const {
@@ -13,7 +12,7 @@ const {
     findGameByField,
 } = requestService;
 
-const validateDLC = async validationData =>
+const validateDLC = async (validationData) =>
     await validateGame({ ...validationData, type: 'dlc' });
 
 export const validateAndCreateDLC = async ({ dlc, forGame, userId }) => {
@@ -46,17 +45,19 @@ export const validateAndUpdateDLC = async ({ id, dlc, userId }) => {
 
 export const validateAndDeleteDLC = async ({ id, userId }) => {
     await validateDLC({ id, userId });
-    return await deleteDLC(id) && await deleteGame(id);
+    return (await deleteDLC(id)) && (await deleteGame(id));
 };
 
 const findByCustomerId = async (customerId, storedIn) => {
     const ids = await getIdsByCustomer(customerId, storedIn);
-    return (await findAllDLCs({
-        joinWith: 'Game',
-    })).filter(dlc => ids.includes(dlc.id));
-}
+    return (
+        await findAllDLCs({
+            joinWith: 'Game',
+        })
+    ).filter((dlc) => ids.includes(dlc.id));
+};
 
-export const findDLCsInLibraryByCustomerId = async customerId =>
+export const findDLCsInLibraryByCustomerId = async (customerId) =>
     await findByCustomerId(customerId, 'library');
-export const findDLCsInCartByCustomerId = async customerId =>
+export const findDLCsInCartByCustomerId = async (customerId) =>
     await findByCustomerId(customerId, 'cart');

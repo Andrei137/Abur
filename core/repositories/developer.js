@@ -43,7 +43,7 @@ export const validateAndCreateDeveloper = async ({ developer }) => {
 }
 
 export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
-    await validateDeveloper({id: userId, developer});
+    await validateDeveloper({ id: userId, developer });
     const updatedUser = await validateAndUpdateUser({ userId, user: developer });
     const updatedDeveloper = await updateDeveloper(userId, developer);
 

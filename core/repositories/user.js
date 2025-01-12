@@ -44,7 +44,7 @@ export const validateAndCreateUser = async ({ user }) => {
 }
 
 export const validateAndUpdateUser = async ({ userId, user }) => {
-    await validateUser({id: userId, user});
+    await validateUser({ id: userId, user });
     return await updateUser(userId, {
         ...user,
         password: await encrypt(user.password),

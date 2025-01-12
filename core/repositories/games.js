@@ -1,5 +1,6 @@
 import requestService from '@services/request.js';
 import { handleValidation } from '@services/validation.js';
+import { findCustomersByGameInLibrary } from '@repositories/customer.js';
 
 const {
     createGame,
@@ -12,14 +13,16 @@ const {
     deleteDLCsByField,
     findCartItemsByField,
     findLibraryItemsByField,
+    findReviewsByField,
+    findLibraryItemByFields,
 } = requestService;
 
-const validator = async validationData => {
+const validator = async (validationData) => {
     const {
         id = null,
         name = null,
         discountPercentage = null,
-        type = 'game'
+        type = 'game',
     } = validationData;
 
     if (id !== null) {
@@ -34,13 +37,16 @@ const validator = async validationData => {
         const game = await findGameByField('name', name);
         if (game) return 'Name already exists';
     }
-    if (discountPercentage !== null && !(0 <= discountPercentage && discountPercentage <= 100)) {
+    if (
+        discountPercentage !== null &&
+    !(0 <= discountPercentage && discountPercentage <= 100)
+    ) {
         return 'Percentage must be between 0 and 100';
     }
     return null;
 };
 
-export const validateGame = async validationData =>
+export const validateGame = async (validationData) =>
     await handleValidation(validator, validationData);
 
 export const validateAndReadGame = async ({ id }) => {
@@ -64,27 +70,46 @@ export const validateAndUpdateGame = async ({ id, game, userId }) => {
 
 export const validateAndDeleteGame = async ({ id, userId }) => {
     await validateGame({ id, userId });
-    return await deleteDLCsByField('baseGameId', id) && await deleteGame(id);
+    return (await deleteDLCsByField('baseGameId', id)) && (await deleteGame(id));
 };
 
 export const filterGames = async ({ field = null, value } = {}) =>
-    (field ? await findGamesByField(field, value) : await findAllGames())
-    .filter(game => game.type === 'game');
+    (field ? await findGamesByField(field, value) : await findAllGames()).filter(
+        (game) => game.type === 'game'
+    );
 
 export const getIdsByCustomer = async (customerId, storedIn) => {
     const fetchItems = {
-        library: async () => await findLibraryItemsByField('customerId', customerId),
+        library: async () =>
+            await findLibraryItemsByField('customerId', customerId),
         cart: async () => await findCartItemsByField('customerId', customerId),
     };
-    return (await fetchItems[storedIn]()).map(item => item.gameId);
+    return (await fetchItems[storedIn]()).map((item) => item.gameId);
 };
 
 const findByCustomerId = async (customerId, storedIn) => {
     const ids = await getIdsByCustomer(customerId, storedIn);
-    return (await filterGames()).filter(game => ids.includes(game.id));
+    return (await filterGames()).filter((game) => ids.includes(game.id));
 };
 
-export const findGamesInLibraryByCustomerId = async customerId =>
+export const findGamesInLibraryByCustomerId = async (customerId) =>
     await findByCustomerId(customerId, 'library');
-export const findGamesInCartByCustomerId = async customerId =>
+
+export const findGamesInCartByCustomerId = async (customerId) =>
     await findByCustomerId(customerId, 'cart');
+
+export const findGamePopularity = async (gameId) => {
+    return (await findCustomersByGameInLibrary(gameId)).length;
+};
+
+export const findGameAverageRating = async (gameId) => {
+    const gameReviews = await findReviewsByField('gameId', gameId);
+    return gameReviews.length !== 0
+        ? gameReviews.reduce((acc, review) => acc + review.rating, 0) /
+        gameReviews.length
+        : 0;
+};
+
+export const findPurchaseDateByCustomer = async ({ id, userId }) =>
+    (await findLibraryItemByFields(['customerId', 'gameId'], [userId, id]))
+        .purchaseDate;

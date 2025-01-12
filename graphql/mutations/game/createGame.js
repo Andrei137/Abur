@@ -1,4 +1,3 @@
-import { GraphQLString } from 'graphql';
 import gameType from '@types/entity/game.js';
 import gameInputType from '@types/input/game.js';
 import { validateAndCreateGame } from '@repositories/games.js';

@@ -95,5 +95,5 @@ export const getCartTotalPrice = async (customerId) => {
     return cartItems.reduce((total, game) => {
         const discountedPrice = game.price - (game.price * (game.discountPercentage / 100));
         return total + discountedPrice;
-      }, 0);
+    }, 0);
 };

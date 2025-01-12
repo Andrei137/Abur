@@ -24,7 +24,7 @@ export default new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLFloat),
             resolve: async game => game.price,
         },
-        price       : { 
+        price       : {
             type: new GraphQLNonNull(GraphQLFloat),
             resolve: async game => game.price - (game.price * (game.discountPercentage / 100)),
         },
