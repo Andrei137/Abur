@@ -1,6 +1,7 @@
 import requestService from '@services/request.js';
 import {
     findGameSales,
+    findGameWishlists,
     findGamePopularity,
     findGameAverageRating,
     findPurchaseDateByCustomer,
@@ -26,12 +27,13 @@ export const sort = async (list, getSortKey, order = 'ascending') => {
 const gamesOptions = {
     default: game => game.id,
     name: game => game.name,
-    releaseDate: game => game.releaseDate,
     price: game => game.price,
+    releaseDate: game => game.releaseDate,
     discount: game => game.discountPercentage,
     sales: async game => await findGameSales(game.id),
-    popularity: async game => await findGamePopularity(game.id),
+    wishlists: async game => await findGameWishlists(game.id),
     rating: async game => await findGameAverageRating(game.id),
+    popularity: async game => await findGamePopularity(game.id),
     purchaseDate: async game => await findPurchaseDateByCustomer(game),
     developer: async game =>
         (

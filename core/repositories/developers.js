@@ -86,6 +86,9 @@ export const getBestSelledGame = async developerId =>
 export const getMostPopularGame = async developerId =>
     await getBestGameByOption(developerId, 'popularity');
 
+export const getMostWishlistedGame = async developerId =>
+    await getBestGameByOption(developerId, 'wishlists');
+
 export const getBestRatedDLC = async developerId =>
     await getBestDLCByOption(developerId, 'rating');
 
@@ -94,3 +97,6 @@ export const getBestSelledDLC = async developerId =>
 
 export const getMostPopularDLC = async developerId =>
     await getBestDLCByOption(developerId, 'popularity');
+
+export const getMostWishlistedDLC = async developerId =>
+    await getBestDLCByOption(developerId, 'wishlists');

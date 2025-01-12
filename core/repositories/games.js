@@ -106,6 +106,9 @@ export const findGamesInCartByCustomerId = async customerId =>
 export const findGameSales = async gameId =>
     (await findCustomersByGameInLibrary(gameId)).length;
 
+export const findGameWishlists = async gameId =>
+    (await findCustomersByGameInWishlist(gameId)).length;
+
 export const findGamePopularity = async gameId =>
     (await findCustomersByGameInLibrary(gameId)).length +
     (await findCustomersByGameInWishlist(gameId)).length;

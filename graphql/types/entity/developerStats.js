@@ -5,9 +5,11 @@ import {
     getBestRatedDLC,
     getBestSelledDLC,
     getMostPopularDLC,
+    getMostWishlistedDLC,
     getBestRatedGame,
     getBestSelledGame,
     getMostPopularGame,
+    getMostWishlistedGame,
 } from '@repositories/developers.js';
 
 export default new GraphQLObjectType({
@@ -25,6 +27,10 @@ export default new GraphQLObjectType({
       type: gameType,
       resolve: async id => await getMostPopularGame(id),
     },
+    mostWishlistedGame: {
+      type: gameType,
+      resolve: async id => await getMostWishlistedGame(id),
+    },
     bestRatedDLC: {
       type: dlcType,
       resolve: async id => await getBestRatedDLC(id),
@@ -36,6 +42,10 @@ export default new GraphQLObjectType({
     mostPopularDLC: {
       type: dlcType,
       resolve: async id => await getMostPopularDLC(id),
+    },
+    mostWishlistedDLC: {
+      type: dlcType,
+      resolve: async id => await getMostWishlistedDLC(id),
     },
   }),
 });

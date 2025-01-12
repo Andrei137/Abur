@@ -7,7 +7,7 @@ import {
 } from 'graphql';
 import dlcType from './dlc.js';
 import gameType from './game.js';
-import devStatsType from './devStats.js';
+import developerStatsType from './developerStats.js';
 import { filterGames } from '@repositories/games.js';
 
 export default new GraphQLObjectType({
@@ -28,7 +28,7 @@ export default new GraphQLObjectType({
                 }),
         },
         stats: {
-            type: devStatsType,
+            type: developerStatsType,
             resolve: async ({ id }) => id,
         },
     }),
