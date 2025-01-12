@@ -1,0 +1,67 @@
+meta {
+  name: View Store
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: none
+}
+
+headers {
+  Authorization: {{tokenAndrei}}
+  ~Authorization: {{tokenSquareEnix}}
+}
+
+body:graphql {
+  query ViewStore($sortOption: String, $order: String, $seeOwned: Boolean) {
+    store(sortOption: $sortOption, order: $order, seeOwned: $seeOwned) {
+      items {
+          ... on Game {
+              id
+  						name
+            	initialPrice
+            	price
+              discount
+            	averageRating
+            	sales
+            	wishlists
+            	popularity
+            	releaseDate
+            	developer {
+                studio
+              }
+          }
+          ... on DLC {
+              id
+              name
+            	initialPrice
+            	price
+              discount
+            	averageRating
+            	sales
+            	wishlists
+            	popularity
+            	releaseDate
+            	developer {
+                studio
+              }
+            	baseGame {
+                name
+              }
+          }
+      }
+    }
+  }
+  
+}
+
+body:graphql:vars {
+  {
+    "sortOption": "default",
+    "order": "descendingg",
+    "seeOwned": true
+  }
+}
