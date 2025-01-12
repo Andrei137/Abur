@@ -16,13 +16,7 @@ const spreadData = (data, joinWith) =>
         }
         : null;
 
-const findQuery = async (
-    model,
-    joinWith,
-    fields = null,
-    values = null,
-    isSingle = false
-) => {
+const findQuery = async (model, joinWith, fields = null, values = null, isSingle = false) => {
     const include = joinWith
         ? [
             {
@@ -45,22 +39,6 @@ const findQuery = async (
 const deleteQuery = async (model, fields = null, values = null) =>
     await db[model].destroy({ where: generateWhere(fields, values) });
 
-const findByField = async (model, field, value, joinWith) =>
-    await findQuery(model, joinWith, [field], [value], true);
-
-const findSomeByField = async (model, field, value, joinWith) =>
-    await findQuery(model, joinWith, [field], [value]);
-
-const findByFields = async (model, fields, values, joinWith) =>
-    await findQuery(model, joinWith, fields, values, true);
-
-const findSomeByFields = async (model, fields, values, joinWith) =>
-    await findQuery(model, joinWith, fields, values);
-
-const findAll = async (model, joinWith) => await findQuery(model, joinWith);
-
-const create = async (model, body) => spreadData(await db[model].create(body));
-
 const updateById = async (model, id, body) => {
     const where = { id };
     const entity = await db[model].findOne({ where });
@@ -70,38 +48,29 @@ const updateById = async (model, id, body) => {
     return spreadData(await entity.update(body));
 };
 
-const deleteById = async (model, id) =>
-    await deleteQuery(model, ['id'], [id]);
-
-const deleteByField = async (model, field, value) =>
-    await deleteQuery(model, [field], [value]);
-
-const deleteByFields = async (model, fields, values) =>
-    await deleteQuery(model, fields, values);
-
 const generateFunctions = model => ({
     [`find${model}ById`]: async (id, props = {}) =>
-        await findByField(model, 'id', id, props?.joinWith),
+        await findQuery(model, props?.joinWith, ['id'], [id], true),
     [`find${model}ByField`]: async (field, value, props = {}) =>
-        await findByField(model, field, value, props?.joinWith),
+        await findQuery(model, props?.joinWith, [field], [value], true),
     [`find${model}sByField`]: async (field, value, props = {}) =>
-        await findSomeByField(model, field, value, props?.joinWith),
+        await findQuery(model, props?.joinWith, [field], [value]),
     [`find${model}ByFields`]: async (fields, values, props = {}) =>
-        await findByFields(model, fields, values, props?.joinWith),
+        await findQuery(model, props?.joinWith, fields, values, true),
     [`find${model}sByFields`]: async (fields, values, props = {}) =>
-        await findSomeByFields(model, fields, values, props?.joinWith),
+        await findQuery(model, props?.joinWith, fields, values),
     [`findAll${model}s`]: async (props = {}) =>
-        await findAll(model, props?.joinWith),
+        await findQuery(model, props?.joinWith),
     [`create${model}`]: async body =>
-        await create(model, body),
+        spreadData(await db[model].create(body)),
     [`update${model}`]: async (id, body) =>
         await updateById(model, id, body),
     [`delete${model}`]: async id =>
-        await deleteById(model, id),
+        await deleteQuery(model, ['id'], [id]),
     [`delete${model}sByField`]: async (field, value) =>
-        await deleteByField(model, field, value),
+        await deleteQuery(model, [field], [value]),
     [`delete${model}sByFields`]: async (fields, values) =>
-        await deleteByFields(model, fields, values),
+        await deleteQuery(model, fields, values),
 });
 
 export default Object.keys(db).reduce((acc, model) => {

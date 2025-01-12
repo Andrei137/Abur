@@ -1,8 +1,8 @@
 import cartType from '@types/entity/cart.js';
-import { validateAndDeleteCartItems } from '@repositories/cart.js';
+import { deleteCartItems } from '@repositories/cart.js';
 
 const cartRemoveAllItemsMutationResolver = async (_, {}, { userId }) => {
-    await validateAndDeleteCartItems({ userId });
+    await deleteCartItems({ userId });
     return { userId };
 }
 
