@@ -12,11 +12,11 @@ export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
         ...authMutations,
+        ...authHandler(developerMutations, 'developer'),
         ...authHandler(dlcMutations, 'developer'),
         ...authHandler(gameMutations, 'developer'),
-        ...authHandler(customerMutations),
-        ...authHandler(developerMutations),
-        ...authHandler(reviewMutations),
-        ...authHandler(cartMutations),
+        ...authHandler(customerMutations, 'customer'),
+        ...authHandler(cartMutations, 'customer'),
+        ...authHandler(reviewMutations), // TODO: customer?
     },
 });
