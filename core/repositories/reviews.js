@@ -8,9 +8,10 @@ const {
     findReviewById,
     findGameByField,
     findReviewByFields,
+    findLibraryItemByFields,
 } = requestService;
 
-const validator = async validationData => {
+const validator = async (validationData) => {
     const {
         rating = null,
         id = null,
@@ -19,19 +20,29 @@ const validator = async validationData => {
     } = validationData;
 
     if (id === null) {
-        // for create
+    // for create
         if (rating === null) {
             return 'Rating is not given';
         }
         if (rating < 0 || rating > 10) {
             return 'Rating not between 0 and 10';
         }
-        if ((await findReviewByFields(['gameId', 'customerId'], [gameId, userId])) !== null) {
+        if (
+            (await findLibraryItemByFields(
+                ['gameId', 'customerId'],
+                [gameId, userId]
+            )) === null
+        ) {
+            return 'Customer cannot leave review for a game they do not own';
+        }
+        if (
+            (await findReviewByFields(['gameId', 'customerId'], [gameId, userId])) !==
+      null
+        ) {
             return 'Customer already left a review for this game';
         }
-    }
-    else {
-        // for delete and update
+    } else {
+    // for delete and update
         const review = await findReviewById(id);
         if (!review) {
             return 'Review does not exist';
@@ -46,7 +57,7 @@ const validator = async validationData => {
     return null;
 };
 
-const validateReview = async validationData =>
+const validateReview = async (validationData) =>
     await handleValidation(validator, validationData);
 
 export const validateAndCreateReview = async ({ review, game, userId }) => {
