@@ -1,5 +1,5 @@
 import requestService from '@services/request.js';
-import { handleValidation } from '@services/validation.js';
+import handleValidation from '@services/validation.js';
 
 const {
     createGame,
@@ -10,6 +10,7 @@ const {
     findGameByField,
     findGamesByField,
     deleteDLCsByField,
+    findDeveloperById,
     findCartItemsByField,
     findLibraryItemsByField,
 } = requestService;
@@ -61,6 +62,19 @@ export const validateAndUpdateGame = async ({ id, game, userId }) => {
 export const validateAndDeleteGame = async ({ id, userId }) => {
     await validateGame({ id, userId });
     return await deleteDLCsByField('baseGameId', id) && await deleteGame(id);
+};
+
+const sortByDeveloper = async game => {
+    const developer = await findDeveloperById(game.developerId, {
+        joinWith: 'User',
+    });
+    return developer.username;
+}
+
+export const sortBy = {
+    name       : game => game.name,
+    releaseDate: game => game.releaseDate,
+    developer  : sortByDeveloper,
 };
 
 export const filterGames = async ({ field = null, value } = {}) =>

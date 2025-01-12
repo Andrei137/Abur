@@ -1,5 +1,5 @@
 import requestService from '@services/request.js';
-import { handleValidation } from '@services/validation.js';
+import handleValidation from '@services/validation.js';
 import { validateAndCreateUser, validateAndUpdateUser } from '@repositories/user.js';
 
 const {
@@ -9,9 +9,9 @@ const {
 } = requestService;
 
 const validator = async validationData => {
-    const { 
+    const {
         id = null,
-        studio = null 
+        studio = null
     } = validationData;
 
     if (id !== null) { // Update
@@ -42,7 +42,7 @@ export const validateAndCreateDeveloper = async ({ developer }) => {
     };
 }
 
-export const validateAndUpdateDeveloper = async ({ userId, developer }) => {   
+export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
     await validateDeveloper({id: userId, developer});
     const updatedUser = await validateAndUpdateUser({ userId, user: developer });
     const updatedDeveloper = await updateDeveloper(userId, developer);

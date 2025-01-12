@@ -1,6 +1,6 @@
 import requestService from '@services/request.js';
+import handleValidation from '@services/validation.js';
 import { encrypt } from '@services/authentication.js';
-import { handleValidation } from '@services/validation.js';
 
 const {
     createUser,
@@ -24,7 +24,7 @@ const validator = async validationData => {
         if (username === null) return 'username cannot be null';
         if (password === null) return 'password cannot be null';
         if (email === null) return 'email cannot be null';
-        
+
         if (await findUserByField('username', username)) return 'username already exists';
         if (await findUserByField('email', email)) return 'email already exists';
     }

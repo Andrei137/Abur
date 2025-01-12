@@ -15,8 +15,8 @@ headers {
 }
 
 body:graphql {
-  query GetLibrary {
-    library {
+  query GetLibrary($sortOption: String, $order: String) {
+    library(sortOption: $sortOption, order: $order) {
       customer {
         firstName
       }
@@ -24,6 +24,10 @@ body:graphql {
         id
         name
         price
+        releaseDate
+        developer {
+          username
+        }
         dlcs {
           id
           name
@@ -31,5 +35,12 @@ body:graphql {
         }
       }
     }
+  }
+}
+
+body:graphql:vars {
+  {
+    "sortOption": "developer",
+    "order": "descending"
   }
 }

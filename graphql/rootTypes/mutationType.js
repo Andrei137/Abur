@@ -17,6 +17,6 @@ export default new GraphQLObjectType({
         ...authHandler(gameMutations, 'developer'),
         ...authHandler(customerMutations, 'customer'),
         ...authHandler(cartMutations, 'customer'),
-        ...authHandler(reviewMutations), // TODO: customer?
+        ...authHandler(reviewMutations, 'customer'),
     },
 });

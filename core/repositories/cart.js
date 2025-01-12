@@ -1,5 +1,5 @@
 import requestService from '@services/request.js';
-import { handleValidation } from '@services/validation.js';
+import handleValidation from '@services/validation.js';
 import { addItemToLibrary } from '@repositories/library.js';
 import { findDLCsInCartByCustomerId } from '@repositories/dlcs.js';
 import { findGamesInCartByCustomerId, findGamesInLibraryByCustomerId } from '@repositories/games.js';

@@ -4,10 +4,9 @@ const {
     createLibraryItem
 } = requestService;
 
-export const addItemToLibrary = async ({ gameId, customerId }) => {
+export const addItemToLibrary = async ({ gameId, customerId }) =>
     await createLibraryItem({
         gameId,
         customerId,
         purchaseDate: Date(),
     });
-}
