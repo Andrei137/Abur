@@ -4,7 +4,7 @@ import {
 import { validateAndCheckoutCart } from '@repositories/cart.js';
 
 const cartCheckoutMutationResolver = async (_, {}, { userId }) => {
-    await validateAndCheckoutCart(userId);
+    return await validateAndCheckoutCart(userId);
 }
 
 export default {

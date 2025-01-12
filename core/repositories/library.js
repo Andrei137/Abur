@@ -25,13 +25,7 @@ const validator = async validationData => {
 const validateLibraryItem = async validationData =>
     await handleValidation(validator, validationData);
 
-export const validateAndCreateLibraryItem = async ({ gameId, customerId }) => {
-    // TODO
-    // validateLibraryItem();
-
-    console.log('library - gameId', gameId);
-    console.log('library - customerId', customerId);
-
+export const addItemToLibrary = async ({ gameId, customerId }) => {
     await createLibraryItem({
         gameId,
         customerId,
