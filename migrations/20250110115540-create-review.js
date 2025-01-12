@@ -7,47 +7,47 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("Reviews", {
       id: {
-        allowNull: false,
+        type         : Sequelize.INTEGER,
+        allowNull    : false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
+        primaryKey   : true,
       },
       customerId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
+        type      : Sequelize.INTEGER,
+        allowNull : false,
+        onDelete: "CASCADE",
         references: {
+          key  : "id",
           model: {
             tableName: "Customers",
           },
-          key: "id",
         },
-        onDelete: "CASCADE",
       },
       gameId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
+        allowNull: false,
+        onDelete: "CASCADE",
         references: {
+          key  : "id",
           model: {
             tableName: "Games",
           },
-          key: "id",
         },
-        onDelete: "CASCADE",
       },
       rating: {
+        type     : Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER,
       },
       comment: {
         type: Sequelize.STRING,
       },
       createdAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE,
       },
       updatedAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE,
       },
     });
   },

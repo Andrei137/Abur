@@ -14,7 +14,7 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert("CartItems", mockCartItems.map(cartItem => ({
+    await queryInterface.bulkInsert('CartItems', mockCartItems.map(cartItem => ({
       customerId: cartItem.customerId,
       gameId    : cartItem.gameId,
       createdAt : Date(),
@@ -23,6 +23,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("CartItems", null, {});
+    await queryInterface.bulkDelete('CartItems', null, {});
   }
 };

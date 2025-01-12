@@ -1,21 +1,13 @@
 'use strict';
+
 import { Model } from 'sequelize';
 
 export default (sequelize, DataTypes) => {
-    class LibraryItem extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-        static associate() {
-            // define association here
-        }
-    }
+    class LibraryItem extends Model {}
     LibraryItem.init(
         {
-            customerId: DataTypes.INTEGER,
-            gameId: DataTypes.INTEGER,
+            customerId  : DataTypes.INTEGER,
+            gameId      : DataTypes.INTEGER,
             purchaseDate: DataTypes.DATE,
         },
         {

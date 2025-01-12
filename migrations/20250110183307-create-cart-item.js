@@ -4,50 +4,50 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('CartItems', {
       id: {
-        allowNull: false,
+        type         : Sequelize.INTEGER,
+        allowNull    : false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        primaryKey   : true,
       },
       gameId: {
+        type     : Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER,
+        onDelete : "CASCADE",
         references: {
+          key  : "id",
           model: {
             tableName: "Games",
           },
-          key: "id",
         },
-        onDelete: "CASCADE",
       },
       customerId: {
+        type     : Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
         references: {
+          key  : "id",
           model: {
             tableName: "Customers",
           },
-          key: "id",
         },
-        onDelete: "CASCADE",
       },
       createdAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
       },
       updatedAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+      },
     });
 
     await queryInterface.addConstraint('CartItems', {
       fields: ['gameId', 'customerId'],
-      type: 'unique',
-      name: 'unique_game_customer_cart'
+      type  : 'unique',
+      name  : 'unique_game_customer_cart',
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('CartItems');
-  }
+  },
 };

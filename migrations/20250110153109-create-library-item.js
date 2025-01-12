@@ -4,54 +4,54 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('LibraryItems', {
       id: {
-        allowNull: false,
+        type         : Sequelize.INTEGER,
+        allowNull    : false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        primaryKey   : true,
       },
       customerId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
+        allowNull : false,
+        type      : Sequelize.INTEGER,
+        onDelete  : "CASCADE",
         references: {
+          key  : "id",
           model: {
             tableName: "Customers",
           },
-          key: "id",
         },
-        onDelete: "CASCADE",
       },
       gameId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
+        type      : Sequelize.INTEGER,
+        allowNull : false,
+        onDelete  : "CASCADE",
         references: {
+          key: "id",
           model: {
             tableName: "Games",
           },
-          key: "id",
         },
-        onDelete: "CASCADE",
       },
       purchaseDate: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE,
       },
       createdAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE,
       },
       updatedAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE,
-      }
+      },
     });
 
     await queryInterface.addConstraint('LibraryItems', {
       fields: ['gameId', 'customerId'],
-      type: 'unique',
-      name: 'unique_game_customer_library'
+      type  : 'unique',
+      name  : 'unique_game_customer_library',
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('LibraryItems');
-  }
+  },
 };

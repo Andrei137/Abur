@@ -18,7 +18,7 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert("WishlistItems", mockWishlistItems.map(wishlistItem => ({
+    await queryInterface.bulkInsert('WishlistItems', mockWishlistItems.map(wishlistItem => ({
       createdAt : Date(),
       updatedAt : Date(),
       ...wishlistItem,
@@ -26,6 +26,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("WishlistItems", null, {});
+    await queryInterface.bulkDelete('WishlistItems', null, {});
   }
 };

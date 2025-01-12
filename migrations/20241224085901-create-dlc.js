@@ -4,10 +4,10 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('DLCs', {
       id: {
-        allowNull: false,
+        type         : Sequelize.INTEGER,
+        allowNull    : false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
+        primaryKey   : true,
         references: {
           model: {
             tableName: 'Games',
@@ -17,18 +17,18 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       baseGameId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        type      : Sequelize.INTEGER,
+        allowNull : false,
         references: {
+          key  : 'id',
           model: {
             tableName: 'Games',
           },
-          key: 'id',
-        }
-      }
+        },
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('DLCs');
-  }
+  },
 };

@@ -4,53 +4,53 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Games', {
       id: {
-        allowNull: false,
+        type         : Sequelize.INTEGER,
+        allowNull    : false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        primaryKey   : true,
       },
       name: {
-        type: Sequelize.STRING,
+        type     : Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique   : true,
       },
       price: {
-        type: Sequelize.DOUBLE,
+        type     : Sequelize.DOUBLE,
         allowNull: false,
       },
       discountPercentage: {
-        type: Sequelize.INTEGER,
+        type        : Sequelize.INTEGER,
         defaultValue: 0,
       },
       releaseDate: {
-        type: Sequelize.DATE,
+        type     : Sequelize.DATE,
         allowNull: false,
       },
       developerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        type      : Sequelize.INTEGER,
+        allowNull : false,
         references: {
+          key  : 'id',
           model: {
             tableName: 'Developers',
           },
-          key: 'id',
-        }
+        },
       },
       type: {
-        type: Sequelize.STRING,
+        type     : Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
+        type     : Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Games');
-  }
+  },
 };

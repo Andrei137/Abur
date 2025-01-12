@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
       },
     ];
 
-    await queryInterface.bulkInsert("LibraryItems", mockLibraryItems.map(libraryItem => ({
+    await queryInterface.bulkInsert('LibraryItems', mockLibraryItems.map(libraryItem => ({
       purchaseDate: Date(),
       createdAt: Date(),
       updatedAt: Date(),
@@ -55,6 +55,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("LibraryItems", null, {});
+    await queryInterface.bulkDelete('LibraryItems', null, {});
   },
 };
