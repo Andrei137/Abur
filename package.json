@@ -44,6 +44,8 @@
     "@developer-mutations": "graphql/mutations/developer/index.js",
     "@cart-queries": "graphql/queries/cart/index.js",
     "@cart-mutations": "graphql/mutations/cart/index.js",
+    "@wishlist-queries": "graphql/queries/wishlist/index.js",
+    "@wishlist-mutations": "graphql/mutations/wishlist/index.js",
     "@library-queries": "graphql/queries/library/index.js"
   },
   "keywords": [],

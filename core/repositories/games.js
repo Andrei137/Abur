@@ -15,6 +15,7 @@ const {
     findLibraryItemsByField,
     findReviewsByField,
     findLibraryItemByFields,
+    findWishlistItemsByField,
 } = requestService;
 
 const validator = async (validationData) => {
@@ -81,9 +82,9 @@ export const filterGames = async ({ field = null, value } = {}) =>
 
 export const getIdsByCustomer = async (customerId, storedIn) => {
     const fetchItems = {
-        library: async () =>
-            await findLibraryItemsByField('customerId', customerId),
+        library: async () => await findLibraryItemsByField('customerId', customerId),
         cart: async () => await findCartItemsByField('customerId', customerId),
+        wishlist: async () => await findWishlistItemsByField('customerId', customerId),
     };
     return (await fetchItems[storedIn]()).map((item) => item.gameId);
 };
