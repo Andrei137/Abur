@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
-      percentage: {
+      discountPercentage: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },

@@ -9,9 +9,9 @@ import {
 export default new GraphQLInputObjectType({
     name: 'GameInput',
     fields: {
-        name       : { type: GraphQLString },
-        price      : { type: GraphQLFloat },
-        percentage : { type: GraphQLInt },
-        releaseDate: { type: GraphQLDate },
+        name                : { type: GraphQLString },
+        price               : { type: GraphQLFloat },
+        discountPercentage  : { type: GraphQLInt },
+        releaseDate         : { type: GraphQLDate },
     },
 });
