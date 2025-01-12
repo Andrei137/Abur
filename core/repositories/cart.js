@@ -5,44 +5,32 @@ import { findGamesInCartByCustomerId, findGamesInLibraryByCustomerId } from '@re
 import { findDLCsInCartByCustomerId } from '@repositories/dlcs.js';
 
 const {
-    findCartItemsByField,
     findCartItemByFields,
+    findCartItemsByFields,
     createCartItem,
     deleteCartItemByFields,
     deleteCartItemsByField,
 
-    findGameById
+    findGameById,
+    findLibraryItemsByFields
 } = requestService;
 
-const validator = async validationData => {
-    const {
-        gameId = null,
-        customerId = null
-    } = validationData;
-
-    console.log(validationData);
-    console.log(gameId);
-    console.log(customerId);
-
-    // TODO: validate DELETE
-    // item NU exista in cart
-    // if ((await findCartItemByFields(['gameId', 'customerId'], [gameId, customerId])) === null) return 'this item is not in your cart';    
-
-    // TODO: validate CREATE
-    // item trebuie sa existe in db
-    // item NU este deja in library
-    // item NU este deja in cart
-
-    return null;
-};
-
-const validateCartItem = async validationData =>
-    await handleValidation(validator, validationData);
-
 export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
-    // TODO
-    // validateCartItem();
-
+    // 1. item trebuie sa existe in db
+    if ((await findGameById(gameId)) === null) {
+        await handleValidation((_) => Promise.resolve('select a valid item from the store'), {});
+    }
+    
+    // 2. item NU este deja in cart
+    if ((await findCartItemsByFields(['gameId', 'customerId'], [gameId, customerId])).length !== 0) {
+        await handleValidation((_) => Promise.resolve('this item is already in your cart'), {});
+    }
+    
+    // 3. item NU este deja in library
+    if ((await findLibraryItemsByFields(['gameId', 'customerId'], [gameId, customerId])).length !== 0) {
+        await handleValidation((_) => Promise.resolve('this item is already in your library'), {});
+    }
+    
     await createCartItem({
         gameId,
         customerId,
@@ -54,8 +42,11 @@ export const deleteCartItems = async (customerId) => {
 };
 
 export const validateAndDeleteCartItem = async ({ gameId, customerId }) => {
-    // TODO
-    // validateCartItem({ gameId, customerId });
+    // 1. item NU exista in cart
+    if ((await findCartItemByFields(['gameId', 'customerId'], [gameId, customerId])) === null) {
+        await handleValidation((_) => Promise.resolve('this item is not in your cart'), {});
+    }
+
     return await deleteCartItemByFields(['gameId', 'customerId'], [gameId, customerId]);
 };
 
