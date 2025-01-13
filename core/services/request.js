@@ -8,13 +8,12 @@ const generateWhere = (fields, values) =>
         }, {})
         : undefined;
 
-const spreadData = (data, joinWith) =>
-    data
-        ? {
-            ...data.dataValues,
-            ...(joinWith ? data.dataValues[joinWith].dataValues : {}),
-        }
-        : null;
+const spreadData = (data, joinWith) => data
+    ? {
+        ...data.dataValues,
+        ...(joinWith ? data.dataValues[joinWith].dataValues : {}),
+    }
+    : null;
 
 const findQuery = async (model, joinWith, fields = null, values = null, isSingle = false) => {
     const include = joinWith

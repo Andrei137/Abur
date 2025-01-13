@@ -10,7 +10,7 @@ export default {
     type: reviewType,
     args: {
         review: { type: reviewInputType },
-        game: { type: GraphQLString },
+        game  : { type: GraphQLString },
     },
     resolve: createReviewMutationResolver,
 };

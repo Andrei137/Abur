@@ -16,11 +16,13 @@ const validator = async validationData => {
         email = null
     } = validationData;
 
-    if (id !== null) { // Update
+    if (id !== null) {
+        // Update
         if (username !== null && await findUserByField('username', username)) return 'username already exists';
         if (email !== null && await findUserByField('email', email)) return 'email already exists';
     }
-    else { // Create
+    else {
+        // Create
         if (username === null) return 'username cannot be null';
         if (password === null) return 'password cannot be null';
         if (email === null) return 'email cannot be null';

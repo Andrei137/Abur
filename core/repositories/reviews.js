@@ -20,7 +20,7 @@ const validator = async (validationData) => {
     } = validationData;
 
     if (id === null) {
-    // for create
+        // Create
         if (rating === null) {
             return 'Rating is not given';
         }
@@ -42,7 +42,7 @@ const validator = async (validationData) => {
             return 'Customer already left a review for this game';
         }
     } else {
-    // for delete and update
+        // Delete and Update
         const review = await findReviewById(id);
         if (!review) {
             return 'Review does not exist';

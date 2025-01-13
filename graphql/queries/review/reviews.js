@@ -7,6 +7,6 @@ const { findAllReviews } = requestService;
 const reviewsQueryResolver = async () => await findAllReviews();
 
 export default {
-    type: new GraphQLList(reviewType),
+    type   : new GraphQLList(reviewType),
     resolve: reviewsQueryResolver,
 };

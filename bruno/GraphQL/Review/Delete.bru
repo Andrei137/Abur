@@ -11,11 +11,11 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenAndrei}}
 }
 
 body:graphql {
   mutation DeleteReview {
-    deleteReview(id: 0)
+    deleteReview(id: 4)
   }
 }

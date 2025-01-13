@@ -14,7 +14,7 @@ import requestService from '@services/request.js';
 const { findReviewsByField } = requestService;
 
 export default new GraphQLObjectType({
-    name: 'Customer',
+    name  : 'Customer',
     fields: () => ({
         id       : { type: new GraphQLNonNull(GraphQLInt) },
         username : { type: new GraphQLNonNull(GraphQLString) },
@@ -22,21 +22,21 @@ export default new GraphQLObjectType({
         email    : { type: new GraphQLNonNull(GraphQLString) },
         firstName: { type: GraphQLString },
         lastName : { type: GraphQLString },
-        reviews  : {
-            type: new GraphQLList(reviewType),
+        reviews: {
+            type   : new GraphQLList(reviewType),
             resolve: async ({ id }) =>
                 await findReviewsByField('customerId', id),
         },
-        library  : {
-            type: libraryType,
+        library: {
+            type   : libraryType,
             resolve: ({ id }) => ({ userId: id }),
         },
-        wishlist : {
-            type: wishlistType,
+        wishlist: {
+            type   : wishlistType,
             resolve: ({ id }) => ({ userId: id }),
         },
         stats: {
-            type: customerStatsType,
+            type   : customerStatsType,
             resolve: ({ id }) => id,
         },
     }),

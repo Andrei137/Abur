@@ -38,7 +38,7 @@ export const validateAndUpdateCustomer = async ({ userId, customer }) => {
     };
 };
 
-const getIdsByGame = async (gameId, storedIn) => {
+const findIdsByGame = async (gameId, storedIn) => {
     const fetchItems = {
         library: async () => await findLibraryItemsByField('gameId', gameId),
         wishlist: async () => await findWishlistItemsByField('gameId', gameId),
@@ -46,28 +46,25 @@ const getIdsByGame = async (gameId, storedIn) => {
     return (await fetchItems[storedIn]()).map((item) => item.customerId);
 };
 
-const getNrItemsByType = async (id, type) => {
-    const [ids, games] = await Promise.all([
+const findAllGamesAndLibraryIds = async id =>
+    await Promise.all([
         (async () =>
-            (await findLibraryItemsByField('customerId', id))
-                .map(item => item.gameId)
+            (await findLibraryItemsByField('customerId', id)
+            ).map(item => item.gameId)
         )(),
         findAllGames()
     ]);
+
+const findNrItemsByType = async (id, type) => {
+    const [ids, games] = await findAllGamesAndLibraryIds(id);
 
     return games
         .filter(game => game.type === type && ids.includes(game.id))
         .length;
 };
 
-const getTopByField = async (id, field) => {
-    const [ids, games] = await Promise.all([
-        (async () =>
-            (await findLibraryItemsByField('customerId', id))
-                .map(item => item.gameId)
-        )(),
-        findAllGames()
-    ]);
+const findTopByField = async (id, field) => {
+    const [ids, games] = await findAllGamesAndLibraryIds(id);
 
     const counter = games
         .filter(game => ids.includes(game.id))
@@ -87,19 +84,19 @@ const getTopByField = async (id, field) => {
 };
 
 export const findCustomersByGameInLibrary = async gameId =>
-    await getIdsByGame(gameId, 'library');
+    await findIdsByGame(gameId, 'library');
 
 export const findCustomersByGameInWishlist = async gameId =>
-    await getIdsByGame(gameId, 'wishlist');
+    await findIdsByGame(gameId, 'wishlist');
 
-export const getNrGames = async id => await getNrItemsByType(id, 'game');
+export const findNrGames = async id => await findNrItemsByType(id, 'game');
 
-export const getNrDLCs = async id => await getNrItemsByType(id, 'dlc');
+export const findNrDLCs = async id => await findNrItemsByType(id, 'dlc');
 
-export const getTopYear = async id =>
-    new Date(await getTopByField(id, 'releaseDate')).getFullYear();
+export const findTopYear = async id =>
+    new Date(await findTopByField(id, 'releaseDate')).getFullYear();
 
-export const getTopDeveloper = async id =>
-    await findDeveloperById(await getTopByField(id, 'developerId'), {
+export const findTopDeveloper = async id =>
+    await findDeveloperById(await findTopByField(id, 'developerId'), {
         joinWith: 'User'
     });

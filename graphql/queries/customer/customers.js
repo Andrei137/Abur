@@ -10,7 +10,7 @@ const customersQueryResolver = async () =>
     });
 
 export default {
-    type: new GraphQLList(customerType),
+    type   : new GraphQLList(customerType),
     resolve: customersQueryResolver,
 };
 

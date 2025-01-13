@@ -10,7 +10,7 @@ import {
 
 const { findDeveloperById } = requestService;
 
-export const sort = async (list, getSortKey, order = 'ascending') => {
+const sort = async (list, getSortKey, order = 'ascending') => {
     const sortedList = (
         await Promise.all(
             list.map(async (item) => ({
@@ -31,21 +31,22 @@ const gamesOptions = {
     price: game => findActualPrice(game),
     releaseDate: game => game.releaseDate,
     discount: game => game.discountPercentage,
-    sales: async game => await findGameSales(game.id),
-    wishlists: async game => await findGameWishlists(game.id),
-    rating: async game => await findGameAverageRating(game.id),
-    popularity: async game => await findGamePopularity(game.id),
+    sales: async ({ id }) => await findGameSales(id),
+    wishlists: async ({ id }) => await findGameWishlists(id),
+    rating: async ({ id }) => await findGameAverageRating(id),
+    popularity: async ({ id }) => await findGamePopularity(id),
     purchaseDate: async game => await findPurchaseDateByCustomer(game),
-    developer: async game =>
-        (
-            await findDeveloperById(game.developerId, {
-                joinWith: 'User',
-            })
-        ).username,
+    developer: async ({ developerId }) =>
+        (await findDeveloperById(developerId, {
+            joinWith: 'User',
+        })).username,
 };
 
-export const selectGameOption = (key) =>
+const selectGameOption = key =>
     gamesOptions[key] || gamesOptions.default;
 
-export const selectOrder = (order) =>
+const selectOrder = order =>
     order === 'descending' ? 'descending' : 'ascending';
+
+export const sortGames = async (list, sortOption, order) =>
+    await sort(list, selectGameOption(sortOption), selectOrder(order));

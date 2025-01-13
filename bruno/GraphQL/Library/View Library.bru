@@ -23,13 +23,15 @@ body:graphql {
       games {
         id
         name
+        initialPrice
         price
+        discount
+        averageRating
+        sales
+        wishlists
+        popularity
         releaseDate
         purchaseDate
-        discount
-        popularity
-        averageRating
-        
         developer {
           username
         }
@@ -45,7 +47,7 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "sortOption": "rating",
+    "sortOption": "default",
     "order": "ascending"
   }
 }

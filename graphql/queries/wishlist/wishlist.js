@@ -1,8 +1,11 @@
 import { GraphQLString } from 'graphql';
 import wishlistType from '@types/entity/wishlist.js';
 
-const wishlistQueryResolver = async (_, { sortOption = 'default', order = 'ascending' }, { userId }) =>
-    ({ sortOption, order, userId });
+const wishlistQueryResolver = async (_, { sortOption, order }, { userId }) => {
+    if (sortOption === undefined || sortOption === 'purchaseDate') sortOption = 'default';
+
+    return { sortOption, order, userId };
+};
 
 export default {
     type: wishlistType,

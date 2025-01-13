@@ -4,30 +4,30 @@ import {
 } from 'graphql';
 import developerType from './developer.js';
 import {
-    getNrDLCs,
-    getNrGames,
-    getTopYear,
-    getTopDeveloper,
+    findNrDLCs,
+    findNrGames,
+    findTopYear,
+    findTopDeveloper,
 } from '@repositories/customers.js';
 
 export default new GraphQLObjectType({
-    name: 'CustomerStats',
+    name  : 'CustomerStats',
     fields: () => ({
         gamesOwned: {
-            type: GraphQLInt,
-            resolve: async id => await getNrGames(id),
+            type   : GraphQLInt,
+            resolve: async id => await findNrGames(id),
         },
         dlcsOwned: {
-            type: GraphQLInt,
-            resolve: async id => await getNrDLCs(id),
+            type   : GraphQLInt,
+            resolve: async id => await findNrDLCs(id),
         },
         topYear: {
-            type: GraphQLInt,
-            resolve: async id => await getTopYear(id),
+            type   : GraphQLInt,
+            resolve: async id => await findTopYear(id),
         },
         topDeveloper: {
-            type: developerType,
-            resolve: async id => await getTopDeveloper(id),
+            type   : developerType,
+            resolve: async id => await findTopDeveloper(id),
         },
     }),
 });

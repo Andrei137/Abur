@@ -9,15 +9,16 @@ const {
     createGame,
     updateGame,
     deleteGame,
+    findDLCById,
     findGameById,
     findAllGames,
     findGameByField,
     findGamesByField,
     deleteDLCsByField,
-    findCartItemsByField,
-    findLibraryItemsByField,
     findReviewsByField,
+    findCartItemsByField,
     findLibraryItemByFields,
+    findLibraryItemsByField,
     findWishlistItemsByField,
 } = requestService;
 
@@ -79,22 +80,28 @@ export const validateAndDeleteGame = async ({ id, userId }) => {
 };
 
 export const filterGames = async ({ field = null, value } = {}) =>
-    (field ? await findGamesByField(field, value) : await findAllGames()).filter(
-        (game) => game.type === 'game'
-    );
+    (field ? await findGamesByField(field, value) : await findAllGames()
+    ).filter(game => game.type === 'game');
 
-export const getIdsByCustomer = async (customerId, storedIn) => {
+export const populateAllGames = async () => await Promise.all(
+    (await findAllGames()
+    ).map(async game => game.type === 'dlc'
+        ? await findDLCById(game.id, { joinWith: 'Game' })
+        : game
+    ));
+
+export const findIdsByCustomer = async (customerId, storedIn) => {
     const fetchItems = {
         library: async () => await findLibraryItemsByField('customerId', customerId),
         cart: async () => await findCartItemsByField('customerId', customerId),
         wishlist: async () => await findWishlistItemsByField('customerId', customerId),
     };
-    return (await fetchItems[storedIn]()).map((item) => item.gameId);
+    return (await fetchItems[storedIn]()).map(item => item.gameId);
 };
 
 const findByCustomerId = async (customerId, storedIn) => {
-    const ids = await getIdsByCustomer(customerId, storedIn);
-    return (await filterGames()).filter((game) => ids.includes(game.id));
+    const ids = await findIdsByCustomer(customerId, storedIn);
+    return (await filterGames()).filter(game => ids.includes(game.id));
 };
 
 export const findActualPrice = game => game.discountPercentage
@@ -120,11 +127,9 @@ export const findGamePopularity = async gameId =>
 export const findGameAverageRating = async gameId => {
     const gameReviews = await findReviewsByField('gameId', gameId);
     return gameReviews.length !== 0
-        ? gameReviews.reduce((acc, review) => acc + review.rating, 0) /
-        gameReviews.length
+        ? gameReviews.reduce((acc, review) => acc + review.rating, 0) / gameReviews.length
         : 0;
 };
 
 export const findPurchaseDateByCustomer = async ({ id, userId }) =>
-    (await findLibraryItemByFields(['customerId', 'gameId'], [userId, id]))
-        .purchaseDate;
+    (await findLibraryItemByFields(['customerId', 'gameId'], [userId, id])).purchaseDate;

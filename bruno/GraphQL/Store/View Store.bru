@@ -16,8 +16,8 @@ headers {
 }
 
 body:graphql {
-  query ViewStore($sortOption: String, $order: String, $seeOwned: Boolean) {
-    store(sortOption: $sortOption, order: $order, seeOwned: $seeOwned) {
+  query ViewStore($sortOption: String, $order: String, $hideOwned: Boolean) {
+    store(sortOption: $sortOption, order: $order, hideOwned: $hideOwned) {
       items {
           ... on Game {
               id
@@ -62,6 +62,6 @@ body:graphql:vars {
   {
     "sortOption": "default",
     "order": "descendingg",
-    "seeOwned": true
+    "hideOwned": true
   }
 }

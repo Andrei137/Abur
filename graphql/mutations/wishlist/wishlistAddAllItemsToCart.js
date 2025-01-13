@@ -7,6 +7,6 @@ const wishlistMoveAllItemsToCartMutationResolver = async (_, __, { userId }) => 
 };
 
 export default {
-    type: wishlistType,
+    type   : wishlistType,
     resolve: wishlistMoveAllItemsToCartMutationResolver,
 };

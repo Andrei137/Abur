@@ -11,7 +11,8 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenAndrei}}
+  Authorization: Bearer {{tokenSeb}}
+  ~Authorization: Bearer {{tokenAndrei}}
 }
 
 body:graphql {
@@ -35,7 +36,6 @@ body:graphql {
             	wishlists
             	popularity
             	releaseDate
-            	purchaseDate
             	developer {
                 username
               }
@@ -66,7 +66,7 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "sortOption": "purchaseDate",
+    "sortOption": "price",
     "order": "descending"
   }
 }

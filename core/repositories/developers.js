@@ -6,7 +6,7 @@ import {
 } from '@repositories/users.js';
 import { findDLCsByDeveloperId } from '@repositories/dlcs.js';
 import { filterGames } from '@repositories/games.js';
-import { sort, selectGameOption } from '@services/sorter.js';
+import { sortGames } from '@services/sorter.js';
 
 const {
     createDeveloper,
@@ -61,19 +61,19 @@ export const validateAndUpdateDeveloper = async ({ userId, developer }) => {
 };
 
 const getBestGameByOption = async (developerId, option) =>
-    (await sort(
+    (await sortGames(
         await filterGames({
             field: 'developerId',
             value: developerId,
         }),
-        selectGameOption(option),
+        option,
         'descending'
     ))[0];
 
 const getBestDLCByOption = async (developerId, option) =>
-    (await sort(
+    (await sortGames(
         await findDLCsByDeveloperId(developerId),
-        selectGameOption(option),
+        option,
         'descending'
     ))[0];
 

@@ -4,7 +4,7 @@ import {
 } from 'graphql';
 
 export default new GraphQLInputObjectType({
-    name: 'CustomerInput',
+    name  : 'CustomerInput',
     fields: {
         username : { type: GraphQLString },
         password : { type: GraphQLString },

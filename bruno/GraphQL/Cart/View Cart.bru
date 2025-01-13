@@ -11,7 +11,7 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenAndrei}}
 }
 
 body:graphql {
@@ -19,7 +19,6 @@ body:graphql {
     cart {
       totalPrice
       totalItems
-      
       customer {
         firstName
       }

@@ -1,5 +1,5 @@
 import requestService from '@services/request.js';
-import { validateGame, getIdsByCustomer } from './games.js';
+import { validateGame, findIdsByCustomer } from './games.js';
 
 const {
     createDLC,
@@ -54,7 +54,7 @@ export const findDLCsByDeveloperId = async developerId =>
     })).filter(dlc => dlc.developerId === developerId);
 
 const findByCustomerId = async (customerId, storedIn) => {
-    const ids = await getIdsByCustomer(customerId, storedIn);
+    const ids = await findIdsByCustomer(customerId, storedIn);
     return (
         await findAllDLCs({
             joinWith: 'Game',

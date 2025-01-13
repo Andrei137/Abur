@@ -19,7 +19,7 @@ const format = query => {
         new RegExp(`\\b(${sqlKeywords.join('|')})\\b`, 'g'),
         '\n$&'
     );
-}
+};
 
 const logger = config.NODE_ENV === 'development'
     ? winston.createLogger({

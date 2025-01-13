@@ -21,7 +21,7 @@ export default [
             '@stylistic/js/indent': ['error', 4],
             '@stylistic/js/linebreak-style': ['error', 'unix'],
             '@stylistic/js/quotes': ['error', 'single'],
-            eqeqeq: 'error',
+            'eqeqeq': 'error',
             'no-trailing-spaces': 'error',
             'object-curly-spacing': ['error', 'always'],
             'arrow-spacing': ['error', { before: true, after: true }],

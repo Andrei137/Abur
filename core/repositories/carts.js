@@ -3,7 +3,7 @@ import { addItemToLibrary } from '@repositories/libraries.js';
 import { findDLCsInCartByCustomerId } from '@repositories/dlcs.js';
 import {
     filterGames,
-    getIdsByCustomer,
+    findIdsByCustomer,
     findGamesInCartByCustomerId,
     findGamesInLibraryByCustomerId,
 } from '@repositories/games.js';
@@ -28,43 +28,32 @@ export const validateAndCreateCartItem = async ({ gameId, customerId }) => {
     }
 
     // item NU este deja in cart
-    if (
-        (
-            await findCartItemsByFields(
-                ['gameId', 'customerId'],
-                [gameId, customerId]
-            )
-        ).length !== 0
-    ) {
+    if ((await findCartItemsByFields(
+        ['gameId', 'customerId'],
+        [gameId, customerId]
+    )).length !== 0) {
         await sendError('This item is already in your cart');
     }
 
     // item NU este deja in library
-    if (
-        (
-            await findLibraryItemsByFields(
-                ['gameId', 'customerId'],
-                [gameId, customerId]
-            )
-        ).length !== 0
-    ) {
+    if ((await findLibraryItemsByFields(
+        ['gameId', 'customerId'],
+        [gameId, customerId]
+    )).length !== 0) {
         await sendError('This item is already in your library');
     }
 
     return await createCartItem({ gameId, customerId });
 };
 
-export const deleteCartItems = async ({ userId }) => {
-    return await deleteCartItemsByField('customerId', userId);
-};
+export const deleteCartItems = async ({ userId }) =>
+    await deleteCartItemsByField('customerId', userId);
 
 export const validateAndDeleteCartItem = async ({ gameId, customerId }) => {
     // item NU exista in cart
-    if (
-        (await findCartItemByFields(
-            ['gameId', 'customerId'],
-            [gameId, customerId]
-        )) === null
+    if ((await findCartItemByFields(
+        ['gameId', 'customerId'],
+        [gameId, customerId])) === null
     ) {
         await sendError('This item is not in your cart');
     }
@@ -75,7 +64,7 @@ export const validateAndDeleteCartItem = async ({ gameId, customerId }) => {
     );
 };
 
-export const validateAndCheckoutCart = async (customerId) => {
+export const validateAndCheckoutCart = async customerId => {
     const [cartGames, cartDLCs, libraryGames] = await Promise.all([
         findGamesInCartByCustomerId(customerId),
         findDLCsInCartByCustomerId(customerId),
@@ -84,9 +73,7 @@ export const validateAndCheckoutCart = async (customerId) => {
 
     // nu are niciun item in cart
     if (cartGames.length + cartDLCs.length === 0) {
-        await sendError(
-            'Cannot proceed to checkout without any items in your cart'
-        );
+        await sendError('Cannot proceed to checkout without any items in your cart');
     }
 
     // are jocul de baza in library sau cart pentru dlc-urile pe care vrea sa le cumpere
@@ -94,9 +81,10 @@ export const validateAndCheckoutCart = async (customerId) => {
     for (const cartDLC of cartDLCs) {
         if (
             cartGames.some((game) => game.id === cartDLC.baseGameId) ||
-      libraryGames.some((game) => game.id === cartDLC.baseGameId)
-        )
+            libraryGames.some((game) => game.id === cartDLC.baseGameId)
+        ) {
             continue;
+        }
 
         missingGames.push(
             `'${cartDLC.name}' requires the base game '${
@@ -108,7 +96,7 @@ export const validateAndCheckoutCart = async (customerId) => {
     if (missingGames.length !== 0) {
         await sendError(
             'The base game must be present in your library or cart to purchase the selected DLC(s): ' +
-        missingGames.join(', ')
+            missingGames.join(', ')
         );
     }
 
@@ -128,9 +116,9 @@ export const validateAndCheckoutCart = async (customerId) => {
     return await deleteCartItems({ userId: customerId });
 };
 
-export const getCartItems = async (customerId) => {
+export const getCartItems = async customerId => {
     const [ids, games, dlcs] = await Promise.all([
-        getIdsByCustomer(customerId, 'cart'),
+        findIdsByCustomer(customerId, 'cart'),
         filterGames(),
         findAllDLCs({
             joinWith: 'Game',
@@ -143,9 +131,9 @@ export const getCartItems = async (customerId) => {
     ];
 };
 
-export const getCartTotalPrice = async (customerId) =>
-    (await getCartItems(customerId)).reduce((total, game) => {
-        const discountedPrice =
-      game.price - game.price * (game.discountPercentage / 100);
+export const getCartTotalPrice = async customerId =>
+    (await getCartItems(customerId)
+    ).reduce((total, game) => {
+        const discountedPrice = game.price - game.price * (game.discountPercentage / 100);
         return total + discountedPrice;
     }, 0);

@@ -5,6 +5,7 @@ import { GraphQLInt, GraphQLNonNull } from 'graphql';
 const { findReviewById } = requestService;
 
 const reviewQueryResolver = async (_, { id }) => await findReviewById(id);
+
 export default {
     type: reviewType,
     args: {

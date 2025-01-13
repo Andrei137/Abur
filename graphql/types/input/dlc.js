@@ -6,7 +6,7 @@ import {
 } from 'graphql';
 
 export default new GraphQLInputObjectType({
-    name: 'DLCInput',
+    name  : 'DLCInput',
     fields: {
         name       : { type: GraphQLString },
         price      : { type: GraphQLFloat },

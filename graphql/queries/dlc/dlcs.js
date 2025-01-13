@@ -10,6 +10,6 @@ const dlcsQueryResolver = async () =>
     });
 
 export default {
-    type: new GraphQLList(dlcType),
+    type   : new GraphQLList(dlcType),
     resolve: dlcsQueryResolver,
 };

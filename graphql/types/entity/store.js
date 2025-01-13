@@ -1,44 +1,28 @@
 import {
-    GraphQLInt,
     GraphQLList,
-    GraphQLFloat,
-    GraphQLNonNull,
     GraphQLObjectType,
 } from 'graphql';
 import unionGameDLCType from './unionGameDLC.js';
-import requestService from '@services/request.js';
-import { sort, selectGameOption, selectOrder } from '@services/sorter.js';
-
-const {
-    findDLCById,
-    findAllGames,
-    findDeveloperById,
-    findLibraryItemsByField,
-} = requestService;
+import { sortGames } from '@services/sorter.js';
+import {
+    populateAllGames,
+    findIdsByCustomer,
+} from '@repositories/games.js';
 
 export default new GraphQLObjectType({
     name: 'Store',
     fields: () => ({
         items: {
-            type: new GraphQLList(unionGameDLCType),
-            resolve: async ({ userId, sortOption, order, seeOwned }) => {
-                if (sortOption === 'purchaseDate') sortOption = 'default';
-                if (userId === undefined || (await findDeveloperById(userId)) !== null) seeOwned = false;
-
-                const inLibraryIds = seeOwned === false
+            type   : new GraphQLList(unionGameDLCType),
+            resolve: async ({ userId, sortOption, order, hideOwned }) => {
+                const inLibraryIds = hideOwned === false
                     ? []
-                    : (await findLibraryItemsByField('customerId', userId)).map(item => item.gameId);
-                const gamesAndDLCs = (await Promise.all(
-                    (await findAllGames())
-                    .map(async game => game.type === 'dlc'
-                        ? await findDLCById(game.id, { joinWith: 'Game' })
-                        : game
-                ))).filter(item => !inLibraryIds.includes(item.id));
+                    : await findIdsByCustomer(userId, 'library');
 
-                return await sort(
-                    gamesAndDLCs,
-                    selectGameOption(sortOption),
-                    selectOrder(order)
+                return await sortGames(
+                    (await populateAllGames()).filter(({ id }) => !inLibraryIds.includes(id)),
+                    sortOption,
+                    order
                 );
             },
         },

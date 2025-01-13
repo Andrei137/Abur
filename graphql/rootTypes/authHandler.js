@@ -2,8 +2,9 @@ import requestService from '@services/request.js';
 
 const { findDeveloperById, findCustomerById } = requestService;
 
-export const authHandler = (mutations, access = 'all') =>
-    Object.entries(mutations).reduce((acc, [mutationName, mutation]) => {
+export const authHandler = (mutations, access = 'all') => Object
+    .entries(mutations)
+    .reduce((acc, [mutationName, mutation]) => {
         acc[mutationName] = {
             ...mutation,
             resolve: async (_, params, context) => {

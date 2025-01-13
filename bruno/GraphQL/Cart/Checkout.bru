@@ -11,9 +11,9 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenSeb}}
+  Authorization: Bearer {{tokenAndrei}}
+  ~Authorization: Bearer {{tokenSeb}}
   ~Authorization: Bearer {{tokenSebi}}
-  ~Authorization: Bearer {{tokenAndrei}}
 }
 
 body:graphql {

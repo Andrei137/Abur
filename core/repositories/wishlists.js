@@ -1,7 +1,7 @@
 import requestService from '@services/request.js';
 import {
     filterGames,
-    getIdsByCustomer,
+    findIdsByCustomer,
 } from '@repositories/games.js';
 import { validateAndCreateCartItem } from '@repositories/carts.js';
 import { sendError } from '@services/validation.js';
@@ -52,7 +52,7 @@ export const validateAndDeleteWishlistItem = async ({ gameId, customerId }) => {
 
 export const getWishlistItems = async (customerId) => {
     const [ids, games, dlcs] = await Promise.all([
-        getIdsByCustomer(customerId, 'wishlist'),
+        findIdsByCustomer(customerId, 'wishlist'),
         filterGames(),
         findAllDLCs({
             joinWith: 'Game',
@@ -71,7 +71,7 @@ export const validateAndMoveItemToCart = async ({ gameId, customerId }) => {
 
 export const validateAndMoveAllItemsToCart = async (customerId) => {
     const [ids, games] = await Promise.all([
-        getIdsByCustomer(customerId, 'wishlist'),
+        findIdsByCustomer(customerId, 'wishlist'),
         findAllGames()
     ]);
 

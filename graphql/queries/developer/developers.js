@@ -10,7 +10,7 @@ const developersQueryResolver = async () =>
     });
 
 export default {
-    type: new GraphQLList(developerType),
+    type   : new GraphQLList(developerType),
     resolve: developersQueryResolver,
 };
 

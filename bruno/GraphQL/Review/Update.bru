@@ -11,12 +11,12 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenAndrei}}
 }
 
 body:graphql {
   mutation UpdateReview($review: ReviewInput!) {
-    updateReview(id: 0, review: $review) {
+    updateReview(id: 5, review: $review) {
       id,
       rating,
       comment

@@ -7,6 +7,6 @@ const cartRemoveAllItemsMutationResolver = async (_, __, { userId }) => {
 };
 
 export default {
-    type: cartType,
+    type   : cartType,
     resolve: cartRemoveAllItemsMutationResolver,
 };

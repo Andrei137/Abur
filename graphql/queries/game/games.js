@@ -5,6 +5,6 @@ import gameType from '@types/entity/game.js';
 const gamesQueryResolver = async () => await filterGames();
 
 export default {
-    type: new GraphQLList(gameType),
+    type   : new GraphQLList(gameType),
     resolve: gamesQueryResolver,
 };
