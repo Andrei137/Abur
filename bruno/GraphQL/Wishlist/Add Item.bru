@@ -12,18 +12,21 @@ post {
 
 headers {
   Authorization: Bearer {{tokenSeb}}
-  ~Authorization: Bearer {{tokenAndrei}}
+  !Authorization: Bearer {{tokenAndrei}}
+  ~Authorization: Bearer {{tokenBambucea}}
+  ~Authorization: Bearer {{tokenCodrin}}
+  ~Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
   mutation AddItem {
     wishlistAddItem(gameId: 12) {
       totalItems
-      
+
       customer {
         firstName
       }
-      
+
       items {
           ... on Game {
               id

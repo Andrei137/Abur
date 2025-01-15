@@ -12,13 +12,17 @@ post {
 
 headers {
   Authorization: Bearer {{tokenAndrei}}
+  ~Authorization: Bearer {{tokenCodrin}}
+  ~Authorization: Bearer {{tokenBambucea}}
+  ~Authorization: Bearer {{tokenSeb}}
+  ~Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
   mutation RemoveItem {
     cartRemoveItem(gameId: 13) {
     	totalPrice
-    
+
       customer {
         firstName
       }

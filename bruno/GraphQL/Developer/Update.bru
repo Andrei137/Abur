@@ -12,6 +12,8 @@ post {
 
 headers {
   Authorization: Bearer {{tokenSquareEnix}}
+  ~Authorization: Bearer {{tokenCDProjekt}}
+  ~Authorization: Bearer {{tokenPlayStation}}
 }
 
 body:graphql {
@@ -21,7 +23,7 @@ body:graphql {
       username
       password
       email
-      
+  
       studio
       website
     }

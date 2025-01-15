@@ -12,18 +12,21 @@ post {
 
 headers {
   Authorization: Bearer {{tokenSeb}}
-  ~Authorization: Bearer {{tokenAndrei}}
+  !Authorization: Bearer {{tokenAndrei}}
+  ~Authorization: Bearer {{tokenBambucea}}
+  ~Authorization: Bearer {{tokenCodrin}}
+  ~Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
   query ViewWishlist($sortOption: String, $order: String) {
     wishlist(sortOption: $sortOption, order: $order) {
       totalItems
-      
+
       customer {
         firstName
       }
-      
+
       items {
           ... on Game {
               id
@@ -61,7 +64,7 @@ body:graphql {
       }
     }
   }
-  
+
 }
 
 body:graphql:vars {

@@ -11,18 +11,22 @@ post {
 }
 
 headers {
-  Authorization: Bearer {{tokenCustomer}}
+  Authorization: Bearer {{tokenSeb}}
+  !Authorization: Bearer {{tokenAndrei}}
+  ~Authorization: Bearer {{tokenBambucea}}
+  ~Authorization: Bearer {{tokenCodrin}}
+  ~Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
   mutation RemoveItem {
     wishlistRemoveItem(gameId: 6) {
       totalItems
-  
+
       customer {
         firstName
       }
-  
+
       items {
           ... on Game {
               id

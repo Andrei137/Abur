@@ -11,8 +11,11 @@ post {
 }
 
 headers {
-  Authorization: {{tokenAndrei}}
-  ~Authorization: {{tokenSquareEnix}}
+  Authorization: Bearer {{tokenAndrei}}
+  ~Authorization: Bearer {{tokenBambucea}}
+  ~Authorization: Bearer {{tokenCodrin}}
+  ~Authorization: Bearer {{tokenSeb}}
+  ~Authorization: Bearer {{tokenSebi}}
 }
 
 body:graphql {
@@ -55,7 +58,7 @@ body:graphql {
       }
     }
   }
-  
+
 }
 
 body:graphql:vars {
