@@ -22,9 +22,9 @@
     "restore:win"  : "rmdir /s /q node_modules && pnpm i",
     "restore:linux": "rm -rf node_modules && pnpm i",
 
-    "deploy"     : ",fly deploy",
-    "deploy:open": ",fly apps open",
-    "deploy:logs": ",fly logs",
+    "deploy"     : "fly deploy",
+    "deploy:open": "fly apps open",
+    "deploy:logs": "fly logs",
 
     "lint"    : "pnpx eslint .",
     "lint:fix": "pnpx eslint . --fix"
